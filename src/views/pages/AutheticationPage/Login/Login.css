@@ -1,0 +1,23 @@
+.container-login{
+    background-image: linear-gradient(to right, rgb(110, 152, 189), rgb(135, 162, 186));
+	width: 100vw;
+	height: 100vh;
+
+    /* additional style */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+}
+.button-login{
+	
+    background-color: #fff;
+	width: 400px;
+	height: 300px;
+    border-radius: 10px;
+    box-shadow: 0px 10px 10px rgb(90, 75, 75);
+}
+
+
+
