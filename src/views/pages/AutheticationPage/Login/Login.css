@@ -7,7 +7,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
+    padding: 10px;
 
 }
 .button-login{
@@ -20,4 +20,7 @@
 }
 
 
-
+  .test-div {
+    min-width: 600px;
+  }
+  

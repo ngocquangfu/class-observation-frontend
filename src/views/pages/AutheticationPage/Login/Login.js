@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '../../../components/Button/Button';
 import './Login.css';
 
+
 function Login() {
   const [button, setButton] = useState(true);
   const showButton = () => {
@@ -31,10 +32,17 @@ function Login() {
             </Button>
           </Link>
         )}
-       
-     
-      </div>
 
+
+      </div>
+      <div class="test-div">
+  <select>
+    <option selected>Open this select menu</option>
+    <option value="1">One</option>
+    <option value="2">Two</option>
+    <option value="3">Three</option>
+  </select>
+</div>
     </div>
   )
 }
