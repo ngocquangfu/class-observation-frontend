@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from './views/pages/AutheticationPage/Login/Login';
 
 
+
 function App() {
   return (
     <BrowserRouter>
@@ -15,8 +16,8 @@ function App() {
         <Route path="/" element={<Home />}>
         </Route>
         <Route path="/login" exact element={<Login/>}>
-
         </Route>
+       
       </Routes>
     </BrowserRouter>
   );
