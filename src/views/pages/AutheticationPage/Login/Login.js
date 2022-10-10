@@ -4,7 +4,7 @@ import { Button } from '../../../components/Button/Button';
 import './Login.css';
 
 function Login() {
-  
+
   const [button, setButton] = useState(true);
   const showButton = () => {
     if (window.innerWidth <= 960) {
@@ -30,15 +30,15 @@ function Login() {
     //           Login
     //         </Button>
     //       </Link>
-          
+
     //     )}
 
     //   </div>
-  
+
     // </div>
     <div id="login">
       <form name='form-login'>
-      {button ? (
+        {button ? (
           <Link to='/login' className='btn-link' component={Login}>
             <Button buttonStyle='btn--outline' buttonColor={'white'} buttonSize='btn--long'>Sign in @fpt.edu.vn</Button>
           </Link>
@@ -51,16 +51,22 @@ function Login() {
               Login
             </Button>
           </Link>
-          
-        )}
-          <input type="text" id="user" placeholder="Username"/>
-       
-          <input type="password" id="pass" placeholder="Password"/>
-        
-        <input type="submit" value="Login"/>
 
-</form>
-</div>
+        )}
+        <input type="text" id="user" placeholder="Username" />
+
+        <input type="password" id="pass" placeholder="Password" />
+        <label for="location">Choose a location:</label>
+
+        <select name="location" id="location">
+          <option value="1">Ha Noi</option>
+          <option value="2">Da Nang</option>
+          <option value="3">Hai Phong</option>
+          <option value="4">Tp.HCM</option>
+        </select>
+        <input type="submit" value="Login" />
+      </form>
+    </div>
   )
 }
 
