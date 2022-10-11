@@ -48,7 +48,7 @@ function Login() {
               buttonStyle='btn--outline'
               buttonSize='btn--medium'
             >
-              Login
+              Sign in @fpt.edu.vn
             </Button>
           </Link>
 
