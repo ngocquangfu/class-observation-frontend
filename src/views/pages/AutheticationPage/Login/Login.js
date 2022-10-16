@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '../../../components/Button/Button';
+import NavBar from './../../HomePage/Navbar';
 import './Login.css';
 
 function Login() {
@@ -36,6 +37,8 @@ function Login() {
     //   </div>
 
     // </div>
+    <>
+    <NavBar/>
     <div id="login">
       <form name='form-login'>
         {button ? (
@@ -67,6 +70,7 @@ function Login() {
         <input type="submit" value="Login" />
       </form>
     </div>
+    </>
   )
 }
 
