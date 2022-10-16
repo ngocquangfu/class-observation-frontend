@@ -97,7 +97,7 @@ export const UpdatesData = [
   {
     img: img1,
     name: "Andrew Thomas",
-    noti: "has ordered Apple smart watch 2500mh battery.",
+    noti: "has ordered Apple smart watch 2500mh batteryyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy.",
     time: "25 seconds ago",
   },
   {

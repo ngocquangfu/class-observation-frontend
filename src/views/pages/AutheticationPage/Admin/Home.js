@@ -1,15 +1,16 @@
 import MainDash from './MainDash/MainDash';
 import RightSide from './RigtSide/RightSide';
-import Sidebar from './Sidebar/Sidebar';
-
+import Navbar from '../../HomePage/Navbar';
 function Home() {
-    return (
-      <>
-        <Sidebar/>
-        <MainDash/>
-        <RightSide/>
-      </>
-    );
-  }
-  
-  export default Home;
+  return (
+    <>
+
+      <Navbar />
+      <RightSide />
+      <MainDash />
+
+    </>
+  );
+}
+
+export default Home;

@@ -1,0 +1,15 @@
+.home .site-main {
+    padding: 32px 0 45px;
+}
+body .site-main {
+    flex-grow: 1;
+}
+.wrap-list-courses .course-infor {
+    flex-grow: 1;
+}
+.course-infor {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+}
