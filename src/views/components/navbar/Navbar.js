@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { MdFingerprint } from 'react-icons/md';
-import {Button} from '../../components/Button/Button';
+import {Button} from '../../components/button/Button';
 import './Navbar.css';
-import Login from '../AutheticationPage/Login/Login';
+import Login from '../../pages/authetication/login/Login';
 function Navbar() {
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);

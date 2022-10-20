@@ -1,7 +1,7 @@
 import React from 'react';
-import Sections from './Sections';
+import Sections from './sections/Sections';
 import {homeObjOne, homeObjThree, homeObjTwo} from './Data';
-import NavBar from './Navbar';
+import NavBar from '../../components/navbar/Navbar';
 
 
 function Home() {

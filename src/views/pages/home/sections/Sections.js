@@ -1,6 +1,6 @@
 import React from 'react';
 import './Sections.css';
-import { Button } from '../../components/Button/Button';
+import { Button } from '../../../components/button/Button';
 import { Link } from 'react-router-dom';
 
 function Sections({ lightBg, topLine, lightText, lightTextDesc, headline, description, buttonLabel, img, alt, imgStart}) {
