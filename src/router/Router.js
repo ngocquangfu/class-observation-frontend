@@ -16,6 +16,7 @@ function Router() {
         <Route path="/admin" exact element={<Admin/>}/>
         <Route path="/Lecture" exact element={<Lecture/>}/>
 
+
       </Routes>
       <Footer/>
     </BrowserRouter>
