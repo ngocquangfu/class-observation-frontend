@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import NavBar from '../../../components/navbar/Navbar';
+import Footer from '../../../components/footer/Footer';
+
 import './Login.css'
 import {gapi} from 'gapi-script';
 
@@ -37,7 +39,7 @@ function Login() {
     <>
       <NavBar />
       <div id="login">
-        <form name='form-login'>
+        <form className='form-login'>
           <div  >
             {showloginButton ?
               <GoogleLogin
@@ -74,6 +76,7 @@ function Login() {
 
         </form>
       </div>
+      <Footer/>
     </>
   )
 }

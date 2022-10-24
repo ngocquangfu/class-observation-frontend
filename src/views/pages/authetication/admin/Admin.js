@@ -1,6 +1,8 @@
 import React from 'react'
-import './Index.css'
+import './Admin.css'
 import NavBar from '../../../components/navbar/Navbar';
+import Footer from '../../../components/footer/Footer';
+
 
 function Index() {
     return (
@@ -66,6 +68,7 @@ function Index() {
                     
                 </tbody>
             </table>
+            <Footer/>
         </>
     )
 }

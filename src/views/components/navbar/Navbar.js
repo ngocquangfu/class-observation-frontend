@@ -1,24 +1,23 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { FaBars, FaTimes } from 'react-icons/fa';
 import { MdFingerprint } from 'react-icons/md';
-import {Button} from '../../components/button/Button';
 import './Navbar.css';
-import Login from '../../pages/authetication/login/Login';
-function Navbar() {
-  const [click, setClick] = useState(false);
-  const handleClick = () => setClick(!click);
-  const [button, setButton] = useState(true);
-  const closeMobileMenu= () =>setClick(false);
+export default class Navbar extends Component {
+//   const [click, setClick] = useState(false);
+//   const handleClick = () => setClick(!click);
+//   const [button, setButton] = useState(true);
+//   const closeMobileMenu= () =>setClick(false);
 
-  const showButton=()=> {
-    if(window.innerWidth<=960){
-      setButton(false);
-    }else{
-      setButton(true);
-    }
-  }
-window.addEventListener('resize', showButton);
+//   const showButton=()=> {
+//     if(window.innerWidth<=960){
+//       setButton(false);
+//     }else{
+//       setButton(true);
+//     }
+//   }
+// window.addEventListener('resize', showButton);
+
+render(){
   return (
     <>
       <div className='navbar'>
@@ -27,10 +26,7 @@ window.addEventListener('resize', showButton);
             <MdFingerprint className="navbar-icon" />
             SWP490
           </Link>
-          <div className="menu-icon" onClick={handleClick}>
-            {click ? <FaTimes /> : <FaBars />}
-          </div>
-          <ul className={click ? 'nav-menu active ' : 'nav-menu'}>
+          {/* <ul className={click ? 'nav-menu active ' : 'nav-menu'}>
           <li className='nav-btn'>
                 {button ? (
                   <Link to='/login' className='btn-link' component={Login}>
@@ -48,12 +44,14 @@ window.addEventListener('resize', showButton);
                   </Link>
                 )}
               </li>
-          </ul>
+          </ul> */}
+          {this.props.custom}
         </div>
 
       </div>
     </>
-  );
+  )}
 }
 
-export default Navbar;
+
+//export default Navbar;

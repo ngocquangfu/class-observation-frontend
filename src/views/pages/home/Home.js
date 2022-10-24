@@ -1,18 +1,64 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Sections from './sections/Sections';
-import {homeObjOne, homeObjThree, homeObjTwo} from './Data';
+import { homeObjOne, homeObjThree, homeObjTwo } from './Data';
 import NavBar from '../../components/navbar/Navbar';
+import Footer from '../../components/footer/Footer';
+import { Button } from '../../components/button/Button';
+import { Link } from 'react-router-dom';
 
 
-function Home() {
+export default class Home extends Component {
+  
+  state = {
+    windowHeight: undefined,
+    windowWidth: undefined
+  }
+
+  handleResize = () => this.setState({
+    windowHeight: window.innerHeight,
+    windowWidth: window.innerWidth
+  });
+
+  componentDidMount() {
+    this.handleResize();
+    window.addEventListener('resize', this.handleResize)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize)
+  }
+
+  render() {
+    var button = "";
+    if (window.innerWidth < 720) {
+      button = (<div className='nav-btn'>
+        <Link to='/login' className='btn-link'>
+          <Button
+            buttonStyle='btn--primary'
+            buttonSize='btn--mobile'
+          >
+            Login
+          </Button></Link></div>);
+    } else {
+      button = (<div className='nav-btn'>
+        <Link to='/login' className='btn-link'>
+          <Button
+            buttonStyle='btn--outline'
+            buttonSize='btn--medium'
+          >
+            Login
+          </Button></Link></div>);
+    }
     return (
       <>
-       <NavBar/>
+        <NavBar custom={button} />
         <Sections {...homeObjOne} />
         <Sections {...homeObjThree} />
         <Sections {...homeObjTwo} />
+      <Footer/>
+
       </>
     );
   }
-  
-  export default Home;
+
+}
