@@ -7,7 +7,7 @@ import './Login.css'
 import {gapi} from 'gapi-script';
 
 function Login() {
-  const clientId = "700459662900-v4ouio1bgi4agnvhkqr3a4tag9e7lnb6.apps.googleusercontent.com";
+  const clientId = process.env.CLIENT_ID;
   useEffect(() => {
     const initClient = () => {
       gapi.client.init({

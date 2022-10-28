@@ -10,7 +10,8 @@ export default class App extends React.Component {
   state = {
     courses: [
       { name: 'Nêu rõ mục đích yêu cầu của bài giảng' },
-      { name: 'Cấu trúc của bài giảng' }
+      { name: 'Cấu trúc của bài giảng được thiết kế có hệ thống và lôgic' },
+      { name: 'Phân bố thời gian hợp lý cho các vấn đề trong bài giảng' }
     ],
     newName: ''
   }

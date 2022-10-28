@@ -27,11 +27,11 @@ export default class Index extends Component {
                         </span>
 
                         <span className="survey-name">
-                            This is demo
+                            Ngữ văn Lớp 10
                         </span>
 
                         <span className="survey-country grid-only">
-                            Mark: 10
+                            Điểm: 90%
                         </span>
 
                         <div className="pull-right">
@@ -43,17 +43,93 @@ export default class Index extends Component {
 
                                 <span className="survey-progress-labels">
                                     <span className="survey-progress-label">
-                                        88%
+                                        Đạt
                                     </span>
 
                                     <span className="survey-completes">
-                                        490 / 500
+                                        90 / 100
                                     </span>
                                 </span>
                             </span>
 
                             <span className="survey-end-date ended">
-                                2014 - May 10
+                                20-10-2022
+                            </span>
+                           
+                        </div>
+                    </li>
+                    <li className="survey-item">
+
+                        <span className="survey-country list-only">
+                            Demo
+                        </span>
+
+                        <span className="survey-name">
+                            Địa Lý Lớp 10
+                        </span>
+
+                        <span className="survey-country grid-only">
+                            Điểm: 90%
+                        </span>
+
+                        <div className="pull-right">
+
+                            <span className="survey-progress">
+                                <span className="survey-progress-bg">
+                                    <span className="survey-progress-fg" ></span>
+                                </span>
+
+                                <span className="survey-progress-labels">
+                                    <span className="survey-progress-label">
+                                        Đạt
+                                    </span>
+
+                                    <span className="survey-completes">
+                                        90 / 100
+                                    </span>
+                                </span>
+                            </span>
+
+                            <span className="survey-end-date ended">
+                                20-10-2022
+                            </span>
+                           
+                        </div>
+                    </li>
+                    <li className="survey-item">
+
+                        <span className="survey-country list-only">
+                            Demo
+                        </span>
+
+                        <span className="survey-name">
+                            Toán Lớp 10
+                        </span>
+
+                        <span className="survey-country grid-only">
+                            Điểm: 90%
+                        </span>
+
+                        <div className="pull-right">
+
+                            <span className="survey-progress">
+                                <span className="survey-progress-bg">
+                                    <span className="survey-progress-fg" ></span>
+                                </span>
+
+                                <span className="survey-progress-labels">
+                                    <span className="survey-progress-label">
+                                        Đạt
+                                    </span>
+
+                                    <span className="survey-completes">
+                                        90 / 100
+                                    </span>
+                                </span>
+                            </span>
+
+                            <span className="survey-end-date ended">
+                                20-10-2022
                             </span>
                            
                         </div>

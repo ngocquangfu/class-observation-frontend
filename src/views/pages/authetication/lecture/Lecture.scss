@@ -104,7 +104,6 @@ $theme-color: #8DC63F;
     display: inline-block;
     width: 100px;
     white-space: nowrap;
-    
     overflow: hidden;
   }
 }
@@ -140,6 +139,7 @@ $theme-color: #8DC63F;
 }
 
 .grid {
+  
   .grid-only {
     display: auto;
   }
@@ -188,11 +188,11 @@ $theme-color: #8DC63F;
   
   .survey-end-date {
     &:before {
-      content: 'Ends\00a0';
+      content: 'Ngày:\00a0';
     }
     
     &.ended:before {
-      content: 'Ended\00a0';
+      content: 'Ngày:\00a0';
     }
   }
   
