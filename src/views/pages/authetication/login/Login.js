@@ -1,84 +1,122 @@
-import React, { useState, useEffect } from 'react';
-import { GoogleLogin, GoogleLogout } from 'react-google-login';
+import React, { useEffect } from 'react';
+import { GoogleLogin } from 'react-google-login';
 import NavBar from '../../../components/navbar/Navbar';
 import Footer from '../../../components/footer/Footer';
+import { apiClient } from '../../../../api/api-client';
+import { Select } from 'antd';
+import { gapi } from "gapi-script";
+import { useNavigate } from 'react-router-dom';
+import './Login.css';
+import image1 from '../../../../assets/images/svg-1.svg';
+import { textAlign } from '@mui/system';
+const Login = () => {
+    const [listCampus, setListCampus] = React.useState([])
+    const [campus, setCampus] = React.useState(null)
 
-import './Login.css'
-import {gapi} from 'gapi-script';
-
-function Login() {
-  const clientId = process.env.CLIENT_ID;
-  useEffect(() => {
-    const initClient = () => {
-      gapi.client.init({
-        clientId: clientId,
-        scope: ''
-      });
-    };
-    gapi.load('client:auth2', initClient);
-  });
-  const [showloginButton, setShowloginButton] = useState(true);
-  const [showlogoutButton, setShowlogoutButton] = useState(false);
-  const onLoginSuccess = (res) => {
-    console.log('Login Success:', res.profileObj);
-    console.log(res);
-    setShowloginButton(false);
-    setShowlogoutButton(true);
-  };
-
-  const onLoginFailure = (res) => {
-    console.log('Login Failed:', res);
-  };
-
-  const onSignoutSuccess = () => {
-    setShowloginButton(true);
-    setShowlogoutButton(false);
-  };
-  return (
-
-    <>
-      <NavBar />
-      <div id="login">
-        <form className='form-login'>
-          <div  >
-            {showloginButton ?
-              <GoogleLogin
-                clientId={clientId}
-                buttonText="Sign In @fpt.edu.vn"
-                onSuccess={onLoginSuccess}
-                onFailure={onLoginFailure}
-                cookiePolicy={'single_host_origin'}
-                isSignedIn={true}
-                className="login-with-google-btn"
-              /> : null}
-
-            {showlogoutButton ?
-              <GoogleLogout
-                clientId={clientId}
-                buttonText="Sign Out"
-                onLogoutSuccess={onSignoutSuccess}
-                className="login-with-google-btn"
-              >
-              </GoogleLogout> : null
+    const navigation = useNavigate()
+    const _requestData = async () => {
+        const { data } = await apiClient.get('/api/campusDropdownList')
+        const convertData = data.map((i, idx) => {
+            return {
+                value: i.value,
+                label: i.name
             }
-          </div>
+        })
+        setListCampus(convertData)
+    }
+    const handleLogin = async (ggApi) => {
+        if (campus) {
+            const body = {
+                token: ggApi.tokenId,
+                campusId: campus
+            }
+            const { data } = await apiClient.post('/auth/google', body)
+            if (data.accessToken) {
+                localStorage.setItem("ACCESS_TOKEN", data.accessToken)
+                navigation('/admin')
+            }
 
-          <br />
+        }
+    }
+    const onChange = (value) => {
 
-          <span class="custom-dropdown big">
-            <select>
-              <option>Hà Nội</option>
-              <option>Hải Phòng</option>
-              <option>Đà Nẵng</option>
-              <option>TP.Hồ Chí Minh</option>
-            </select>
-          </span>
+        setCampus(value)
+        console.log("goi toi day")
+    };
+    const onSearch = (value) => {
+        console.log('search:', value);
+    };
+    const handleFailLogin = (err) => {
+        console.log(err);
+    }
+    useEffect(() => {
+        _requestData()
+    }, [])
+    useEffect(() => {
+        function start() {
+            gapi.client.init({
+                clientId: process.env.REACT_APP_GOOGLE_API_ID,
+                scope: 'email',
+            });
+        }
 
-        </form>
-      </div>
-      <Footer/>
+        gapi.load('client:auth2', start);
+    }, []);
+    return (<>
+        <NavBar />
+        <div className="login">
+            <div className='form-login'>
+                <div style={{ display: 'relative', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                    <div>
+                        <img src={image1} width='280' />
+                    </div>
+                    <span className="custom-dropdown big">
+                        {/* <select >
+
+
+                            {listCampus.map((campus) => (
+                                <option key={campus.value} onChange={onChange} >
+                                    {campus.label}
+
+                                </option>
+                            ))}
+
+                           
+                        </select> */}
+                         <Select
+                                size='large'
+                                showSearch
+                                placeholder="Select a campus"
+                                optionFilterProp="children"
+                                onChange={onChange}
+                                onSearch={onSearch}
+                                filterOption={(input, option) =>
+                                    (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                                }
+                                options={listCampus}
+                            />
+                    </span>
+                    <GoogleLogin
+                        clientId={process.env.REACT_APP_GOOGLE_API_ID}
+                        buttonText="Sign in with @fpt.edu.vn"
+                        className='login-with-google-btn'
+                        onSuccess={handleLogin}
+                        onFailure={handleFailLogin}
+                        cookiePolicy={'single_host_origin'}
+                    >
+                    </GoogleLogin>
+
+                    <br />
+
+
+                </div>
+
+            </div>
+        </div>
+        <Footer />
     </>
-  )
-}
+    );
+};
 
 export default Login
+
