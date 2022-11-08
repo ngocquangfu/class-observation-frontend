@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import './Lecture.scss'
 import NavBar from '../../../components/navbar/Navbar';
-import Filter from '../../../components/filter/Filter';
 import Footer from '../../../components/footer/Footer';
 
 export default class Index extends Component {
@@ -14,8 +13,6 @@ export default class Index extends Component {
         </select>);
         return (
             <>
-                <NavBar />
-                <Filter select={option} filterName={filterName} />
                 <span className="toggler active" data-toggle="grid"><span className="entypo-layout"></span></span>
                 <span className="toggler" data-toggle="list"><span className="entypo-list"></span></span>
 

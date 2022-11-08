@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GoogleLogin } from 'react-google-login';
 import NavBar from '../../../components/navbar/Navbar';
 import Footer from '../../../components/footer/Footer';
@@ -12,10 +12,9 @@ import { textAlign } from '@mui/system';
 const Login = () => {
     const [listCampus, setListCampus] = React.useState([])
     const [campus, setCampus] = React.useState(null)
-
     const navigation = useNavigate()
     const _requestData = async () => {
-        const { data } = await apiClient.get('/api/campusDropdownList')
+        const { data } = await apiClient.get('/api/campus-dropdown-list')
         const convertData = data.map((i, idx) => {
             return {
                 value: i.value,
@@ -24,6 +23,8 @@ const Login = () => {
         })
         setListCampus(convertData)
     }
+
+
     const handleLogin = async (ggApi) => {
         if (campus) {
             const body = {
@@ -43,6 +44,14 @@ const Login = () => {
         setCampus(value)
         console.log("goi toi day")
     };
+
+
+
+
+
+
+
+
     const onSearch = (value) => {
         console.log('search:', value);
     };
@@ -62,39 +71,25 @@ const Login = () => {
 
         gapi.load('client:auth2', start);
     }, []);
-    return (<>
+    return (
+    <>
         <NavBar />
-        <div className="login">
+        <div className="login" >
             <div className='form-login'>
                 <div style={{ display: 'relative', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                     <div>
                         <img src={image1} width='280' />
                     </div>
                     <span className="custom-dropdown big">
-                        {/* <select >
-
-
+                        <select onChange={e => setCampus(parseInt(e.target.options.selectedIndex))} >
+                            <option value="" selected disabled hidden>Choose campus</option>
                             {listCampus.map((campus) => (
-                                <option key={campus.value} onChange={onChange} >
+                                <option key={campus.value + 1} value={campus.value + 1} >
                                     {campus.label}
 
                                 </option>
                             ))}
-
-                           
-                        </select> */}
-                         <Select
-                                size='large'
-                                showSearch
-                                placeholder="Select a campus"
-                                optionFilterProp="children"
-                                onChange={onChange}
-                                onSearch={onSearch}
-                                filterOption={(input, option) =>
-                                    (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
-                                }
-                                options={listCampus}
-                            />
+                        </select>
                     </span>
                     <GoogleLogin
                         clientId={process.env.REACT_APP_GOOGLE_API_ID}

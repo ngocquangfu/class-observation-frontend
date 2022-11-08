@@ -1,61 +1,61 @@
-import React from 'react'
-import './Admin.css'
-import NavBar from '../../../components/navbar/Navbar';
-import Footer from '../../../components/footer/Footer';
-import axios from 'axios';
-import { Component } from 'react';
+import React, { useState } from 'react';
+import { Button, Radio } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+import AdminLecture from '../admin/admin-lecture/index';
+import AdminHOS from '../admin/admin-head-subject/index';
+import AdminTraining from '../admin/admin-trainning/index';
+import image1 from '../../../../assets/images/svg-1.svg'
 
 
-export default class Index extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            users: []
-        };
+
+const Admin = () => {
+    const [adminIndex , setAdminIndex] = useState(1)
+
+    const objAdmin = {
+        3 : <AdminLecture />,
+        1 : <AdminHOS />,
+        2 : <AdminTraining />
     }
-
-    componentDidMount() {
-
-        axios.get("http://localhost:8081/api/admin/list/", { headers: { "Authorization": 'Bearer ' + localStorage.getItem("accesstoken") } })
-            .then(response => {
-                const users = JSON.stringify(response.data)
-                this.setState({users: JSON.stringify    (response.data)})
-
-                console.log("data99: " + users)
-
-            })
-}
-    renderRow = () => {
-        return this.state.users.map(user => {
-            console.log("data10: " + user.userName)
-            
-        })
+    const handleClick = (idx) => {
+        setAdminIndex(idx)
     }
-    render() {
-        const { users } = this.state;
-        return users.length > 0 ? (
+    return (
+        <div>
+            <div style={{ height: 60, background: '#0a8cf1', display: 'flex', justifyContent: 'space-between', alignItems: 'center' , marginBottom : 40 }}>
+                <div style={{ display: 'flex' }}>
+                    <img style={{ marginLeft: 20, marginRight: 20 }} src={image1} height="40" />
+                    <div>
+                    <Button type="ghost" onClick={() => handleClick(2)} style={{ background: adminIndex == 2 ? 'yellow' : '#b1b7bb' ,marginLeft: 20, marginRight: 20}} shape="round" size='large'>
+                            Head Of Subject
+                        </Button>
+                        <Button type="ghost" onClick={() => handleClick(3)} style={{ background: adminIndex == 3 ? 'yellow' : '#b1b7bb' ,marginLeft: 20, marginRight: 20}} shape="round" size='large'>
+                            Training
+                        </Button>
+                        <Button type="ghost" onClick={() => handleClick(1)} style={{ background: adminIndex == 1 ? 'yellow' : '#b1b7bb' ,marginLeft: 20, marginRight: 20}} shape="round" size='large'>
+                            Lecture
+                        </Button>
+                       
+                    </div>
+                </div>
 
-            <>
-                <NavBar />
-                <table id="basic-data-table" className="table nowrap" >
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Last name</th>
-                            <th>Position</th>
+                <div style={{ display: 'flex', color: 'black', fontSize: 24, fontWeight: 500 }}>
+                    <div>
+                        ThangNg
+                    </div>
+                    <div style={{marginLeft: 20, marginRight: 20}}>
+                        <UserOutlined height='60px' />
+                    </div>
+                    <div style={{marginRight : 20 , cursor : 'pointer'}}>
+                        LogOut
+                    </div>
+                </div>
+            </div>
 
-                        </tr>
-                    </thead>
+            <div>
+                {objAdmin[adminIndex]}
+            </div>
+        </div>
+    );
+};
 
-                    <tbody>
-
-                        <tr>
-                            {this.renderRow()}
-                        </tr>
-                    </tbody>
-                </table>
-                <Footer />
-            </>)
-            : (<h1>No content</h1>)
-    }
-}
+export default Admin;

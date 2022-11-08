@@ -70,7 +70,6 @@ export default class App extends React.Component {
 
     return (
       <>
-        <NavBar />
         <div className="app">
           <div className="padd"></div>
           <div className="crud">
