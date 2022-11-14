@@ -1,21 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import {
-    Pagination, Input, Button, Upload, Checkbox,
-    Image, Popover, List
-} from "antd";
-import {
-    PlusOutlined, DeleteOutlined, FilterOutlined, ReloadOutlined,
-    UploadOutlined, UnorderedListOutlined
-} from "@ant-design/icons";
-import { CardCustom, TableCustom } from '../../../helper/style-component'
+import {Pagination, Button} from "antd";
+import {PlusOutlined, DeleteOutlined,  ReloadOutlined} from "@ant-design/icons";
+import { CardCustom, TableCustom } from '../../helper/style-component'
 import { apiClient } from '../../../../../api/api-client';
-import AddNewForm from './com/add_new_modal';
-import ModalFormDetail from './com/detail_modal';
-
+import AddNewForm from '../common/com//add_new_modal';
+import ModalFormDetail from '../common/com/detail_modal'
 import { openNotificationWithIcon } from '../../../request/notification';
-// import ModalFormDetail from './com/detail_modal';
-// import FilterForm from './com/filter_modal';
-// import ColumnForm from './com/column_modal';
+
 
 const AdminLecture = () => {
     const [selectedRow, setSelectRow] = useState([]);
@@ -116,7 +107,7 @@ const AdminLecture = () => {
             campusId : value.campusId,
             roles : [
                 {
-                    id : 1
+                    id : 2
                 }
             ]
         }

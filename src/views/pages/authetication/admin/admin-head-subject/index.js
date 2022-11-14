@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import {
-    Pagination,Button
-} from "antd";
-import {
-    PlusOutlined, DeleteOutlined, ReloadOutlined
-} from "@ant-design/icons";
-import { CardCustom, TableCustom } from '../../../helper/style-component'
+import {Pagination,Button} from "antd";
+import {PlusOutlined, DeleteOutlined, ReloadOutlined} from "@ant-design/icons";
+import { CardCustom, TableCustom } from '../../helper/style-component'
 import { apiClient } from '../../../../../api/api-client';
-import AddNewForm from './com/add_new_modal';
-import ModalFormDetail from './com/detail_modal';
+import AddNewForm from '../common/com//add_new_modal';
+import ModalFormDetail from '../common/com/detail_modal'
 import { openNotificationWithIcon } from '../../../request/notification';
 
 const AdminLecture = () => {
@@ -41,7 +37,6 @@ const AdminLecture = () => {
     // modal
     const [showAddNew, setShowAddNew] = useState(false);
     const [showDetail, setShowDetail] = useState(false);
-    const [showColumn, setShowColumn] = useState(false);
     const _handleChangePage = (page, number_of_page) => {
         console.log(page, number_of_page);
         setPage({
@@ -116,7 +111,7 @@ const AdminLecture = () => {
         }
         try {
             const { data } = await apiClient.post('/api/admin/new-account', body)
-            openNotificationWithIcon("success","Thêm thanh công")
+            openNotificationWithIcon("success","Thêm thành công")
         } catch (error) {
             openNotificationWithIcon("error","Thêm thất bại")
 

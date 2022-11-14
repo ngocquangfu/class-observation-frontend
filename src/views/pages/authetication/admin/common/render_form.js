@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Card, Table, Button, Modal, Form, Input, InputNumber, Select, DatePicker, Space, TimePicker, Checkbox, AutoComplete } from 'antd';
-// import { apiClient } from 'helper/request/api_client';
+import React from 'react';
+import { Form, Input, Select} from 'antd';
 
 const { Option } = Select;
-export const RenderForm = ({ jsonFrom, _handleChange = () => { }, dataInit }) => {
-    const { RangePicker } = DatePicker;
+export const RenderForm = ({ jsonFrom = () => { } }) => {
     return (
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}> {
             jsonFrom.map((item, index) => {
@@ -15,11 +13,8 @@ export const RenderForm = ({ jsonFrom, _handleChange = () => { }, dataInit }) =>
                             name={item.name}
                             label={item.label}
                             rules={item.rules}
-                            style={item.hidden ? { display: 'none' } : { margin: '0', width: '45%' }}
-                        >
-                            <Select
-                                placeholder="Chon Campus"
-                            >
+                            style={item.hidden ? { display: 'none' } : { margin: '0', width: '45%' }}>
+                            <Select placeholder="Chọn Campus">
                                 {
                                     item.data.map(i => {
                                         return <Option key={i.value} value={i.value}>{i.label}</Option>
@@ -35,9 +30,8 @@ export const RenderForm = ({ jsonFrom, _handleChange = () => { }, dataInit }) =>
                         name={item.name}
                         label={item.label}
                         rules={item.rules}
-                        style={item.hidden ? { display: 'none' } : { margin: '0', width: '45%' }}
-                    >
-                        <Input disabled={item.disabled} />
+                        style={item.hidden ? { display: 'none' } : { margin: '0', width: '45%' }}>
+                        <Input disabled={item.disabled}/>
                     </Form.Item>
                 )
             })

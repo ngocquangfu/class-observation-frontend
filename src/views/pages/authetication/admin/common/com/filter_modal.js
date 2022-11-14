@@ -3,11 +3,7 @@ import React, { useEffect, useMemo } from "react";
 import {  isEmpty } from "lodash";
 import { Button, Form, Drawer } from "antd";
 import styled from "styled-components";
-import {
-    CloseOutlined, ReloadOutlined
-} from "@ant-design/icons";
-
-
+import {CloseOutlined, ReloadOutlined} from "@ant-design/icons";
 import { RenderForm } from "com/antd_form/render_form";
 const ModalForm = ({
     visible,
@@ -31,7 +27,7 @@ const ModalForm = ({
     if (isEmpty(jsonFormInput)) return null;
 
     return (
-        <Drawer title={false} placement={'right'} closable={false} onClose={_onClose} visible={visible} width={500}>
+        <Drawer title={false} placement={'right'} closable={false} onClose={_onClose} open={visible} width={500}>
             <TitleDetail _onClose={_onClose} _onReset={() => form.resetFields()} />
             <StyledForm layout="vertical" onFinish={onFinish} form={form} initialValues={dataInit}>
                 <Form.Item> <Header loading={false} _handleReset={() => form.resetFields()} /></Form.Item>
@@ -77,7 +73,6 @@ const StyledForm = styled(Form)`
     padding: 0px 24px 24px 24px;
     background: red;
   }
-
   .ant-form-item {
     margin-bottom: 4px;
   }

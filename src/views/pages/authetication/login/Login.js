@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { GoogleLogin } from 'react-google-login';
 import NavBar from '../../../components/navbar/Navbar';
 import Footer from '../../../components/footer/Footer';
 import { apiClient } from '../../../../api/api-client';
-import { Select } from 'antd';
 import { gapi } from "gapi-script";
 import { useNavigate } from 'react-router-dom';
-import './Login.css';
+import './login.css';
 import image1 from '../../../../assets/images/svg-1.svg';
-import { textAlign } from '@mui/system';
 const Login = () => {
     const [listCampus, setListCampus] = React.useState([])
     const [campus, setCampus] = React.useState(null)
@@ -39,11 +37,7 @@ const Login = () => {
 
         }
     }
-    const onChange = (value) => {
-
-        setCampus(value)
-        console.log("goi toi day")
-    };
+  
 
 
 
@@ -53,7 +47,7 @@ const Login = () => {
 
 
     const onSearch = (value) => {
-        console.log('search:', value);
+        console.log('token:', value.tokenId);
     };
     const handleFailLogin = (err) => {
         console.log(err);
@@ -82,7 +76,7 @@ const Login = () => {
                     </div>
                     <span className="custom-dropdown big">
                         <select onChange={e => setCampus(parseInt(e.target.options.selectedIndex))} >
-                            <option value="" selected disabled hidden>Choose campus</option>
+                            <option  hidden >Choose campus</option>
                             {listCampus.map((campus) => (
                                 <option key={campus.value + 1} value={campus.value + 1} >
                                     {campus.label}

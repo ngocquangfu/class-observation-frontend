@@ -1,21 +1,9 @@
 
 import React, {  useEffect, useMemo } from "react";
-import {  get, isEmpty } from "lodash";
-import {
-  Table,
-  Upload,
-  Button,
-  Modal, Space,
-  Form, Drawer,
-  Input,
-  Select,
-  DatePicker,
-  InputNumber,
-  TimePicker, Card,
-} from "antd";
+import {  get } from "lodash";
+import { Button,Form, Drawer} from "antd";
 
-import {
-  PlusOutlined, DeleteOutlined, CloseOutlined, ReloadOutlined
+import { CloseOutlined, ReloadOutlined
 } from "@ant-design/icons";
 
 import styled from "styled-components";
@@ -94,7 +82,7 @@ const ModalForm = ({
   }
   return (
     <Drawer bodyStyle={{ padding: 10 }} title={false}
-      placement={'right'} closable={false} onClose={_onClose} visible={visible} width={650}>
+      placement={'right'} closable={false} onClose={_onClose} open={visible} width={650}>
       <TitleDetail _onClose={_onClose} _onReset={() => form.resetFields()} />
       <StyledForm onFinish={onFinish} form={form} initialValues={dataInit}
         style={{ padding: '0px 10px' }} layout="vertical" >

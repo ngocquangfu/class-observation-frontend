@@ -1,6 +1,4 @@
-import {
-    notification,
-} from "antd";
+import {notification} from "antd";
 
 export const openNotificationWithIcon = (type, description, message = "Thông báo") => {
     notification[type]({

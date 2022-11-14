@@ -1,33 +1,12 @@
 
-import React, { Component, useState, useEffect, useCallback, useMemo } from "react";
-import { findIndex, get, isEmpty } from "lodash";
-import {
-  Table,
-  Upload,
-  Button,
-  Modal, Space,
-  Form, Drawer,
-  Input,
-  Select,
-  DatePicker,
-  InputNumber,
-  TimePicker, Card,
-} from "antd";
-
-import {
-  PlusOutlined, DeleteOutlined, CloseOutlined, ReloadOutlined
-} from "@ant-design/icons";
-
+import React, { useEffect, useMemo } from "react";
+import { get } from "lodash";
+import {Button,Form, Drawer} from "antd";
+import {CloseOutlined, ReloadOutlined} from "@ant-design/icons";
 import styled from "styled-components";
-
 import { RenderForm } from "../render_form";
-import { openNotificationWithIcon } from "../../../../request/notification";
-import axios from "axios";
 
-// import { ACT_TYPE } from "../const";
-// import * as services from '../services';
-// import { openNotificationWithIcon } from "../helper/notification_antd";
-// import { handleErr } from "../helper/handle_err_request";
+
 
 const ModalForm = ({
   visible,
@@ -37,22 +16,16 @@ const ModalForm = ({
 }) => {
   // state
   const [loading, setLoading] = React.useState(false);
-  const [img, setImg] = React.useState(null)
-  // 
   const [form] = Form.useForm();
-  // value
   const type = useMemo(() => get(visible, 'type', 'add'), [visible]);
   const dataInit = useMemo(() => get(visible, 'data', {}), [visible]);
-  // effect
   useEffect(() => form.resetFields(), [dataInit]);
-  // handle
   const onFinish = (val) => {
     try {
       setLoading(true);
       _onSubmit(val)
       _onClose()
       setLoading(false);
-      // _onClose()
     } catch (err) {
       setLoading(false);
     }
@@ -61,7 +34,7 @@ const ModalForm = ({
 
   return (
     <Drawer bodyStyle={{ padding: 10 }} title={false}
-      placement={'right'} closable={false} onClose={_onClose} visible={visible} width={650}>
+      placement={'right'} closable={false} onClose={_onClose} open={visible} width={650}>
       <TitleDetail _onClose={_onClose} _onReset={() => form.resetFields()} />
       <StyledForm onFinish={onFinish} form={form} initialValues={dataInit}
         style={{ padding: '0px 10px' }} layout="vertical" >
@@ -83,7 +56,7 @@ const TitleDetail = React.memo(({ _onReset, _onClose }) => {
     </div>)
 })
 
-const HeaderForm = ({ loading, type, _onClose = () => { } }) => {
+const HeaderForm = ({ loading, type = () => { } }) => {
   return (
     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #eee', }}>
       <span style={{ fontSize: 18, fontWeight: '500' }}>{type === "EDIT" ? "Chỉnh sửa" : "Thêm mới"}</span>

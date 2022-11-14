@@ -1,17 +1,14 @@
 import React from 'react';
-import Home from '../views/pages/home/Home';
+import Home from '../views/pages/home/home';
+import Error404 from '../views/pages/error/error404'
 import { BrowserRouter , Routes, Route } from "react-router-dom";
-import Login from '../views/pages/authetication/login/Login';
-import Admin from '../views/pages/authetication/admin/Admin';
-import Lecture from '../views/pages/authetication/lecture/Lecture';
+import Login from '../views/pages/authetication/login/login';
+import Admin from '../views/pages/authetication/admin/index/Admin';
+import Lecture from '../views/pages/authetication/lecture/index/Lecture';
 import Result from '../views/pages/authetication/lecture/result/Result';
-import HeadSubject from '../views/pages/authetication/headSubject/HeadSubject';
+import HeadSubject from '../views/pages/authetication/headSubject/index/HeadSubject';
 import TimeTable from '../views/pages/authetication/headSubject/timeTable/TimeTable';
 import Response from '../views/pages/authetication/headSubject/response/Response';
-
-
-
-
 
 
 export default function Router() {
@@ -26,6 +23,7 @@ export default function Router() {
         <Route path="/head-subject" exact element={<HeadSubject/>}/>
         <Route path="/time-table" exact element={<TimeTable/>}/>
         <Route path="/response" exact element={<Response/>}/>
+        <Route path='*' exact element={<Error404/>} />
       </Routes>
     </BrowserRouter>
   );

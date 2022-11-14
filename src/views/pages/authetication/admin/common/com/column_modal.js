@@ -21,7 +21,7 @@ const ModalForm = ({
     }
 
     return (
-        <Drawer title={false} placement={'right'} closable={false} onClose={_onClose} visible={visible} width={500}>
+        <Drawer title={false} placement={'right'} closable={false} onClose={_onClose} open={visible} width={500}>
             <Header loading={false} _handleReset={_handleReset} _handleSubmit={_handleSubmit} />
             <div>
                 {

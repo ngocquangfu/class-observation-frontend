@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import Sections from './sections/Sections';
-import { homeObjOne, homeObjThree, homeObjTwo } from './Data';
+import Sections from './sections/sections';
+import { homeObjOne, homeObjThree, homeObjTwo } from './data';
 import NavBar from '../../components/navbar/Navbar';
 import Footer from '../../components/footer/Footer';
-import { Button } from '../../components/button/Button';
+import { Button } from './button/Button';
 import { Link } from 'react-router-dom';
 
 
@@ -32,7 +32,7 @@ export default class Home extends Component {
     var button = "";
     if (window.innerWidth < 720) {
       button = (<div className='nav-btn'>
-        <Link to='/login' className='btn-link'>
+        <Link to='/login' className='btn-link-2'>
           <Button
             buttonStyle='btn--primary'
             buttonSize='btn--mobile'

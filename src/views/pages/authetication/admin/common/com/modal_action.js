@@ -1,18 +1,6 @@
-import React, { Component, useState, useEffect, useCallback } from "react";
-
-import { findIndex, get, isEmpty } from "lodash";
-import {
-    Table,
-    Upload,
-    Button,
-    Modal,
-    Form,
-    Input,
-    Select,
-    DatePicker,
-    InputNumber,
-    TimePicker, Card
-} from "antd";
+import React from "react";
+import { get} from "lodash";
+import { Modal} from "antd";
 import styled from "styled-components";
 
 const ModalAction = ({
@@ -23,10 +11,10 @@ const ModalAction = ({
 }) => {
     // return null;
     return (
-        <Modal
+        <Modal forceRender
             title={"Action for " + get(visibleData, "id", "")}
             centered
-            visible={visibleData}
+            open={visibleData}
             onCancel={onClose}
             footer={null}
             // style={{width: 250}}
@@ -37,8 +25,7 @@ const ModalAction = ({
                     return (
                         <DivAction
                             key={action.name}
-                            onClick={() => _handleSelectAction({ data: visibleData, type: action.name }) }
-                        >
+                            onClick={() => _handleSelectAction({ data: visibleData, type: action.name }) }>
                             {action.Icon()}
                             {action.title}
                         </DivAction>

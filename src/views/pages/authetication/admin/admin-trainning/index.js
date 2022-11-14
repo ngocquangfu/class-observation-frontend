@@ -1,22 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import {
-    Pagination, Input, Button, Upload, Checkbox,
-    Image, Popover, List
-} from "antd";
-import {
-    PlusOutlined, DeleteOutlined, FilterOutlined, ReloadOutlined,
-    UploadOutlined, UnorderedListOutlined
-} from "@ant-design/icons";
-import { CardCustom, TableCustom } from '../../../helper/style-component'
+import {Pagination, Button} from "antd";
+import {PlusOutlined, DeleteOutlined, ReloadOutlined} from "@ant-design/icons";
+import { CardCustom, TableCustom } from '../../helper/style-component'
 import { apiClient } from '../../../../../api/api-client';
-
-import AddNewForm from './com/add_new_modal';
-import ModalFormDetail from './com/detail_modal';
-
+import AddNewForm from '../common/com//add_new_modal';
+import ModalFormDetail from '../common/com/detail_modal'
 import { openNotificationWithIcon } from '../../../request/notification';
-// import ModalFormDetail from './com/detail_modal';
-// import FilterForm from './com/filter_modal';
-// import ColumnForm from './com/column_modal';
+
 
 const AdminLecture = () => {
     const [selectedRow, setSelectRow] = useState([]);
@@ -79,7 +69,7 @@ const AdminLecture = () => {
         setFormAdd(convertDataFormAdd)
     }
     const _requestDataTable = async () => {
-        const start = page.current == 1 ? 0 : page.current*page.number_of_page - page.number_of_page
+        const start = page.current === 1 ? 0 : page.current*page.number_of_page - page.number_of_page
         const end = page.current*page.number_of_page
         const  {data}  = await apiClient.get(`/api/admin/list-account-role?roleId=3&start=${start}&end=${end}`)
         const convertData = data.items.map(item => {
@@ -241,7 +231,7 @@ const AdminLecture = () => {
                 }}
                 _onSubmit={_handleAddNew}
             />
-            <ModalFormDetail
+            <ModalFormDetail 
                 visible={showDetail} jsonFormInput={formAdd}
                 _onClose={() => {
                     setShowDetail(false)
