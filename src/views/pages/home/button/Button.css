@@ -26,21 +26,14 @@
     transition: all 0.3s ease-out;
 }
 
-.btn--medium {
-    padding: 12px 26px;
-    font-size: 20px;
-}
+
 
 .btn--mobile {
-    text-align: center;
+    display: block;
     border-radius: 5px;
     width: 80%;
-    text-decoration: none;
     background-color: transparent;
-    color: rgb(117, 42, 42);
-    padding: 14px 20px;
     border: 1px solid rgb(34, 59, 204);
-    transition: all 0.3s ease-out;
 }
 
 .btn--wide {
@@ -63,7 +56,12 @@
 
 }
 
-.btn--long {
+.btn--medium {
+    padding: 8px 20px;
+    font-size: 18px;
+}
+
+.btn--small {
     padding: 10px 75px;
     font-size: 20px;
 
@@ -116,6 +114,17 @@
     align-items: center;
     text-decoration: none;
     padding: 8px 16px;
+    height: 100%;
+    width: 100%;
+}
+
+.btn-link-2 {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    padding-left: 290px;
+    padding-top: 15px;
     height: 100%;
     width: 100%;
 }

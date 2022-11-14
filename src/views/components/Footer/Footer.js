@@ -9,8 +9,10 @@ import {
   FaLinkedin
 } from 'react-icons/fa';
 import { MdFingerprint } from 'react-icons/md';
+import { Component } from 'react';
 
-function Footer() {
+export default class Footer extends Component{
+  render(){
   return (
     <div className='footer-container'>
       
@@ -105,7 +107,5 @@ function Footer() {
         </div>
       </section>
     </div>
-  );
+  );}
 }
-
-export default Footer;

@@ -1,81 +1,111 @@
-import React, { useState, useEffect } from 'react';
-import { GoogleLogin, GoogleLogout } from 'react-google-login';
+import React, { useEffect } from 'react';
+import { GoogleLogin } from 'react-google-login';
 import NavBar from '../../../components/navbar/Navbar';
-import './Login.css'
-import {gapi} from 'gapi-script';
-
-function Login() {
-  const clientId = "700459662900-v4ouio1bgi4agnvhkqr3a4tag9e7lnb6.apps.googleusercontent.com";
-  useEffect(() => {
-    const initClient = () => {
-      gapi.client.init({
-        clientId: clientId,
-        scope: ''
-      });
-    };
-    gapi.load('client:auth2', initClient);
-  });
-  const [showloginButton, setShowloginButton] = useState(true);
-  const [showlogoutButton, setShowlogoutButton] = useState(false);
-  const onLoginSuccess = (res) => {
-    console.log('Login Success:', res.profileObj);
-    console.log(res);
-    setShowloginButton(false);
-    setShowlogoutButton(true);
-  };
-
-  const onLoginFailure = (res) => {
-    console.log('Login Failed:', res);
-  };
-
-  const onSignoutSuccess = () => {
-    setShowloginButton(true);
-    setShowlogoutButton(false);
-  };
-  return (
-
-    <>
-      <NavBar />
-      <div id="login">
-        <form name='form-login'>
-          <div  >
-            {showloginButton ?
-              <GoogleLogin
-                clientId={clientId}
-                buttonText="Sign In @fpt.edu.vn"
-                onSuccess={onLoginSuccess}
-                onFailure={onLoginFailure}
-                cookiePolicy={'single_host_origin'}
-                isSignedIn={true}
-                className="login-with-google-btn"
-              /> : null}
-
-            {showlogoutButton ?
-              <GoogleLogout
-                clientId={clientId}
-                buttonText="Sign Out"
-                onLogoutSuccess={onSignoutSuccess}
-                className="login-with-google-btn"
-              >
-              </GoogleLogout> : null
+import Footer from '../../../components/footer/Footer';
+import { apiClient } from '../../../../api/api-client';
+import { gapi } from "gapi-script";
+import { useNavigate } from 'react-router-dom';
+import './login.css';
+import image1 from '../../../../assets/images/svg-1.svg';
+const Login = () => {
+    const [listCampus, setListCampus] = React.useState([])
+    const [campus, setCampus] = React.useState(null)
+    const navigation = useNavigate()
+    const _requestData = async () => {
+        const { data } = await apiClient.get('/api/campus-dropdown-list')
+        const convertData = data.map((i, idx) => {
+            return {
+                value: i.value,
+                label: i.name
             }
-          </div>
+        })
+        setListCampus(convertData)
+    }
 
-          <br />
 
-          <span class="custom-dropdown big">
-            <select>
-              <option>Hà Nội</option>
-              <option>Hải Phòng</option>
-              <option>Đà Nẵng</option>
-              <option>TP.Hồ Chí Minh</option>
-            </select>
-          </span>
+    const handleLogin = async (ggApi) => {
+        if (campus) {
+            const body = {
+                token: ggApi.tokenId,
+                campusId: campus
+            }
+            const { data } = await apiClient.post('/auth/google', body)
+            if (data.accessToken) {
+                localStorage.setItem("ACCESS_TOKEN", data.accessToken)
+                navigation('/admin')
+            }
 
-        </form>
-      </div>
+        }
+    }
+  
+
+
+
+
+
+
+
+
+    const onSearch = (value) => {
+        console.log('token:', value.tokenId);
+    };
+    const handleFailLogin = (err) => {
+        console.log(err);
+    }
+    useEffect(() => {
+        _requestData()
+    }, [])
+    useEffect(() => {
+        function start() {
+            gapi.client.init({
+                clientId: process.env.REACT_APP_GOOGLE_API_ID,
+                scope: 'email',
+            });
+        }
+
+        gapi.load('client:auth2', start);
+    }, []);
+    return (
+    <>
+        <NavBar />
+        <div className="login" >
+            <div className='form-login'>
+                <div style={{ display: 'relative', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                    <div>
+                        <img src={image1} width='280' />
+                    </div>
+                    <span className="custom-dropdown big">
+                        <select onChange={e => setCampus(parseInt(e.target.options.selectedIndex))} >
+                            <option  hidden >Choose campus</option>
+                            {listCampus.map((campus) => (
+                                <option key={campus.value + 1} value={campus.value + 1} >
+                                    {campus.label}
+
+                                </option>
+                            ))}
+                        </select>
+                    </span>
+                    <GoogleLogin
+                        clientId={process.env.REACT_APP_GOOGLE_API_ID}
+                        buttonText="Sign in with @fpt.edu.vn"
+                        className='login-with-google-btn'
+                        onSuccess={handleLogin}
+                        onFailure={handleFailLogin}
+                        cookiePolicy={'single_host_origin'}
+                    >
+                    </GoogleLogin>
+
+                    <br />
+
+
+                </div>
+
+            </div>
+        </div>
+        <Footer />
     </>
-  )
-}
+    );
+};
 
 export default Login
+
