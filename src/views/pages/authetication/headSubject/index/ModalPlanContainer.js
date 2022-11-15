@@ -1,9 +1,9 @@
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import {AutoComplete, Button, DatePicker, Form, Input, Select, Space } from 'antd';
-import './HeadSubject.scss';
 import React, { useEffect, useState } from 'react';
-import { apiClient } from '../../request-api/api_client';
-const { Option } = Select;
+import './headSubject.scss';
+import { apiClient } from '../../../../../api/api-client';
+
 const semesters = [
   {
     label: 'Kì 1',
@@ -398,3 +398,4 @@ const ModalPlanContainer = () => {
   );
 };
 export default ModalPlanContainer;
+
