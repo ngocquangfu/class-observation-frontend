@@ -1,5 +1,5 @@
 import React from 'react'
-import './error404.css'
+import '../styles/error404.css'
 import NavBar from '../../components/navbar/Navbar';
 import Footer from '../../components/footer/Footer';
 

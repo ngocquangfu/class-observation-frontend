@@ -3,7 +3,7 @@ import Sections from './sections/sections';
 import { homeObjOne, homeObjThree, homeObjTwo } from './data';
 import NavBar from '../../components/navbar/Navbar';
 import Footer from '../../components/footer/Footer';
-import { Button } from './button/Button';
+import { Button } from './button/button';
 import { Link } from 'react-router-dom';
 
 
