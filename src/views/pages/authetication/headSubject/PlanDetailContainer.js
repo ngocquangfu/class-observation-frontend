@@ -1,9 +1,9 @@
 import { Table } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { apiClient } from '../../../../../api/api-client';
-import './timeTable.scss';
+import '../../styles/plan.css';
+import { apiClient } from '../../../../api/api-client';
 
-const PlanDetail = () => {
+const PlanDetailContainer = () => {
   const id = window.location.pathname.split("/")[2];
   const [listData, setListData] = useState();
 
@@ -70,4 +70,4 @@ const PlanDetail = () => {
   );
 };
 
-export default PlanDetail;
+export default PlanDetailContainer;

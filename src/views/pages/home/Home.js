@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import Sections from './sections/sections';
+import Sections from './sections/Sections';
 import { homeObjOne, homeObjThree, homeObjTwo } from './data';
 import NavBar from '../../components/navbar/Navbar';
 import Footer from '../../components/footer/Footer';
-import { Button } from './button/button';
+import { Button } from './button/Button';
 import { Link } from 'react-router-dom';
 
 
