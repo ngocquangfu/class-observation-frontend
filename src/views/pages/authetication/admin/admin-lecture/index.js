@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {Pagination, Button} from "antd";
 import {PlusOutlined, DeleteOutlined,  ReloadOutlined} from "@ant-design/icons";
-import { CardCustom, TableCustom } from '../../helper/style-component'
+import { CardCustom, TableCustom } from '../../../helper/style-component'
 import { apiClient } from '../../../../../api/api-client';
 import AddNewForm from '../common/com//add_new_modal';
 import ModalFormDetail from '../common/com/detail_modal'

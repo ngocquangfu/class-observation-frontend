@@ -1,11 +1,13 @@
 import { Button, Modal, Table } from 'antd';
 import React, { useEffect, useState } from 'react';
-import ModalPlanContainer from '../index/ModalPlanContainer';
-import './timeTable.scss';
-import { apiClient } from '../../../../../api/api-client';
+import ModalPlanContainer from './ModalPlanContainer';
+import '../../styles/plan.css';
+import { apiClient } from '../../../../api/api-client';
 import { useNavigate } from 'react-router-dom';
 
-const TimeTable = () => {
+
+
+const PlanContainer = () => {
   const navigation = useNavigate();
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
@@ -125,7 +127,7 @@ const TimeTable = () => {
   ]
 
   const handleNavigation = (record) => {
-    navigation(`/plan/${record.id}`);
+    navigation(`/head-plan/${record.id}`);
   }
   
   return (
@@ -157,7 +159,7 @@ const TimeTable = () => {
     </>
   );
 };
-export default TimeTable;
+export default PlanContainer;
 
 
 

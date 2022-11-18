@@ -5,7 +5,7 @@ import Footer from '../../../components/footer/Footer';
 import { apiClient } from '../../../../api/api-client';
 import { gapi } from "gapi-script";
 import { useNavigate } from 'react-router-dom';
-import './login.css';
+import '../../styles/login.css';
 import image1 from '../../../../assets/images/svg-1.svg';
 const Login = () => {
     const [listCampus, setListCampus] = React.useState([])
