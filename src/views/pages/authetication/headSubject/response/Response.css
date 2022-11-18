@@ -1,0 +1,115 @@
+
+h1{
+    text-align: center;
+    color: blue;
+}
+
+.container-response {
+    display: flex;
+    flex-direction: column;
+    max-width: 450px;
+    width: 90vw;
+    margin: 1rem auto;
+}
+.container-response > * + * {
+    margin-top: 1rem;
+}
+
+@supports (display: grid) {
+    @media (min-width: 700px) {
+        .container-response {
+            display: grid;
+            max-width: 750px;
+            grid-template-areas: "input input" "spreadsheet chart";
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 1rem;
+        }
+        .container-response .input {
+            grid-area: input;
+        }
+        .container-response .spreadsheet {
+            grid-area: spreadsheet;
+        }
+        .container-response .chart {
+            grid-area: chart;
+            align-self: start;
+        }
+
+        .container-response > * + * {
+            margin-top: 0;
+        }
+    }
+}
+
+/* for all meaningful container-responses
+describe a card layout with a white background and considerable padding
+*/
+.container-response .input,
+.container-response .spreadsheet,
+.container-response .chart {
+    background: hsl(0, 0%, 100%);
+    padding: 1.5rem 1.25rem;
+    box-shadow: 0 2px 10px -5px hsl(210, 85%, 10%);
+    /* position relative for the icons */
+    position: relative;
+}
+/* absolute position the icons at alternating corners of the container-responses */
+.container-response .input .icon,
+.container-response .spreadsheet .icon,
+.container-response .chart .icon {
+    position: absolute;
+    filter: drop-shadow(0 1px 5px hsla(210, 90%, 30%, 0.2));
+}
+.container-response .input .icon {
+    top: 0;
+    right: 0;
+    transform: rotate(20deg);
+}
+.container-response .spreadsheet .icon {
+    top: 0;
+    left: 0;
+    transform: rotate(-20deg);
+}
+.container-response .chart .icon {
+    bottom: 0;
+    right: 0;
+    transform: rotate(10deg);
+}
+
+.container-response .input > * + * {
+    margin-top: 1rem;
+}
+.container-response .input textarea {
+    display: block;
+    width: 100%;
+    height: 200px;
+    font-family: inherit;
+    resize: none;
+    font-size: 1rem;
+    padding: 0.5rem;
+    line-height: 1.5;
+    border: 2px solid hsl(210, 90%, 85%);
+    outline-color: hsl(210, 90%, 60%);
+}
+.container-response .input .controls {
+    display: flex;
+    align-items: center;
+}
+.container-response .input .controls > * + * {
+    margin-left: 0.75rem;
+}
+.container-response .input .controls button {
+    padding: 0.25rem 1rem;
+    color: hsl(0, 0%, 100%);
+    background: hsl(210, 90%, 55%);
+    border: 2px solid hsl(210, 90%, 55%);
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: inherit;
+    outline-color: hsl(210, 90%, 60%);
+}
+.container-response .input .controls button:last-of-type {
+    color: hsl(210, 90%, 55%);
+    background: hsl(0, 0%, 100%);
+}
+

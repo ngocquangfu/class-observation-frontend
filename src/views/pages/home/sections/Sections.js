@@ -3,9 +3,10 @@ import './Sections.css';
 import { Button } from '../../../components/button/Button';
 import { Link } from 'react-router-dom';
 
-function Sections({ lightBg, topLine, lightText, lightTextDesc, headline, description, buttonLabel, img, alt, imgStart}) {
+function Sections({ lightBg, topLine, lightText, lightTextDesc, headline, description, buttonLabel, img, alt, imgStart }) {
   return (
     <>
+    <div className='section-style'>
       <div
         className={lightBg ? 'home__hero-section' : 'home__hero-section darkBg'}
       >
@@ -48,8 +49,9 @@ function Sections({ lightBg, topLine, lightText, lightTextDesc, headline, descri
           </div>
         </div>
       </div>
+      </div>
     </>
- 
+
   );
 
 }

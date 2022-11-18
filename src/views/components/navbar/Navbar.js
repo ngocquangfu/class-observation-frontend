@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { MdFingerprint } from 'react-icons/md';
 import './Navbar.css';
+
 export default class Navbar extends Component {
 //   const [click, setClick] = useState(false);
 //   const handleClick = () => setClick(!click);
