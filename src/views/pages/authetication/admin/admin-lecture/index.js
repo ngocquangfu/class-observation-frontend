@@ -8,6 +8,7 @@ import ModalFormDetail from '../common/com/detail_modal'
 import { openNotificationWithIcon } from '../../../request/notification';
 
 
+
 const AdminLecture = () => {
     const [selectedRow, setSelectRow] = useState([]);
     const [dataTable, setDataTable] = useState([])
@@ -107,7 +108,7 @@ const AdminLecture = () => {
             campusId : value.campusId,
             roles : [
                 {
-                    id : 2
+                    id : 1
                 }
             ]
         }

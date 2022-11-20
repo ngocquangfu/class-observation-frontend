@@ -10,7 +10,6 @@ const PlanDetailContainer = () => {
   const _requestData = async () => {
     const {data} = await apiClient.get(`/api/result-observation-slot?oSlotId=${id}`)
     setListData(data.items);
-    console.log("convert: ", data.items);
   }
   
   useEffect(() => {
@@ -54,7 +53,7 @@ const PlanDetailContainer = () => {
   return (
     <div>
       {listData?.length > 0 && <Table columns={columns} dataSource={listData} />}
-      <div className='columns '>
+      {listData?.length > 0 && <div className='columns '>
         <div className='column is-1' style={{marginLeft: "40rem"}}>
             <button className='button is-danger'>
               Không đạt
@@ -65,7 +64,7 @@ const PlanDetailContainer = () => {
               Đạt yêu cầu
             </button>
         </div>
-      </div>
+      </div>}
     </div>
   );
 };

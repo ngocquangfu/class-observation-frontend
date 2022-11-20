@@ -10,23 +10,66 @@ import HeadContainer from '../views/pages/authetication/headSubject/PlanContaine
 import HeadModalPlan from '../views/pages/authetication/headSubject/ModalPlanContainer';
 import HeadPlanDetail from '../views/pages/authetication/headSubject/PlanDetailContainer';
 import TrainContainer from '../views/pages/authetication/training/TrainingContainer';
-// import TrainChange from '../views/pages/authetication/training/TrainingChangeContainer';
 
-export default function Router() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />}/>
-        <Route path="/login" exact element={<Login/>}/>
-        <Route path="/lecture" exact element={<Lecture/>}/>
-        <Route path="/lecture/:Id" exact element={<LectureDetail/>}/>
-        <Route path="/admin" exact element={<Admin/>}/>
-        <Route path="/head" exact element={<HeadContainer/>}/>
-        <Route path="/head-plan" exact element={<HeadModalPlan/>}/>
-        <Route path="/head-plan/:Id" exact element={<HeadPlanDetail/>}/>
-        <Route path="/train" exact element={<TrainContainer/>}/>
-        <Route path='*' exact element={<Error404/>} />
-      </Routes>
-    </BrowserRouter>
-  );
+
+
+export const ROUTES = {
+    HOME : '',
+    LOGIN : 'login',
+    ADMIN : 'admin',
+    HEADOFSECTIONPLAN: 'head-plan',
+    PLAN_DETAIL: `head-plan/:Id`,
+    LECTURE: 'lecture',
+    LECTURE_DETAIL: 'lecture/:Id',
+    TRAINING:'train',
 }
+
+
+export const public_route = [
+    {
+        path: `/${ROUTES.HOME}`,
+        Com: Home,
+        role : [1 ,2 ,3]
+    },
+    {
+        path: `/${ROUTES.LOGIN}`,
+        Com: Login,
+        role : [1 ,2 ,3]
+    },
+    {
+        path : `/${ROUTES.ADMIN}`,
+        Com : Admin,
+        role : [1]
+    },
+    {
+        path: `/err`,
+        Com:Error404,
+        role : [1 ,2 ,3]
+    },
+    {
+        path: `/${ROUTES.HEADOFSECTIONPLAN}`,
+        Com: HeadContainer,
+        role : [2]
+    },
+    {
+        path: `/${ROUTES.PLAN_DETAIL}`,
+        Com: HeadPlanDetail,
+        role : [2]
+    },
+    {
+        path: `/${ROUTES.LECTURE}`,
+        Com: Lecture,
+        role : [3]
+    },
+    {
+        path: `/${ROUTES.LECTURE_DETAIL}`,
+        Com: LectureDetail,
+        role : [3]
+    },
+    {
+        path: `/${ROUTES.TRAINING}`,
+        Com: TrainContainer,
+        role : [3]
+    }
+
+];

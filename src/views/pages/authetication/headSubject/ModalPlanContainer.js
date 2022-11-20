@@ -3,48 +3,29 @@ import {AutoComplete, Button, DatePicker, Form, Input, Select, Space } from 'ant
 import '../../styles/plan.css';
 import { apiClient } from '../../../../api/api-client';
 import React, { useEffect, useState } from 'react';
-const semesters = [
-  {
-    label: 'Kì 1',
-    value: 1,
-  },
-  {
-    label: 'Kì 2',
-    value: 2,
-  },{
-    label: 'Kì 3',
-    value: 3,
-  },
-];
-
-const accounts = [
-  {
-    label: '1 fake',
-    value: 1,
-  },
-  {
-    label: '2 fake',
-    value: 2,
-  },{
-    label: '3 fake',
-    value: 3,
-  },
-];
-
 const ModalPlanContainer = () => {
   const [form] = Form.useForm();
   const campusId = localStorage.getItem('campusId');
   const userId = localStorage.getItem('userId');
-
+  const [departmentValue, setDepartmentValue] = useState('');
+  const [departmentOptions, setDepartmentOptions] = useState([]);
+  const [subjectOptions, setSubjectOptions] = useState([]);
+  const [roomOptions, setRoomOptions] = useState([]);
+  const [semesters, setSemesters] = useState([]);
+  const [accounts, setAccounts] = useState([]);
 
   const getDepartments = async (searchText) => {
     const {data} = await apiClient.get(`/api/list-department?id=${campusId}&name=${searchText}`)
-    return data.items[0].value;
+    return data.items[1].value;
   }
 
+  const getSemesters = async () => {
+    const {data} = await apiClient.get('/api/semester-list')
+    setSemesters(data);
+  }
   const getSubjects = async () => {
     const {data} = await apiClient.get(`/api/subject-dropdown-list?id=${campusId}&code=`)
-    var subjects = data.items;
+    var subjects = data;
     subjects = subjects.map((item, idx) => {
       return {...item, label: item.name}
     })
@@ -52,20 +33,26 @@ const ModalPlanContainer = () => {
   }
   const getRooms = async () => {
     const {data} = await apiClient.get(`/api/room-dropdown-list?id=${campusId}&name=`)
-    var rooms = data.items;
+    var rooms = data;
     rooms = rooms.map((item, idx) => {
       return {...item, label: item.name}
     })
     setRoomOptions(rooms);
   }
+  const getAccounts = async () => {
+    const {data} = await apiClient.get(`/api/list-account?id=${campusId}&email=`)
+  
+    setAccounts(data.items);
+  }
+
+  console.log("accounts: ", accounts);
   useEffect(() => {
     getSubjects();
     getRooms();
+    getSemesters();
+    getAccounts();
   }, [])  
-  const [departmentValue, setDepartmentValue] = useState('');
-  const [departmentOptions, setDepartmentOptions] = useState([]);
-  const [subjectOptions, setSubjectOptions] = useState([]);
-  const [roomOptions, setRoomOptions] = useState([]);
+  
   
   const onDepartmentSearch = async (searchText) => {
     const {data} = await apiClient.get(`/api/list-department?id=${campusId}&name=${searchText}`)
@@ -73,9 +60,9 @@ const ModalPlanContainer = () => {
     if (!searchText) {
       searchData = [];
     }
-    if(data.items && data.items.length > 0){
-      for(let i = 0; i < data.items.length; i++){
-        searchData.push({value: data.items[i].name})
+    if(data && data.length > 0){
+      for(let i = 0; i < data.length; i++){
+        searchData.push({value: data[i].name})
       }
     }
     setDepartmentOptions(
@@ -174,7 +161,7 @@ const ModalPlanContainer = () => {
                         <Form.Item
                           {...field}
                           label="AccountId"
-                          name={[field.name, 'accountId']}
+                          name={[field.name, 'name']}
                           rules={[
                             {
                               required: true,
@@ -269,6 +256,7 @@ const ModalPlanContainer = () => {
                           <Select className='select-box' options={roomOptions} onChange={handleChange} />
 
                     </Form.Item>
+
                     <Form.Item
                       {...field}
                       label="Class Name"

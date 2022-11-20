@@ -4,7 +4,6 @@ const request = axios.create({
   timeout: 20000,
 });
 
-// Add a request interceptor
 request.interceptors.request.use(
   async (config) => {
     // console.log("request interceptor ==== ", config);
@@ -17,11 +16,8 @@ request.interceptors.request.use(
     Promise.reject(error);
   }
 );
-
-
 const apiClient = {
   get: (url, data = {}) => {
-    // console.log('url get: ', url, data);
     return request({
       method: "get",
       url,
