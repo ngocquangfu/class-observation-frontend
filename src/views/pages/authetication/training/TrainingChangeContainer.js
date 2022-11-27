@@ -8,11 +8,9 @@ import { openNotificationWithIcon } from '../../request/notification';
 const TrainingChangeContainer = (props) => {
   const [listData, setListData] = useState();
   const campusId = localStorage.getItem('campusId');
-  const [isUpdate, setIsUpdate] = useState(false);
   const [count, setCount] = useState(-1);
   const [value, setValue] = useState('');
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [create, setCreate] = useState('');
 
   const handleCreate = () => {
@@ -27,20 +25,25 @@ const TrainingChangeContainer = (props) => {
   }
 
   const handlePostCreate = async () => {
-    const values = {"campusId": campusId, "criteriaName": create}
-    const {data} = await apiClient.post(`/api/training/create-criteria`, values);
-    if(data.status == 200){
-      openNotificationWithIcon("success", "Thêm mới thành công")
-      setOpen(false)
-      _requestData();
+    if (create == '') {
+      openNotificationWithIcon("error", "Không được bỏ trống")
     } else {
-      openNotificationWithIcon("error", "Thất bại")
+
+      const values = { "campusId": campusId, "criteriaName": create }
+      const { data } = await apiClient.post(`/api/training/create-criteria`, values);
+      if (data.status == 200) {
+        openNotificationWithIcon("success", "Thêm mới thành công")
+        setOpen(false)
+        _requestData();
+      } else {
+        openNotificationWithIcon("error", "Thất bại")
+      }
     }
   }
 
   const _requestData = async () => {
-    const {data} = await apiClient.get(`/api/training/list-criteria-campus?id=${campusId}`)
-    
+    const { data } = await apiClient.get(`/api/training/list-criteria-campus?id=${campusId}`)
+
     setListData(data.items);
     console.log("convert: ", data.items);
   }
@@ -57,9 +60,9 @@ const TrainingChangeContainer = (props) => {
     setValue(e.target.value);
   };
   const handlePostUpdate = async (id, e) => {
-    const values = {"id": id, "campusId": campusId, "criteriaName": value}
-    const {data} = await apiClient.post(`/api/training/update-criteria`, values);
-    if(data.status == 200){
+    const values = { "id": id, "campusId": campusId, "criteriaName": value }
+    const { data } = await apiClient.post(`/api/training/update-criteria`, values);
+    if (data.status == 200) {
       openNotificationWithIcon("success", "Cập nhật thành công")
       setCount(-1)
       _requestData();
@@ -68,8 +71,8 @@ const TrainingChangeContainer = (props) => {
     }
   }
   const handleDelete = async (index) => {
-    const {data} = await apiClient.post(`/api/training/delete-criteria?id=${index}&campusId=${campusId}`);
-    if(data.status == 200){
+    const { data } = await apiClient.post(`/api/training/delete-criteria?id=${index}&campusId=${campusId}`);
+    if (data.status == 200) {
       openNotificationWithIcon("success", "Xoá thành công")
       _requestData();
     } else {
@@ -79,8 +82,7 @@ const TrainingChangeContainer = (props) => {
   return (
     <div>
       <div className='columns'>
-        <div className='column is-1'>Id</div>
-        <div className='column is-2'>Mã code</div>
+        <div className='column is-1'>STT</div>
         <div className='column'>Tên tiêu chí</div>
         <div className='column is-2'></div>
         <div className='column is-2'>
@@ -88,24 +90,23 @@ const TrainingChangeContainer = (props) => {
         </div>
       </div>
       <Drawer title="Thêm mới" placement="right" onClose={onClose} open={open}>
-          <p>Nội dung tiêu chí</p>
-          <TextArea rows={4} onChange={(e) => onCreateChange(e)} />
-          <button className='button is-primary mt-5' onClick={(e) => handlePostCreate()}>Xác nhận</button>
+        <p>Nội dung tiêu chí</p>
+        <TextArea rows={4} onChange={(e) => onCreateChange(e)} />
+        <button className='button is-primary mt-5' onClick={(e) => handlePostCreate()}>Xác nhận</button>
       </Drawer>
       <hr />
       {listData && listData.map((item, idx) => {
-        return(
+        return (
           <div className='columns' key={idx}>
-            <div className='column is-1'>{item.id}</div>
-            <div className='column is-2'>{item.criteriaCode}</div>
+            <div className='column is-1'>{idx + 1}</div>
             <div className='column'>
-              {count == idx ? <input bordered={false} value={value} autoFocus={true} onChange={onChange} style={{width: "100%"}} /> : <p>{item.criteriaName}</p>}
-              </div>
+              {count == idx ? <input bordered={false} value={value} autoFocus={true} onChange={onChange} style={{ width: "100%" }} /> : <p>{item.criteriaName}</p>}
+            </div>
             <div className='column is-2'>
               {count == idx ?
-              <button className='button is-primary' onClick={(e) => handlePostUpdate(item.id, e)}>Xác nhận</button>
-              : 
-              <button className='button is-primary' onClick={() => handleUpdate(idx, item.criteriaName)}>Update</button>
+                <button className='button is-primary' onClick={(e) => handlePostUpdate(item.id, e)}>Xác nhận</button>
+                :
+                <button className='button is-primary' onClick={() => handleUpdate(idx, item.criteriaName)}>Update</button>
               }
             </div>
             <div className='column is-2'>

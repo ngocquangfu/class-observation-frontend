@@ -14,7 +14,6 @@ const ModalForm = ({
   _onClose,
   _onSubmit = () => { },
 }) => {
-  // state
   const [loading, setLoading] = React.useState(false);
   const [form] = Form.useForm();
   const type = useMemo(() => get(visible, 'type', 'add'), [visible]);

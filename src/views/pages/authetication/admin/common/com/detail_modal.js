@@ -2,27 +2,18 @@
 import React, {  useEffect, useMemo } from "react";
 import {  get } from "lodash";
 import { Button,Form, Drawer} from "antd";
-
 import { CloseOutlined, ReloadOutlined
 } from "@ant-design/icons";
-
 import styled from "styled-components";
-
 import { RenderForm } from "../render_form";
-import axios from "axios";
-import { openNotificationWithIcon } from "../../../../request/notification";
 
-// import { ACT_TYPE } from "../const";
-// import * as services from '../services';
-// import { openNotificationWithIcon } from "../helper/notification_antd";
-// import { handleErr } from "../helper/handle_err_request";
+
 
 const ModalForm = ({
   visible,
   jsonFormInput,
   _onClose,
   _onSubmit = () => { },
-  url = ''
 }) => {
   // state
   const [loading, setLoading] = React.useState(false);
@@ -56,30 +47,10 @@ const ModalForm = ({
   } ,[visible])
   useEffect(() => {
     return () => {
-      console.log("aaaa");
       
     }
   } ,[])
-  function guardarArchivo(e) {
-    var file = e.target.files[0] //the file
-    var reader = new FileReader() //this for convert to Base64 
-    reader.readAsDataURL(e.target.files[0]) //start conversion...
-    reader.onload = async function (e) { //.. once finished..
-      var rawLog = reader.result.split(',')[1]; //extract only thee file data part
-      var dataSend = { dataReq: { data: rawLog, name: file.name, type: file.type }, fname: "uploadFilesToGoogleDrive" }; //preapre info to send to API
-      try {
-        const { data } = await axios.post("https://script.google.com/macros/s/AKfycbyGk5Dr8rE_wMO43kCYJnoxIBLuSVqXsHheABi09h_gYTpgWB0aJ_MCmtmXVlV3rEmyGA/exec", JSON.stringify(dataSend))
-        console.log('data' ,data.url.split('/')[5]);
-        
-        form.setFieldsValue({
-          imageAvatar: data.url.split('/')[5]
-        })
-        setImg(data.url.split('/')[5])
-      } catch (error) {
-        openNotificationWithIcon('error', error)
-      }
-    }
-  }
+ 
   return (
     <Drawer bodyStyle={{ padding: 10 }} title={false}
       placement={'right'} closable={false} onClose={_onClose} open={visible} width={650}>

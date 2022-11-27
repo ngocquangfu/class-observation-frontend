@@ -58,9 +58,9 @@ const TrainingContainer = () => {
 
   const columns = [
     {
-      title: 'Id',
-      dataIndex: 'id',
-      key: 'id',
+      title: 'STT',
+      dataIndex: 'stt',
+      render: (text, record, index) => index + 1,
     },
     {
       title: 'Bộ môn',
@@ -92,8 +92,50 @@ const TrainingContainer = () => {
         </button>
        ),
     },
+    {
+      title: 'Đồng ý',
+      dataIndex: 'totalPoint',
+      key: 'totalPoint',
+      render: (text, record) => (
+        {...record.planStatus == 0 ? 
+          <button {...record.planStatus != 0 ? 'disabled' : ''} onClick={() => reject(record)}>
+            {"Đồng ý"}
+          </button>
+          : null}
+       ),
+    },
+    {
+      title: 'Từ chối',
+      dataIndex: 'totalPoint',
+      key: 'totalPoint',
+      render: (text, record) => (
+        {...record.planStatus == 0 ? 
+        <button {...record.planStatus != 0 ? 'disabled' : ''} onClick={() => reject(record)}>
+          {"Từ chối"}
+        </button>
+        : null}
+       ),
+    },
   ];
 
+  const approved = async (record) => {
+    const {data} = await apiClient.post(`/api/approve-observation-plan?planId=${record.id}&statusId=1`);
+    if(data.status == 200){
+      openNotificationWithIcon("success", "Duyệt thành công")
+      _requestData();
+    } else {
+      openNotificationWithIcon("error", "Thất bại")
+    }
+  }
+  const reject = async (record) => {
+    const {data} = await apiClient.post(`/api/approve-observation-plan?planId=${record.id}&statusId=2`);
+    if(data.status == 200){
+      openNotificationWithIcon("success", "Từ chối thành công")
+      _requestData();
+    } else {
+      openNotificationWithIcon("error", "Thất bại")
+    }
+  }
   const semesterColums = [
     {
       title: 'Kì học',
@@ -109,17 +151,19 @@ const TrainingContainer = () => {
 
   return (
     <div>
+        <Header />
         <div className='columns'>
           <p className='column is-10 has-text-centered has-text-weight-bold is-size-3'>Danh sách kế hoạch theo kì</p>
           <button className='button is-info ml-6 mt-4' onClick={() => showModal()}>Thay đổi tiêu chí</button>
         </div>
-        <Modal
+        <Modal className='train-detail'
           open={open}
           title="Thay đổi tiêu chí"
           onOk={handleOk}
           onCancel={handleCancel}
           footer={null}
           >
+            {detail.id != 0 && <TrainingDetail data={detail} />}
           <TrainingChangeContainer data={listData} />
         </Modal>
         <div className='columns'>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {Pagination, Button} from "antd";
+import { Button} from "antd";
 import {PlusOutlined, DeleteOutlined,  ReloadOutlined} from "@ant-design/icons";
 import { CardCustom, TableCustom } from '../../../helper/style-component'
 import { apiClient } from '../../../../../api/api-client';
@@ -12,7 +12,7 @@ import { openNotificationWithIcon } from '../../../request/notification';
 const AdminLecture = () => {
     const [selectedRow, setSelectRow] = useState([]);
     const [dataTable, setDataTable] = useState([])
-    const [total , setTotal] = useState(10)
+    const [total , setTotal] = useState(5)
     const [listCampus, setListCampus] = React.useState([])
     const [formAdd , setFormAdd] = React.useState(
         [
@@ -34,14 +34,12 @@ const AdminLecture = () => {
     )
     const [page , setPage] = useState({
         current : 1,
-        number_of_page : 10
+        number_of_page : 5
     })
     // modal
     const [showAddNew, setShowAddNew] = useState(false);
     const [showDetail, setShowDetail] = useState(false);
-    const [showColumn, setShowColumn] = useState(false);
     const _handleChangePage = (page, number_of_page) => {
-        console.log(page, number_of_page);
         setPage({
             current : page,
             number_of_page : number_of_page
@@ -188,7 +186,7 @@ const AdminLecture = () => {
                             key: 'campusName',
                         },
                     ]}
-                    scroll={{ y: 'calc(100vh - 190px)' }} pagination={false}
+                    scroll={{ y: 'calc(100vh - 190px)' }}  pagination={{ defaultPageSize: 10, showSizeChanger: true, pageSizeOptions: ['10', '15', '30']}}
                     rowSelection={{
                         type: 'checkbox',
                         onChange: (selectedRowKeys, selectedRows) => {
@@ -211,17 +209,8 @@ const AdminLecture = () => {
                         }
                     })}
                 />
-                <Pagination
-                    showSizeChanger
-                    pageSizeOptions={[5, 10, 15, 20, 25]}
-                    style={{ marginTop: 20, float: 'right',marginBottom : 30 }}
-                    current={page.current}
-                    pageSize={Number(page.number_of_page)}
-                    total={total}
-                    onChange={_handleChangePage}
-                />
+                
             </CardCustom>
-            {/* modal */}
             <AddNewForm
                 visible={showAddNew} jsonFormInput={formAdd}
                 _onClose={() => {
@@ -252,9 +241,7 @@ const Extra = ({
 
     _handleDel = () => { },
     _onClickAdd = () => { },
-    _onFilter = () => { },
     _onReload = () => { },
-    // _onClickColumnShow = () => { },
 }) => {
 
     return (

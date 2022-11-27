@@ -15,7 +15,8 @@ const PlanContainer = () => {
   const [listSemesters, setListSemesters] = useState();
   const [semesterId, setSemesterId] = useState(1);
   const userId = localStorage.getItem('userId');
-
+  const [count, setCount] = useState(1);
+  const [isDone, setIsDone] = useState(false);
   const _requestData = async () => {
     const {data} = await apiClient.get(`/api/list-observation-slot?semesterId=${semesterId}&accountId=${userId}`)
      data.items = data.items.map((item, idx) => {
@@ -33,12 +34,16 @@ const PlanContainer = () => {
   }
   
   useEffect(() => {
-    getSemesters()
+    getSemesters();
+    setIsDone(true)
   }, [])
   
   useEffect(() => {
-    _requestData();
-  }, [semesterId])
+    if(isDone){
+      _requestData();
+      setCount(semesterId)
+    }
+  }, [semesterId, isDone])
 
   const showModal = () => {
     setOpen(true);
@@ -132,7 +137,7 @@ const PlanContainer = () => {
     <>
     <div className='plan-container'>
       <div className='modal-plan'>
-        <Button type="primary" onClick={showModal}>
+      <Button type="primary"  disabled={count != 1 ? true : false} onClick={showModal}>
           Tạo kế hoạch dự giờ
         </Button>
         <Modal
@@ -142,7 +147,7 @@ const PlanContainer = () => {
           onCancel={handleCancel}
           footer={null}
           >
-          <ModalPlanContainer />
+          <ModalPlanContainer handleCancel={handleCancel}/>
         </Modal>
       </div>
       <div className='columns'>

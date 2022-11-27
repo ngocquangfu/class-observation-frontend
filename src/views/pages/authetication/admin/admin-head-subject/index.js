@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {Pagination,Button} from "antd";
+import {Button} from "antd";
 import {PlusOutlined, DeleteOutlined, ReloadOutlined} from "@ant-design/icons";
 import { CardCustom, TableCustom } from '../../../helper/style-component'
 import { apiClient } from '../../../../../api/api-client';
@@ -37,13 +37,7 @@ const AdminLecture = () => {
     // modal
     const [showAddNew, setShowAddNew] = useState(false);
     const [showDetail, setShowDetail] = useState(false);
-    const _handleChangePage = (page, number_of_page) => {
-        console.log(page, number_of_page);
-        setPage({
-            current : page,
-            number_of_page : number_of_page
-        })
-    };
+    
     const _requestData = async () => {
         const {data} = await apiClient.get('/api/campus-dropdown-list')
         const convertData = data.map((i , idx) => {
@@ -185,11 +179,10 @@ const AdminLecture = () => {
                             key: 'campusName',
                         },
                     ]}
-                    scroll={{ y: 'calc(100vh - 190px)' }} pagination={false}
+                    scroll={{ y: 'calc(100vh - 190px)' }}  pagination={{ defaultPageSize: 10, showSizeChanger: true, pageSizeOptions: ['10', '15', '30']}}
                     rowSelection={{
                         type: 'checkbox',
                         onChange: (selectedRowKeys, selectedRows) => {
-                            console.log(selectedRowKeys, selectedRows);
                             setSelectRow(selectedRowKeys)
                         }
                     }}
@@ -208,15 +201,7 @@ const AdminLecture = () => {
                         }
                     })}
                 />
-                <Pagination
-                    showSizeChanger
-                    pageSizeOptions={[5, 10, 15, 20, 25]}
-                    style={{ marginTop: 20, float: 'right',marginBottom : 30 }}
-                    current={page.current}
-                    pageSize={Number(page.number_of_page)}
-                    total={total}
-                    onChange={_handleChangePage}
-                />
+               
             </CardCustom>
             {/* modal */}
             <AddNewForm

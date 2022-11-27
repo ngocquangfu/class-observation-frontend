@@ -11,7 +11,6 @@ function App() {
       <div>
         <BrowserRouter>
           <Routes>
-  
             {
               public_route.map(route => {
                 const checkRole = isLogin && route.role.filter(i => role?.includes(i)).length > 0

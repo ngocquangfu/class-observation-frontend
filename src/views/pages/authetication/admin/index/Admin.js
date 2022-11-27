@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Radio } from 'antd';
+import { Button } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import AdminLecture from '../admin-lecture/index';
 import AdminHOS from '../admin-head-subject/index';
@@ -26,15 +26,15 @@ const Admin = () => {
         <div>
             <div style={{ height: 60, background: '#0a8cf1', display: 'flex', justifyContent: 'space-between', alignItems: 'center' , marginBottom : 40 }}>
                 <div style={{ display: 'flex', width: '90', height: "80%" }}>
-                <img style={{ marginLeft: 20, marginRight: 20 }} src={image1} height="40" />
+                <img style={{ marginLeft: 20, marginRight: 20 }} src={image1} height="40" alt=''/>
                     <div>
-                        <Button type="ghost" onClick={() => handleClick(1)} style={{ background: adminIndex == 1 ? 'yellow' : '#b1b7bb' }} shape="round" size='large'>
+                        <Button type="ghost" onClick={() => handleClick(1)} style={{ background: adminIndex === 1 ? 'yellow' : '#b1b7bb' }} shape="round" size='large'>
                             Lecture
                         </Button>
-                        <Button type="ghost" onClick={() => handleClick(2)} style={{ background: adminIndex == 2 ? 'yellow' : '#b1b7bb' ,marginLeft: 20, marginRight: 20}} shape="round" size='large'>
+                        <Button type="ghost" onClick={() => handleClick(2)} style={{ background: adminIndex ===2 ? 'yellow' : '#b1b7bb' ,marginLeft: 20, marginRight: 20}} shape="round" size='large'>
                             Head Of Subject
                         </Button>
-                        <Button type="ghost" onClick={() => handleClick(3)} style={{ background: adminIndex == 3 ? 'yellow' : '#b1b7bb' }} shape="round" size='large'>
+                        <Button type="ghost" onClick={() => handleClick(3)} style={{ background: adminIndex === 3 ? 'yellow' : '#b1b7bb' }} shape="round" size='large'>
                             Training
                         </Button>
                     </div>
