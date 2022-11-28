@@ -1,9 +1,13 @@
-import { Modal, Table } from 'antd';
+import { Modal, Table, Button } from 'antd';
+import { openNotificationWithIcon } from '../../request/notification';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/plan.css';
 import { apiClient } from '../../../../api/api-client';
 import TrainingChangeContainer from './TrainingChangeContainer';
+import TrainingDetail from './TrainingDetail';
+
+
 
 const TrainingContainer = () => {
   
@@ -11,6 +15,9 @@ const TrainingContainer = () => {
   const [listSemesters, setListSemesters] = useState();
   const [semesterId, setSemesterId] = useState(1);
   const [open, setOpen] = useState(false);
+  const [openDetail, setOpenDetail] = useState(false);
+  const [detail, setDetail] = useState({});
+
   const [loading, setLoading] = useState(false);
   const campusId = localStorage.getItem('campusId');
   const userId = true ? 15 : localStorage.getItem('userId');
@@ -45,15 +52,24 @@ const TrainingContainer = () => {
   const showModal = (record) => {
     setOpen(true);
   };
+  const showDetail = (record) => {
+    setOpenDetail(true)
+    setDetail(record);
+  };
+
+  
+  console.log("detail: ", detail);
   const handleOk = () => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      setOpen(false);
+    setOpenDetail(false);
+    setOpen(false);
     }, 3000);
   };
   const handleCancel = () => {
     setOpen(false);
+    setOpenDetail(false);
   };
 
   const columns = [
@@ -87,9 +103,9 @@ const TrainingContainer = () => {
       dataIndex: 'totalPoint',
       key: 'totalPoint',
       render: (text, record) => (
-        <button onClick={() => showModal(record)}>
+        <Button onClick={() => showDetail(record)}>
           {"Chi tiết"}
-        </button>
+        </Button>
        ),
     },
     {
@@ -98,9 +114,9 @@ const TrainingContainer = () => {
       key: 'totalPoint',
       render: (text, record) => (
         {...record.planStatus == 0 ? 
-          <button {...record.planStatus != 0 ? 'disabled' : ''} onClick={() => reject(record)}>
+          <Button type='primary' {...record.planStatus != 0 ? 'disabled' : ''} onClick={() => approved(record)}>
             {"Đồng ý"}
-          </button>
+          </Button>
           : null}
        ),
     },
@@ -110,9 +126,9 @@ const TrainingContainer = () => {
       key: 'totalPoint',
       render: (text, record) => (
         {...record.planStatus == 0 ? 
-        <button {...record.planStatus != 0 ? 'disabled' : ''} onClick={() => reject(record)}>
+        <Button danger {...record.planStatus != 0 ? 'disabled' : ''} onClick={() => reject(record)}>
           {"Từ chối"}
-        </button>
+        </Button>
         : null}
        ),
     },
@@ -142,29 +158,36 @@ const TrainingContainer = () => {
       dataIndex: 'totalPoint',
       key: 'totalPoint',
       render: (text, record) => (
-        <button onClick={() => setSemesterId(record.value)} className='is-clickable' >
-          {record.name}
-        </button>
+        <Button style={{width : 130}} onClick={() => setSemesterId(record.value)} className='is-clickable' >
+        {record.name}
+      </Button>
        ),
     },
   ]
 
   return (
     <div>
-        <Header />
         <div className='columns'>
           <p className='column is-10 has-text-centered has-text-weight-bold is-size-3'>Danh sách kế hoạch theo kì</p>
           <button className='button is-info ml-6 mt-4' onClick={() => showModal()}>Thay đổi tiêu chí</button>
         </div>
-        <Modal className='train-detail'
+        <Modal
           open={open}
           title="Thay đổi tiêu chí"
           onOk={handleOk}
           onCancel={handleCancel}
           footer={null}
           >
-            {detail.id != 0 && <TrainingDetail data={detail} />}
           <TrainingChangeContainer data={listData} />
+        </Modal>
+        <Modal className='train-detail'
+          open={openDetail}
+          title="Chi tiết"
+          onOk={handleOk}
+          onCancel={handleCancel}
+          footer={null}
+          >
+          {detail.id != 0 && <TrainingDetail data={detail} />}
         </Modal>
         <div className='columns'>
           <div className='column ml-4 is-1 mr-6'>

@@ -44,6 +44,8 @@ const Login = () => {
                     navigation("/admin")
                 }if (role == 2) {
                     navigation("/head-plan")
+                    navigation("/lecture")
+
                 } if (role == 3) {
                     navigation("/train")
                 }

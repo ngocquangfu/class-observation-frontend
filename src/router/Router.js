@@ -59,7 +59,7 @@ export const public_route = [
     {
         path: `/${ROUTES.LECTURE}`,
         Com: Lecture,
-        role : [3]
+        role : [2,3]
     },
     {
         path: `/${ROUTES.LECTURE_DETAIL}`,
