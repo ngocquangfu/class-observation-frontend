@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import '../../styles/lecture.css';
 import { apiClient } from '../../../../api/api-client';
 import LectureDetailContainer from './LectureDetailContainer';
+import Header from '../Header';
+
 const LectureContainer = () => {
 
   const [listData, setListData] = useState();
@@ -120,6 +122,7 @@ const LectureContainer = () => {
 
   return (
     <div>
+      <Header />
       <p className='has-text-centered has-text-weight-bold is-size-3'>Danh sách đi dự giờ của giảng viên</p>
       <Drawer
         width={620}

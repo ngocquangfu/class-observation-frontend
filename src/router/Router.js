@@ -10,6 +10,7 @@ import HeadContainer from '../views/pages/authetication/headSubject/PlanContaine
 import HeadModalPlan from '../views/pages/authetication/headSubject/ModalPlanContainer';
 import HeadPlanDetail from '../views/pages/authetication/headSubject/PlanDetailContainer';
 import TrainContainer from '../views/pages/authetication/training/TrainingContainer';
+import AssessmentPlan from '../views/pages/authetication/headSubject/AssessmentPlan';
 
 
 
@@ -42,24 +43,29 @@ export const public_route = [
         role : [1]
     },
     {
-        path: `*`,
+        path: `/404`,
         Com:Error404,
         role : [1 ,2 ,3]
     },
     {
         path: `/${ROUTES.HEADOFSECTIONPLAN}`,
         Com: HeadContainer,
-        role : [2]
+        role : [1,2,3]
     },
     {
         path: `/${ROUTES.PLAN_DETAIL}`,
-        Com: HeadPlanDetail,
-        role : [2]
+        Com: AssessmentPlan,
+        role : [1,2,3]
     },
     {
         path: `/${ROUTES.LECTURE}`,
         Com: Lecture,
-        role : [2,3]
+        role : [1,2,3]
+    },
+    {
+        path: `/${ROUTES.PLAN_DETAIL}`,
+        Com: AssessmentPlan,
+        role : [1 ,2 ,3]
     },
     {
         path: `/${ROUTES.LECTURE_DETAIL}`,

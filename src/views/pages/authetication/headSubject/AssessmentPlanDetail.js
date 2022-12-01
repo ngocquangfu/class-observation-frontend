@@ -26,9 +26,7 @@ const AssessmentPlanDetail = (props) => {
         },
     ];
     useEffect(() => {
-
         if(props.item?.listOfObservationDetail && props.item.listOfObservationDetail.length > 0){
-            console.log("tesss", props.item)
             const sumPoint = props.item.listOfObservationDetail.reduce((prv , cur) => {
                 return prv + cur.point
             } , 0)            

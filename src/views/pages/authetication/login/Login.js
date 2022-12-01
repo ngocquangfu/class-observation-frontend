@@ -43,8 +43,8 @@ const Login = () => {
                 if (role == 1) {
                     navigation("/admin")
                 }if (role == 2) {
-                    navigation("/head-plan")
                     navigation("/lecture")
+                    navigation("/head-plan")
 
                 } if (role == 3) {
                     navigation("/train")
