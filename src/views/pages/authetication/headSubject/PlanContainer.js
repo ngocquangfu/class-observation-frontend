@@ -180,16 +180,6 @@ const PlanContainer = () => {
       key: 'reason',
     },
     {
-      title: 'Kết quả',
-      key: 'result',
-      dataIndex: 'result',
-      render: (text, record) => (
-       <Button onClick={() => handleNavigation(record)}>
-         {"Kết quả"}
-       </Button>
-      ),
-    },
-    {
       title: 'Cập nhật',
       render: (text, record, idx) => (
         isUpdate && idx == index ? 
@@ -200,6 +190,15 @@ const PlanContainer = () => {
           <Button type="primary" onClick={() => updateSlot(record, idx)}>
           {"Cập nhật"}
           </Button>
+      ),
+    },{
+      title: 'Kết quả',
+      key: 'result',
+      dataIndex: 'result',
+      render: (text, record) => (
+       <Button onClick={() => handleNavigation(record)}>
+         {"Kết quả"}
+       </Button>
       ),
     },
     
@@ -265,7 +264,7 @@ const PlanContainer = () => {
   ]
 
   const handleNavigation = (record) => {
-    navigation(`/plan/${record.id}`);
+    navigation(`/head-plan/${record.id}`);
   }
   const [dialogOpen, setDialogOpen] = useState(false);
   const handleClickOpen = () => {
@@ -306,12 +305,9 @@ const PlanContainer = () => {
             aria-describedby="alert-dialog-description"
           >
             <DialogTitle id="alert-dialog-title">
-              {"Cập nhật thông tin"}
+              {"Xác nhận cập nhật"}
             </DialogTitle>
             <DialogContent>
-              <DialogContentText id="alert-dialog-description">
-                Cập nhật
-              </DialogContentText>
             </DialogContent>
             <DialogActions>
               <Button onClick={handleClose}>Huỷ bỏ</Button>

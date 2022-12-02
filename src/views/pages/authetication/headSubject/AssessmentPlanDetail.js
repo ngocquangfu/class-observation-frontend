@@ -56,7 +56,7 @@ const AssessmentPlanDetail = (props) => {
                 <div>{props.item?.disadvantage || ''}</div>
             </div>
             <div style={{ fontSize: 20, color: 'blue' }}>
-                Bảng đánh gía chi tiết dạy giáo dục :
+                Bảng đánh giá chi tiết dạy giáo dục :
             </div>
             <div style={{width : '50%'}}>
                 <Table dataSource={dataSource} columns={columns} pagination={false} />

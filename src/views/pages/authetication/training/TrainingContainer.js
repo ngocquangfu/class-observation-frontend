@@ -119,7 +119,7 @@ const TrainingContainer = () => {
       key: 'totalPoint',
       render: (text, record) => (
         {...record.planStatus == 0 ? 
-          <Button type='primary' {...record.planStatus != 0 ? 'disabled' : ''} onClick={() => reject(record)}>
+          <Button type='primary' {...record.planStatus != 0 ? 'disabled' : ''} onClick={() => approved(record)}>
             {"Đồng ý"}
           </Button>
           : null}

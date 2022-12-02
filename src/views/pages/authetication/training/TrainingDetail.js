@@ -30,9 +30,9 @@ const TrainingDetail = (props) => {
       render: (text, record, index) => index + 1,
     },
     {
-      title: 'userName',
-      dataIndex: 'userName',
-      key: 'userName',
+      title: 'GV được đánh giá',
+      dataIndex: 'accountName',
+      key: 'accountName',
     },
     {
       title: 'slotTime',
@@ -65,20 +65,10 @@ const TrainingDetail = (props) => {
       key: 'reason',
     },
     {
-      title: 'headTraining',
-      dataIndex: 'headTraining',
-      key: 'headTraining',
-    },
-    {
-      title: 'lecture1',
-      dataIndex: 'lecture1',
-      key: 'lecture1',
-    },
-    {
-      title: 'lecture2',
-      dataIndex: 'lecture2',
-      key: 'lecture2',
-    },
+      title: 'result',
+      dataIndex: 'result',
+      key: 'result',
+    }
    
   ];
   return (

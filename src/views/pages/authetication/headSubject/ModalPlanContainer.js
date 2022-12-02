@@ -91,14 +91,30 @@ const ModalPlanContainer = ({handleCancel}) => {
   };
 
   const onFinish = (fieldValues) => {
+    const ACCOUNT_DICT = Object.fromEntries(
+      accounts.map(item => [item.name, item])
+    );
+
     var observationSlotsRequest = fieldValues.observationSlotsRequest;
     observationSlotsRequest = observationSlotsRequest.map((item) => {
       var date = new Date(item.slotTime._d),
       mnth = ("0" + (date.getMonth() + 1)).slice(-2),
       day = ("0" + date.getDate()).slice(-2);
       var dateResult = [date.getFullYear(), mnth, day].join("-");
-      return {...item, headSubject: userId, slotTime: dateResult, headTraining: 1}
+      var accountId = ACCOUNT_DICT[item.accountId].value;
+      var accountId1 = ACCOUNT_DICT[item.accountId1].value;
+      var accountId2 = ACCOUNT_DICT[item.accountId2].value;
+
+      return {...item,
+        headSubject: parseInt(userId),
+        slotTime: dateResult,
+        headTraining: 1,
+        accountId: parseInt(accountId),
+        accountId1: parseInt(accountId1),
+        accountId2: parseInt(accountId2),
+      }
     })
+    
     var values = {
       ...fieldValues,
       "observationSlotsRequest": observationSlotsRequest
@@ -110,6 +126,7 @@ const ModalPlanContainer = ({handleCancel}) => {
         "campusId": parseInt(campusId),
         "departmentId": result,
       }
+      console.log("finalvalueee", finalValues)
       postPlan(finalValues);
     })
   };
@@ -138,7 +155,7 @@ const ModalPlanContainer = ({handleCancel}) => {
     }
     if(data && data.length > 0){
       for(let i = 0; i < data.length; i++){
-        searchData.push({label: data[i].name, value: data[i].value})
+        searchData.push({label: data[i].name, value: data[i].name})
       }
     }
     setOptions(
@@ -223,8 +240,6 @@ const ModalPlanContainer = ({handleCancel}) => {
                       }
                     >
                       {() => (
-
-
                         <Form.Item
                           {...field}
                           label="AccountId"

@@ -38,20 +38,22 @@ const AssessmentPlan = () => {
             <div className='columns mt-5'>
                 <div className='column is-1' style={{ marginLeft: "40rem" }}>
                     <button onClick={async () => {
-                        const {data} = await apiClient.post(`api/pass-observation-slot?oSlotId=1&pass=${2}`)
+                        const {data} = await apiClient.post(`api/pass-observation-slot?oSlotId=${id}
+                        &pass=${2}`)
+                        console.log("idddd", id)
                         if(data.status == '200'){
                             openNotificationWithIcon("success", "Đánh giá thành công");
-                            navigation('/plan')
+                            navigation('-p/headlan')
                         }
                     }} className='button is-danger'>
                         Không đạt
             </button>
                 </div>
                 <div onClick={async () => {
-                        const {data} = await apiClient.post(`api/pass-observation-slot?oSlotId=1&pass=${1}`)
+                        const {data} = await apiClient.post(`api/pass-observation-slot?oSlotId=${id}&pass=${1}`)
                         if(data.status == '200'){
                             openNotificationWithIcon("success", "Đánh giá thành công");
-                            navigation('/plan')
+                            navigation('/head-plan')
                         }
                     }} className='column'>
                     <button className='button is-success'>
