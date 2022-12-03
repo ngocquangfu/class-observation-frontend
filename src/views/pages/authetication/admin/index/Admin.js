@@ -27,16 +27,16 @@ const Admin = () => {
             <div style={{ height: 60, background: '#0a8cf1', display: 'flex', justifyContent: 'space-between', alignItems: 'center' , marginBottom : 40 }}>
                 <div style={{ display: 'flex', width: '90', height: "80%" }}>
                 <img style={{ marginLeft: 20, marginRight: 20 }} src={image1} height="40" alt=''/>
-                    <div>
-                        <Button type="ghost" onClick={() => handleClick(1)} style={{ background: adminIndex === 1 ? 'yellow' : '#b1b7bb' }} shape="round" size='large'>
+                    <div  style={{marginLeft:'20px',  justifyContent: 'space-between', fontSize:"25px"}}>
+                        <span type="ghost" onClick={() => handleClick(1)} style={{marginLeft:"20px", color:'white'}}>
                             Lecture
-                        </Button>
-                        <Button type="ghost" onClick={() => handleClick(2)} style={{ background: adminIndex ===2 ? 'yellow' : '#b1b7bb' ,marginLeft: 20, marginRight: 20}} shape="round" size='large'>
+                        </span>
+                        <span type="ghost" onClick={() => handleClick(2)} style={{marginLeft:"20px", color:'white'}}>
                             Head Of Subject
-                        </Button>
-                        <Button type="ghost" onClick={() => handleClick(3)} style={{ background: adminIndex === 3 ? 'yellow' : '#b1b7bb' }} shape="round" size='large'>
+                        </span>
+                        <span type="ghost" onClick={() => handleClick(3)} style={{marginLeft:"20px", color:'white'}}>
                             Training
-                        </Button>
+                        </span>
                     </div>
                 </div>
 

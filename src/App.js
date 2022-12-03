@@ -1,4 +1,4 @@
-import {public_route} from './router/router'
+import {public_route} from './router/Router'
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Login from './views/pages/authetication/login/Login';
 

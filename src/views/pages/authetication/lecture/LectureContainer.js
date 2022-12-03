@@ -1,10 +1,11 @@
-import { Modal, Table, Button, Drawer} from 'antd';
+import { Modal, Table, Button, Drawer } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/lecture.css';
 import { apiClient } from '../../../../api/api-client';
 import LectureDetailContainer from './LectureDetailContainer';
 import Header from '../Header';
+import { useId } from 'react';
 
 const LectureContainer = () => {
 
@@ -16,6 +17,7 @@ const LectureContainer = () => {
   const [detail, setDetail] = useState({});
   const campusId = localStorage.getItem('campusId');
   const userId = localStorage.getItem('userId');
+  const role = localStorage.getItem('role');
   const navigation = useNavigate();
   const _requestData = async () => {
     const { data } = await apiClient.get(`/api/lecture/list-observation-review?campusId=${campusId}&semesterId=${semesterId}&accountId=${userId}`)
@@ -106,7 +108,7 @@ const LectureContainer = () => {
       ),
     },
   ];
-
+ 
   const semesterColums = [
     {
       title: 'Kì học',
@@ -122,7 +124,12 @@ const LectureContainer = () => {
 
   return (
     <div>
-      <Header />
+      {role=="[2]"?
+     <Header name1="Lịch dự giờ" link1="/lecture" name2="Kết quả" link2="/lecture-result" name3="Trưởng bộ môn" link3="/head-plan"/>
+      :
+     <Header name1="Lịch dự giờ" link1="/lecture" name2="Kết quả" link2="/lecture-result" />
+
+    }
       <p className='has-text-centered has-text-weight-bold is-size-3'>Danh sách đi dự giờ của giảng viên</p>
       <Drawer
         width={620}

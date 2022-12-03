@@ -42,12 +42,14 @@ const Login = () => {
                 localStorage.setItem("role", JSON.stringify(role))
                 if (role == 1) {
                     navigation("/admin")
-                }if (role == 2) {
+                } if (role == 2) {
                     navigation("/lecture")
                     navigation("/head-plan")
 
                 } if (role == 3) {
                     navigation("/train")
+                } if (role == 4) {
+                    navigation("/lecture")
                 }
             }
 
