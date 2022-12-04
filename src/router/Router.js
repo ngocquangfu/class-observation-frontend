@@ -15,7 +15,7 @@ import LectureResultContainer from '../views/pages/authetication/lecture/Lecture
 
 
 export const ROUTES = {
-    HOME: '',
+    HOME: '/',
     LOGIN: 'login',
     ADMIN: 'admin',
     HEADOFSECTIONPLAN: 'head-plan',
@@ -30,14 +30,14 @@ export const ROUTES = {
 
 export const public_route = [
     {
-        path: `/${ROUTES.HOME}`,
+        path: `${ROUTES.HOME}`,
         Com: Home,
-        role: [1, 2, 3]
+        role: [1, 2, 3, 4 ,5]
     },
     {
         path: `/${ROUTES.LOGIN}`,
         Com: Login,
-        role: [1, 2, 3]
+        role: [1, 2, 3, 4 ,5]
     },
     {
         path: `/${ROUTES.ADMIN}`,
@@ -47,12 +47,12 @@ export const public_route = [
     {
         path: `/404`,
         Com: Error404,
-        role: [1, 2, 3]
+        role: [1, 2, 3, 4 ,5]
     },
     {
         path: `/${ROUTES.HEADOFSECTIONPLAN}`,
         Com: HeadContainer,
-        role: [1, 2, 3]
+        role: [2]
     },
     {
         path: `/${ROUTES.PLAN_DETAIL}`,
@@ -70,7 +70,7 @@ export const public_route = [
         role: [2,4]
     },
     {
-        path: `/${ROUTES.PLAN_DETAIL}`,
+        path: `/${ROUTES.LECTURE_RESULT_DETAIL}`,
         Com: AssessmentPlan,
         role: [2]
     },

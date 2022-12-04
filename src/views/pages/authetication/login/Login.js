@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { GoogleLogin } from 'react-google-login';
 import NavBar from '../../../components/navbar/Navbar';
-import Footer from '../../../components/footer/Footer';
+import Footer from '../../../components/footerr/Footer';
 import { apiClient } from '../../../../api/api-client';
 import { gapi } from "gapi-script";
 import { useNavigate } from 'react-router-dom';

@@ -1,7 +1,7 @@
 import React from 'react'
 import '../styles/error404.css'
 import NavBar from '../../components/navbar/Navbar';
-import Footer from '../../components/footer/Footer';
+import Footer from '../../components/footerr/Footer';
 
 function error404() {
   return (
