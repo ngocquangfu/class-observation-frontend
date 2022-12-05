@@ -1,7 +1,6 @@
 import React from 'react';
-import Home from '../views/pages/home/Home';
+import HomePage from '../views/pages/home/Home';
 import Error404 from '../views/pages/error/error404'
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from '../views/pages/authetication/login/Login';
 import Admin from '../views/pages/authetication/admin/index/Admin';
 import Lecture from '../views/pages/authetication/lecture/LectureContainer';
@@ -30,8 +29,8 @@ export const ROUTES = {
 
 export const public_route = [
     {
-        path: `${ROUTES.HOME}`,
-        Com: Home,
+        path: '/',
+        Com: HomePage,
         role: [1, 2, 3, 4 ,5]
     },
     {

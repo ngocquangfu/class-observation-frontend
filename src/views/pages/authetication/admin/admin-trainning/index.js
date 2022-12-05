@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Button} from "antd";
-import {PlusOutlined, DeleteOutlined, ReloadOutlined} from "@ant-design/icons";
+import { Button } from "antd";
+import { PlusOutlined, DeleteOutlined, ReloadOutlined } from "@ant-design/icons";
 import { CardCustom, TableCustom } from '../../../helper/style-component'
 import { apiClient } from '../../../../../api/api-client';
 import AddNewForm from '../common/com//add_new_modal';
@@ -13,63 +13,91 @@ const AdminLecture = () => {
     const [dataTable, setDataTable] = useState([])
     const [total] = useState(10)
     const [listCampus, setListCampus] = React.useState([])
-    const [formAdd , setFormAdd] = React.useState(
+    const [yesNo, setYesNo] = useState([
+        {
+            label: 'Yes',
+            name: "yes",
+            value: 1
+        },
+        {
+
+            label: 'No',
+            name: "no",
+            value: 0
+        },
+    ])
+    const [formAdd, setFormAdd] = React.useState(
         [
             {
-                name : 'userName',
-                label : 'Tên'
+                name: 'userName',
+                label: 'Tên'
             },
             {
-                name : 'email',
-                label : "Email"
+                name: 'email',
+                label: "Email"
             },
             {
-                name : 'campusId',
-                label : 'Campus',
-                data : [],
-                type : 'select'
-            }
+                name: 'campusId',
+                label: 'Campus',
+                data: [],
+                type: 'select'
+            },
+            {
+                name: 'check',
+                label: 'Tranning pro',
+                type: 'selected'
+            },
         ]
     )
-    const [page , setPage] = useState({
-        current : 1,
-        number_of_page : 5
+    const [page, setPage] = useState({
+        current: 1,
+        number_of_page: 5
     })
     const [showAddNew, setShowAddNew] = useState(false);
     const [showDetail, setShowDetail] = useState(false);
     const _handleChangePage = (page, number_of_page) => {
         console.log(page, number_of_page);
         setPage({
-            current : page,
-            number_of_page : number_of_page
+            current: page,
+            number_of_page: number_of_page
         })
     };
     const _requestData = async () => {
-        const {data} = await apiClient.get('/api/campus-dropdown-list')
-        const convertData = data.map((i , idx) => {
+        const { data } = await apiClient.get('/api/campus-dropdown-list')
+        const convertData = data.map((i, idx) => {
             return {
-                value : i.value,
-                label : i.name,
+                value: i.value,
+                label: i.name,
             }
         })
         setListCampus(convertData)
-        const convertDataFormAdd = formAdd.map(i => {
-            if(i.type == "select"){
-                return {
-                    ...i,
-                    data : convertData,
-                }
-            }
-            else{
-                return i
+        const convertDatayn = yesNo.map((i, idx) => {
+            return {
+                value: i.value,
+                label: i.name,
             }
         })
+        setYesNo(convertDatayn)
+        const convertDataFormAdd = formAdd.map(i => {
+            if (i.type == "select") {
+                return {
+                    ...i,
+                    data: convertData,
+                }
+            }
+            else {
+                return i
+            }
+
+        })
         setFormAdd(convertDataFormAdd)
+
+
     }
     const _requestDataTable = async () => {
-        const start = page.current === 1 ? 0 : page.current*page.number_of_page - page.number_of_page
-        const end = page.current*page.number_of_page
-        const  {data}  = await apiClient.get(`/api/admin/list-account-role?roleId=3&start=${start}&end=${end}`)
+        const start = page.current === 1 ? 0 : page.current * page.number_of_page - page.number_of_page
+        const end = page.current * page.number_of_page
+        const { data } = await apiClient.get(`/api/admin/list-account-role?roleId=3&start=${start}&end=${end}`)
         const convertData = data.items.map(item => {
             return {
                 key: item.id,
@@ -86,57 +114,57 @@ const AdminLecture = () => {
                     const { data } = await apiClient.post(`/api/admin/delete-account?id=${item}`)
                     openNotificationWithIcon("success", "Xoá thành công");
                 } catch (error) {
-                    openNotificationWithIcon("error",error.message)
+                    openNotificationWithIcon("error", error.message)
                 }
             })
         }
         setTimeout(() => {
             _handleReset()
-        } ,1000)
+        }, 1000)
     }
 
 
     const _handleAddNew = async (value) => {
         const body = {
-            userName : value.userName,
-            email : value.email,
-            campusId : value.campusId,
-            roles : [
+            userName: value.userName,
+            email: value.email,
+            campusId: value.campusId,
+            roles: [
                 {
-                    id : 3
+                    id: 3
                 }
             ]
         }
         try {
             const { data } = await apiClient.post('/api/admin/new-account', body)
-            openNotificationWithIcon("success","Thêm thanh công")
+            openNotificationWithIcon("success", "Thêm thanh công")
         } catch (error) {
-            openNotificationWithIcon("error","Thêm thất bại")
+            openNotificationWithIcon("error", "Thêm thất bại")
 
         }
 
     }
-    const _handleUpdate = async(value) => {
+    const _handleUpdate = async (value) => {
         const body = {
-            id : showDetail.data.id,
-            userName : value.userName,
-            email : value.email,
-            campusId : value.campusId,
-            roles : [
+            id: showDetail.data.id,
+            userName: value.userName,
+            email: value.email,
+            campusId: value.campusId,
+            roles: [
                 {
-                    id : 3
+                    id: 3
                 }
             ]
         }
         try {
             const { data } = await apiClient.post(`/api/admin/edit-account`, body)
-            openNotificationWithIcon("success","Sửa thanh công")
+            openNotificationWithIcon("success", "Sửa thanh công")
         } catch (error) {
-            openNotificationWithIcon("error","Sửa thất bại")
+            openNotificationWithIcon("error", "Sửa thất bại")
         }
-        
+
     }
-    
+
     const _handleReset = () => {
         _requestDataTable()
     }
@@ -182,7 +210,7 @@ const AdminLecture = () => {
                         }
 
                     ]}
-                    scroll={{ y: 'calc(100vh - 190px)' }}  pagination={{ defaultPageSize: 10, showSizeChanger: true, pageSizeOptions: ['10', '15', '20']}}
+                    scroll={{ y: 'calc(100vh - 190px)' }} pagination={{ defaultPageSize: 10, showSizeChanger: true, pageSizeOptions: ['10', '15', '20'] }}
                     rowSelection={{
                         type: 'checkbox',
                         onChange: (selectedRowKeys, selectedRows) => {
@@ -194,16 +222,16 @@ const AdminLecture = () => {
                         onClick: () => {
                             setShowDetail({
                                 data: {
-                                    id : r.id,
-                                    userName : r.userName,
-                                    email : r.email,
+                                    id: r.id,
+                                    userName: r.userName,
+                                    email: r.email,
                                     campusId: listCampus.find(i => i.label == r.campusName).value
                                 }, type: "EDIT"
                             })
                         }
                     })}
                 />
-                
+
             </CardCustom>
             <AddNewForm
                 visible={showAddNew} jsonFormInput={formAdd}
@@ -211,17 +239,17 @@ const AdminLecture = () => {
                     setShowAddNew(false)
                     setTimeout(() => {
                         _requestDataTable()
-                    } , 1000)
+                    }, 1000)
                 }}
                 _onSubmit={_handleAddNew}
             />
-            <ModalFormDetail 
+            <ModalFormDetail
                 visible={showDetail} jsonFormInput={formAdd}
                 _onClose={() => {
                     setShowDetail(false)
                     setTimeout(() => {
                         _requestDataTable()
-                    } , 1000)
+                    }, 1000)
                 }}
                 _onSubmit={_handleUpdate}
             />
