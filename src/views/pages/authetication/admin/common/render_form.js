@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Select} from 'antd';
+import { Checkbox, Form, Input, Select} from 'antd';
 
 const { Option } = Select;
 export const RenderForm = ({ jsonFrom = () => { } }) => {
@@ -24,6 +24,20 @@ export const RenderForm = ({ jsonFrom = () => { } }) => {
                         </Form.Item>
                     )
                 }
+                 if (item.type === "selected") {
+                    return (
+                        <Form.Item
+                            key={String(index)}
+                            name={item.name}
+                            label={item.label}
+                            rules={item.rules}
+                            style={item.hidden ? { display: 'none' } : { margin: '0', width: '45%' }}>
+                            <Checkbox value={item.name}/>
+                               
+                        </Form.Item>
+                    )
+                }
+                
                 return (
                     <Form.Item
                         key={String(index)}

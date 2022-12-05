@@ -1945,7 +1945,7 @@
 
 "@remix-run/router@1.0.4":
   version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.0.4.tgz#cbfbec6735711e7c2fc93b9b40adf70ef5a39990"
+  resolved "https://registry.npmjs.org/@remix-run/router/-/router-1.0.4.tgz"
   integrity sha512-gTL8H5USTAKOyVA4xczzDJnC3HMssdFa3tRlwBicXynx9XfiXwneHnYQogwSKpdCkjXISrEKSTtX62rLpNEVQg==
 
 "@rollup/plugin-babel@^5.2.0":
@@ -8388,7 +8388,7 @@ react-router-dom@^6.4.4:
 
 react-router@6.4.4:
   version "6.4.4"
-  resolved "https://registry.yarnpkg.com/react-router/-/react-router-6.4.4.tgz#8e7794f55ccc7050cb03937c87ff3720ce9f8b60"
+  resolved "https://registry.npmjs.org/react-router/-/react-router-6.4.4.tgz"
   integrity sha512-SA6tSrUCRfuLWeYsTJDuriRqfFIsrSvuH7SqAJHegx9ZgxadE119rU8oOX/rG5FYEthpdEaEljdjDlnBxvfr+Q==
   dependencies:
     "@remix-run/router" "1.0.4"

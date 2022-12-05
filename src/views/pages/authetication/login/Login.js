@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { GoogleLogin } from 'react-google-login';
 import NavBar from '../../../components/navbar/Navbar';
-import Footer from '../../../components/footerr/Footer';
+import Footer from '../../../components/footer/Footer';
 import { apiClient } from '../../../../api/api-client';
 import { gapi } from "gapi-script";
 import { useNavigate } from 'react-router-dom';
@@ -50,6 +50,9 @@ const Login = () => {
                     navigation("/train")
                 } if (role == 4) {
                     navigation("/lecture")
+                }
+                if (role == 5) {
+                    navigation("/train")
                 }
             }
 

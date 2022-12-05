@@ -1,4 +1,4 @@
-import { Button, Form, Input, Table, Modal} from 'antd';
+import { Button, Form, Input, Table, Modal, Space} from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import React, { useEffect, useState } from 'react';
 import '../../styles/lecture.css';
@@ -18,7 +18,25 @@ const LectureDetailContainer = (props) => {
   const [dataInput, setDataInput] = useState({});
   const [loading, setLoading] = useState(false);
 
-
+  const state = {
+    buttonState: 2
+};
+const onSubmit =async (e, fieldValues) => {
+  if (state.buttonState === 1) {
+    showConfirm(fieldValues)
+    console.log("Button 1 clicked!");
+  }
+  if (state.buttonState === 2) {
+    console.log("Button 2 clicked!");
+    onSaveDraft(fieldValues)
+  }
+};
+const onSaveDraft=async(fieldValues)=>{
+  const body = { ...fieldValues, ...values, "observationDetailRequests": observation };
+  const { data } = await apiClient.post(`/api/lecture/create-observation-review`, body)
+  localStorage.setItem("save draft", data)
+  console.log("log112", body)
+}
   const { confirm } = Modal;
 
   const _requestData = async () => {
@@ -124,7 +142,7 @@ const LectureDetailContainer = (props) => {
   return (
     <div>
       {loading && 
-      <Form form={form} name="dynamic_form_nest_item" onFinish={onFinish} autoComplete="off" initialValues={Object.keys(dataInput).length !== 0 && dataInput.constructor === Object ? dataInput : {}}>
+      <Form form={form} name="dynamic_form_nest_item" onFinish={onSubmit} autoComplete="off" initialValues={Object.keys(dataInput).length !== 0 && dataInput.constructor === Object ? dataInput : {}}>
         {record && <div>
           <div className='columns'>
             <div className='column is-8'>
@@ -223,11 +241,14 @@ const LectureDetailContainer = (props) => {
             <TextArea rows={4} className="text-area-antd" />
           </Form.Item>
           <div className='is-flex is-justify-content-end'>
-            <Form.Item >
-              <Button className='button mt-5 ml-6' htmlType="submit">
+            <Space wrap>
+            <Button className='button mt-5 ml-6' onClick={()=> state.buttonState=1}  htmlType="submit">
                 Submit
               </Button>
-            </Form.Item>
+              <Button className='button mt-5 ml-6' onClick={() => (state.buttonState = 2)} htmlType="submit" >
+                Save draft
+              </Button>
+              </Space>
           </div>
         </div>}
       </Form>

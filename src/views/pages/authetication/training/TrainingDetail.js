@@ -5,18 +5,19 @@ import { apiClient } from '../../../../api/api-client';
 
 const TrainingDetail = (props) => {
 
-  const {data} = props;
+  const { data } = props;
   const [listData, setListData] = useState();
   var planId = data ? data.id : '';
 
   const _requestData = async () => {
-    const {data} = await apiClient.get(`/api/list-observation-slot-plan?planId=${planId}`)
+    const { data } = await apiClient.get(`/api/list-observation-slot-plan?planId=${planId}`)
     data.items = data.items.map((item, idx) => {
       var slotTime = new Date(`${item.slotTime}`);
-
-        item.slotTime =
+      var result = item.result;
+      item.slotTime =
         ((slotTime.getMonth() > 8) ? (slotTime.getMonth() + 1) : ('0' + (slotTime.getMonth() + 1))) + '/' + ((slotTime.getDate() > 9) ? slotTime.getDate() : ('0' + slotTime.getDate())) + '/' + slotTime.getFullYear();
-        return item;
+      item.result = (result == 1 ? "Đạt" : result==0?"Chờ kết quả": "từ chối")
+      return item;
     })
     setListData(data.items);
   }
@@ -35,45 +36,45 @@ const TrainingDetail = (props) => {
       key: 'accountName',
     },
     {
-      title: 'slotTime',
+      title: 'Thời gian',
       dataIndex: 'slotTime',
       key: 'slotTime',
     },
     {
-      title: 'slot',
+      title: 'Slot',
       dataIndex: 'slot',
       key: 'slot',
     },
     {
-      title: 'roomName',
+      title: 'Phòng',
       dataIndex: 'roomName',
       key: 'roomName',
     },
     {
-      title: 'subjectName',
+      title: 'Môn',
       dataIndex: 'subjectName',
       key: 'subjectName',
     },
     {
-      title: 'className',
+      title: 'Lớp',
       dataIndex: 'className',
       key: 'className',
     },
     {
-      title: 'reason',
+      title: 'Lý do',
       dataIndex: 'reason',
       key: 'reason',
     },
     {
-      title: 'result',
+      title: 'Kết quả',
       dataIndex: 'result',
       key: 'result',
     }
-   
+
   ];
   return (
     <div >
-      {listData?.length > 0 ? <Table columns={columns} dataSource={listData} /> : <div style={{textAlign : 'center' , fontSize : 24}}>Không có bản ghi nào</div>}
+      {listData?.length > 0 ? <Table columns={columns} dataSource={listData} /> : <div style={{ textAlign: 'center', fontSize: 24 }}>Không có bản ghi nào</div>}
     </div>
   );
 };
