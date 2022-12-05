@@ -6,13 +6,14 @@ import AdminLecture from '../admin-lecture/index';
 import AdminHOS from '../admin-head-subject/index';
 import AdminTraining from '../admin-trainning/index';
 import image1 from '../../../../../assets/images/svg-1.svg'
+import Header from '../../Header';
 
 
 
 
 const Admin = () => {
     const [adminIndex , setAdminIndex] = useState(1)
-
+    const userName = localStorage.getItem("userName")
     const objAdmin = {
         1 : <AdminLecture />,
         2 : <AdminHOS />,
@@ -42,7 +43,7 @@ const Admin = () => {
 
                 <div style={{ display: 'flex', color: 'black', fontSize: 24, fontWeight: 500 }}>
                     <div>
-                        ThangNg
+                        {userName}
                     </div>
                     <div style={{marginLeft: 20, marginRight: 20}}>
                         <UserOutlined height='60px' />

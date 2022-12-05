@@ -58,9 +58,9 @@ const LectureContainer = () => {
 
   const columns = [
     {
-      title: 'Id',
-      dataIndex: 'id',
-      key: 'id',
+      title: 'STT',
+      dataIndex: 'stt',
+      render: (text, record, index) => index + 1,
     },
     {
       title: 'Tên GV được dự giờ',

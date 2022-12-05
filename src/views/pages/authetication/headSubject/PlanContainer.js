@@ -25,6 +25,8 @@ const PlanContainer = () => {
   const [subject, setSubject] = useState([]);
   const [accounts, setAccounts] = useState([]);
   const campusId = localStorage.getItem('campusId');
+  const [listSemestersFlag, setListSemestersFlag] = useState([]);
+
 
   const _requestData = async () => {
     const { data } = await apiClient.get(`/api/list-observation-slot?semesterId=${semesterId}&accountId=${userId}`)
@@ -78,6 +80,7 @@ const PlanContainer = () => {
   const getSemesters = async () => {
     const { data } = await apiClient.get('/api/semester-list')
     setListSemesters(data);
+
   }
 
   useEffect(() => {
@@ -111,9 +114,9 @@ const PlanContainer = () => {
   };
   const columns = [
     {
-      title: 'Id',
-      dataIndex: 'id',
-      key: 'id',
+      title: 'STT',
+      dataIndex: 'stt',
+      render: (text, record, index) => index + 1,
     },
     {
       title: 'Thời gian',
@@ -275,10 +278,10 @@ const PlanContainer = () => {
   const handleClose = () => {
     setDialogOpen(false);
   };
-  
+
   return (
     <>
-    <Header name1="Giảng viên" link1="/lecture"/>
+      <Header name1="Giảng viên" link1="/lecture" />
       <div className='plan-container'>
         <div className='modal-plan'>
           <Button type="primary" disabled={count != 1 ? true : false} onClick={showModal}>
@@ -335,7 +338,7 @@ function HomeScreen({ navigation }) {
     <>
       <Header screenName="Details" />
       <Header screenName="Detailsss" />
-      </>
+    </>
   );
 }
 

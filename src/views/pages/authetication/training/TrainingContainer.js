@@ -42,7 +42,9 @@ const TrainingContainer = () => {
 
   const getSemesters = async () => {
     const { data } = await apiClient.get('/api/semester-list')
+    
     setListSemesters(data);
+
     console.log("semesterList: ", data.items);
   }
 
@@ -165,7 +167,7 @@ const TrainingContainer = () => {
   }
   const semesterColums = [
     {
-      title: 'Kì học',
+      title: '',
       dataIndex: 'totalPoint',
       key: 'totalPoint',
       render: (text, record) => (
