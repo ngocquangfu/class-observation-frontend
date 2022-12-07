@@ -70,7 +70,7 @@ const AdminLecture = () => {
     const _requestDataTable = async () => {
         const start = page.current == 1 ? 0 : page.current*page.number_of_page - page.number_of_page
         const end = page.current*page.number_of_page
-        const  {data}  = await apiClient.get(`/api/admin/list-account-role?roleId=1&start=${start}&end=${end}`)
+        const  {data}  = await apiClient.get(`/api/admin/list-account-role?roleId=4&start=${start}&end=${end}`)
         const convertData = data.items.map(item => {
             return {
                 key: item.id,
@@ -106,7 +106,7 @@ const AdminLecture = () => {
             campusId : value.campusId,
             roles : [
                 {
-                    id : 1
+                    id : 4
                 }
             ]
         }
@@ -127,14 +127,14 @@ const AdminLecture = () => {
             campusId : value.campusId,
             roles : [
                 {
-                    id : 1
+                    id : 4
                 }
             ]
         }
         try {
             const { data } = await apiClient.post(`/api/admin/edit-account`, body)
             console.log("data" ,data);
-            openNotificationWithIcon("success","Sửa thanh công")
+            openNotificationWithIcon("success","Sửa thành công")
         } catch (error) {
             openNotificationWithIcon("error","Sửa thất bại")
         }

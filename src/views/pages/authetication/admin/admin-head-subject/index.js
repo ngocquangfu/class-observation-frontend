@@ -197,13 +197,11 @@ const AdminLecture = () => {
                                     campusId: listCampus.find(i => i.label == r.campusName).value
                                 }, type: "EDIT"
                             })
-                            // r.dates.split(",")
                         }
                     })}
                 />
 
             </CardCustom>
-            {/* modal */}
             <AddNewForm
                 visible={showAddNew} jsonFormInput={formAdd}
                 _onClose={() => {

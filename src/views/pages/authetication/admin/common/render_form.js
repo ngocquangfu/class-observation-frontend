@@ -24,18 +24,16 @@ export const RenderForm = ({ jsonFrom = () => { } }) => {
                         </Form.Item>
                     )
                 }
-                 if (item.type === "selected") {
-                    return (
-                        <Form.Item
-                            key={String(index)}
-                            name={item.name}
-                            label={item.label}
-                            rules={item.rules}
-                            style={item.hidden ? { display: 'none' } : { margin: '0', width: '45%' }}>
-                            <Checkbox value={item.name}/>
-                               
-                        </Form.Item>
-                    )
+                if (item.type == 'checkbox') {
+                    return(
+                    <Form.Item
+                        key={String(index)}
+                        name={item.name}
+                        valuePropName="checked"
+                        style={item.hidden ? { display: 'none' } : { margin: '0', width: '45%' , marginTop : 25}}
+                    >
+                        <Checkbox>{item.label}</Checkbox>
+                    </Form.Item>)
                 }
                 
                 return (

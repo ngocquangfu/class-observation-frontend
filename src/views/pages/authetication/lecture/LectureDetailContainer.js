@@ -115,11 +115,11 @@ const onSaveDraft=async(fieldValues)=>{
   function showConfirm(fieldValues) {
     confirm({
       title: 'Bạn đã chắc chắn nộp chưa?',
-      content:
-        'Khi nhấp vào nút OK, hộp thoại này sẽ đóng sau 1 giây',
+      
       async onOk() {
         try {
           const body = { ...fieldValues, ...values, "observationDetailRequests": observation };
+          console.log("body" , body)
           const { data } = await apiClient.post(`/api/lecture/create-observation-review`, body)
           if (data.status == '200') {
             openNotificationWithIcon("success","Thêm thanh công")

@@ -14,22 +14,22 @@ import LectureResultContainer from '../views/pages/authetication/lecture/Lecture
 
 
 export const ROUTES = {
-    HOME: '/',
-    LOGIN: 'login',
-    ADMIN: 'admin',
-    HEADOFSECTIONPLAN: 'head-plan',
+    HOME: ``,
+    LOGIN: `login`,
+    ADMIN: `admin`,
+    HEADOFSECTIONPLAN: `head-plan`,
     PLAN_DETAIL: `head-plan/:Id`,
-    LECTURE: 'lecture',
-    LECTURE_DETAIL: 'lecture/:Id',
-    LECTURE_RESULT: 'lecture-result',
-    LECTURE_RESULT_DETAIL: 'lecture-result/:Id',
-    TRAINING: 'train',
+    LECTURE: `lecture`,
+    LECTURE_DETAIL: `lecture/:Id`,
+    LECTURE_RESULT: `lecture-result`,
+    LECTURE_RESULT_DETAIL: `lecture-result/:Id`,
+    TRAINING: `train`,
 }
 
 
 export const public_route = [
     {
-        path: '/',
+        path: `/${ROUTES.HOME}`,
         Com: HomePage,
         role: [1, 2, 3, 4 ,5]
     },
@@ -70,8 +70,8 @@ export const public_route = [
     },
     {
         path: `/${ROUTES.LECTURE_RESULT_DETAIL}`,
-        Com: AssessmentPlan,
-        role: [2]
+        Com: LectureResult,
+        role: [2,4]
     },
     {
         path: `/${ROUTES.LECTURE_DETAIL}`,
@@ -81,7 +81,7 @@ export const public_route = [
     {
         path: `/${ROUTES.TRAINING}`,
         Com: TrainContainer,
-        role: [3]
+        role: [3,5]
     }
 
 ];

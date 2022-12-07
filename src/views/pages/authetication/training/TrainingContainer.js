@@ -7,6 +7,7 @@ import { apiClient } from '../../../../api/api-client';
 import TrainingChangeContainer from './TrainingChangeContainer';
 import TrainingDetail from './TrainingDetail';
 import Header from '../Header';
+import { TableCustom } from '../../helper/style-component';
 
 
 
@@ -29,12 +30,11 @@ const TrainingContainer = () => {
     data.items = data.items.map((item, idx) => {
       var createdAt = new Date(`${item.createdAt}`);
       var updatedAt = new Date(`${item.updatedAt}`);
-      var planStatus =item.planStatus;
+      var planStatus = item.planStatus;
       item.createdAt =
         ((createdAt.getMonth() > 8) ? (createdAt.getMonth() + 1) : ('0' + (createdAt.getMonth() + 1))) + '/' + ((createdAt.getDate() > 9) ? createdAt.getDate() : ('0' + createdAt.getDate())) + '/' + createdAt.getFullYear();
       item.updatedAt =
         ((updatedAt.getMonth() > 8) ? (updatedAt.getMonth() + 1) : ('0' + (updatedAt.getMonth() + 1))) + '/' + ((updatedAt.getDate() > 9) ? updatedAt.getDate() : ('0' + updatedAt.getDate())) + '/' + updatedAt.getFullYear();
-      item.planStatus = (planStatus === 1 ? "Đã duyệt" : "Từ chối")
       return item;
     })
     setListData(data.items);
@@ -42,10 +42,14 @@ const TrainingContainer = () => {
 
   const getSemesters = async () => {
     const { data } = await apiClient.get('/api/semester-list')
-    
-    setListSemesters(data);
 
-    console.log("semesterList: ", data.items);
+    var ReverseArray = [];
+    var length = Object.keys(data).length;
+    for (var i = length - 1; i >= 0; i--) {
+      ReverseArray.push(data[i]);
+      console.log("dataa", data[i])
+    }
+    setListSemesters(ReverseArray);
   }
 
   useEffect(() => {
@@ -96,6 +100,15 @@ const TrainingContainer = () => {
       title: 'Trạng thái',
       dataIndex: 'planStatus',
       key: 'planStatus',
+      render: (planStatus) => {
+        if (planStatus == 1) {
+          return "Đã duyệt"
+        } else if (planStatus == 0) {
+          return "Đợi duyệt"
+        } else {
+          return "Từ chối"
+        }
+      }
     },
     {
       title: 'Ngày tạo',
@@ -167,7 +180,7 @@ const TrainingContainer = () => {
   }
   const semesterColums = [
     {
-      title: '',
+      title: 'Kì học',
       dataIndex: 'totalPoint',
       key: 'totalPoint',
       render: (text, record) => (
@@ -211,7 +224,8 @@ const TrainingContainer = () => {
 
         </div>
         <div className='column'>
-          {listData?.length > 0 && <Table columns={columns} dataSource={listData} />}
+          {listData?.length > 0 && <TableCustom columns={columns} dataSource={listData} 
+          scroll={{ y: 'calc(100vh - 190px)' }}  pagination={{ defaultPageSize: 5, showSizeChanger: true, pageSizeOptions: ['5', '10', '20']}}/>}
         </div>
       </div>
     </div>

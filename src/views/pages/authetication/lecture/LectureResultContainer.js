@@ -6,6 +6,7 @@ import { apiClient } from '../../../../api/api-client';
 import LectureDetailContainer from './LectureDetailContainer';
 import Header from '../Header';
 import { useId } from 'react';
+import { TableCustom } from '../../helper/style-component';
 
 const LectureResultContainer= () => {
 
@@ -19,8 +20,11 @@ const LectureResultContainer= () => {
     const userId = localStorage.getItem('userId');
     const role = localStorage.getItem('role');
     const navigation = useNavigate();
+    const handleNavigation = (record) => {
+      navigation(`/lecture-result/${record.id}`);
+    }
     const _requestData = async () => {
-      const { data } = await apiClient.get(`/api/lecture/list-observation-review?campusId=${campusId}&semesterId=${semesterId}&accountId=${userId}`)
+      const { data } = await apiClient.get(`/api/lecture/list-result-observation-review?campusId=${campusId}&semesterId=${semesterId}&accountId=${userId}`)
       data.items = data.items.map((item, idx) => {
         var date = new Date(`${item.slotTime}`);
         item.slotTime =
@@ -32,7 +36,13 @@ const LectureResultContainer= () => {
   
     const getSemesters = async () => {
       const { data } = await apiClient.get('/api/semester-list')
-      setListSemesters(data);
+      var ReverseArray = [];
+    var length = Object.keys(data).length;
+    for (var i = length - 1; i >= 0; i--) {
+      ReverseArray.push(data[i]);
+      console.log("dataa", data[i])
+    }
+    setListSemesters(ReverseArray);
     }
   
     useEffect(() => {
@@ -98,12 +108,12 @@ const LectureResultContainer= () => {
         key: 'departmentName',
       },
       {
-        title: 'Chi tiết',
-        dataIndex: 'totalPoint',
-        key: 'totalPoint',
+        title: 'Kết quả',
+        key: 'result',
+        dataIndex: 'result',
         render: (text, record) => (
-          <Button onClick={() => showModal(record)}>
-            {"Chi tiết"}
+          <Button onClick={() => handleNavigation(record)}>
+            {"Kết quả"}
           </Button>
         ),
       },
@@ -129,6 +139,7 @@ const LectureResultContainer= () => {
       :
      <Header name1="Lịch dự giờ" link1="/lecture" name2="Kết quả" link2="/lecture-result" />}
         <p className='has-text-centered has-text-weight-bold is-size-3'>Kết quả đánh giá</p>
+        
         <Drawer
           width={620}
           open={open}
@@ -147,7 +158,7 @@ const LectureResultContainer= () => {
   
           </div>
           <div className='column'>
-            {listData?.length > 0 && <Table columns={columns} dataSource={listData} />}
+            {listData?.length > 0 && <TableCustom columns={columns} dataSource={listData} pagination={{ defaultPageSize: 5, showSizeChanger: true, pageSizeOptions: ['5', '10', '20']}}/>}
           </div>
         </div>
       </div>

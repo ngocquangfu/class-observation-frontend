@@ -16,7 +16,6 @@ const TrainingDetail = (props) => {
       var result = item.result;
       item.slotTime =
         ((slotTime.getMonth() > 8) ? (slotTime.getMonth() + 1) : ('0' + (slotTime.getMonth() + 1))) + '/' + ((slotTime.getDate() > 9) ? slotTime.getDate() : ('0' + slotTime.getDate())) + '/' + slotTime.getFullYear();
-      item.result = (result == 1 ? "Đạt" : result==0?"Chờ kết quả": "từ chối")
       return item;
     })
     setListData(data.items);
@@ -68,7 +67,10 @@ const TrainingDetail = (props) => {
     {
       title: 'Kết quả',
       dataIndex: 'result',
-      key: 'result',
+      render: (result) => {
+        if (result == 1) { return "Đạt" } else if (result == 0) { return "Chờ kết quả" } else { return "Từ chối" }
+
+      }
     }
 
   ];

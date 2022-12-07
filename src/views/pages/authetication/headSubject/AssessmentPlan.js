@@ -7,19 +7,27 @@ import { openNotificationWithIcon } from '../../request/notification';
 import Header from '../Header';
 const AssessmentPlan = () => {
     const [listData, setListData] = useState([]);
-    const location = useLocation()
+    const [result, setResult] = useState();
     const id = window.location.pathname.split("/")[2];
     const navigation = useNavigate()
     const onChange = () => {
-
     }
     const _requestData = async () => {
         const { data } = await apiClient.get(`/api/result-observation-slot?oSlotId=${id}`)
         setListData(data.items)
+
+    }
+    const getResultId = async () => {
+        const { data } = await apiClient.get(`/api/list-observation-slot-plan?planId=${id}`)
+        console.log("dddsf", data.items[0].result)
+        setResult(data.items[0].result)
+
     }
     useEffect(() => {
         _requestData()
-    }, [])
+        getResultId()
+       
+    },[])
     return (<>
         <Header name1="Giảng viên" link1="/lecture" name2="Trưởng bộ môn" link2="/head-plan" />
         <div style={{ padding: 24 }}>
@@ -37,15 +45,15 @@ const AssessmentPlan = () => {
                     };
                 })}
             />
+        {result==0?
             <div className='columns mt-5'>
                 <div className='column is-1' style={{ marginLeft: "40rem" }}>
-                    <button onClick={async () => {
-                        const { data } = await apiClient.post(`api/pass-observation-slot?oSlotId=${id}
-                        &pass=${2}`)
+                    <button  onClick={async () => {
+                        const { data } = await apiClient.post(`api/pass-observation-slot?oSlotId=${id}&pass=${2}`)
                         console.log("idddd", id)
                         if (data.status == '200') {
                             openNotificationWithIcon("success", "Đánh giá thành công");
-                            navigation('-p/headlan')
+                            navigation('/head-plan')
                         }
                     }} className='button is-danger'>
                         Không đạt
@@ -58,11 +66,11 @@ const AssessmentPlan = () => {
                         navigation('/head-plan')
                     }
                 }} className='column'>
-                    <button className='button is-success'>
+                    <button  className='button is-success'>
                         Đạt yêu cầu
                     </button>
                 </div>
-            </div>
+            </div>: <div></div>}
         </div>
     </>
     );

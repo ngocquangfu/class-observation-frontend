@@ -64,7 +64,7 @@ const PlanDetailContainer = () => {
         </div>
         <div className='column'>
             <button className='button is-success'>
-              Đạt yêu cầu
+              Đạt yêu cầuuu
             </button>
         </div>
       </div>}

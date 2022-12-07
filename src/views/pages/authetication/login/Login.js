@@ -40,13 +40,13 @@ const Login = () => {
                 localStorage.setItem("userId", data.userId)
                 localStorage.setItem("userName", data.userName)
                 localStorage.setItem("role", JSON.stringify(role))
-                if (role == 1) {
+                if (parseInt(role) === 1) {
                     navigation("/admin")
-                } if (role == 2) {
+                } if (parseInt(role) === 2) {
                     navigation("/lecture")
                     navigation("/head-plan")
 
-                } if (role == 3) {
+                } if (parseInt(role) === 3) {
                     navigation("/train")
                 } if (role == 4) {
                     navigation("/lecture")

@@ -7,6 +7,7 @@ import { useNavigate, NavigationContainer } from 'react-router-dom';
 import { openNotificationWithIcon } from '../../request/notification';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import Header from '../Header';
+import { TableCustom } from '../../helper/style-component';
 
 const PlanContainer = () => {
   const navigation = useNavigate();
@@ -25,9 +26,16 @@ const PlanContainer = () => {
   const [subject, setSubject] = useState([]);
   const [accounts, setAccounts] = useState([]);
   const campusId = localStorage.getItem('campusId');
-  const [listSemestersFlag, setListSemestersFlag] = useState([]);
+  const [semestersStatus, setSemestersStatus] = useState();
+  const [result1, setResult1] = useState(0);
 
-
+  const getSemestersStatus = async (id) => {
+    const { data } = await apiClient.get(`/api/status-observation-plan?planId=${id}`)
+    if(data.items==1){
+      return 1
+    } return 0
+    
+  }
   const _requestData = async () => {
     const { data } = await apiClient.get(`/api/list-observation-slot?semesterId=${semesterId}&accountId=${userId}`)
     data.items = data.items.map((item, idx) => {
@@ -40,6 +48,7 @@ const PlanContainer = () => {
       var subjectCode = subject.find(o => o.value == item.subjectId)?.name;
       var slotName = slot.find(o => o.value == item.slotId)?.name;
       return { ...item, accountName1: accountName1, accountName2: accountName2, roomName: roomName, subjectCode: subjectCode, slotName: slotName };
+    
     })
     setListPlan(data.items);
   }
@@ -79,7 +88,15 @@ const PlanContainer = () => {
 
   const getSemesters = async () => {
     const { data } = await apiClient.get('/api/semester-list')
-    setListSemesters(data);
+    console.log("ffff", Object.keys(data).length)
+    var ReverseArray = [];
+    var length = Object.keys(data).length;
+    for (var i = length - 1; i >= 0; i--) {
+      ReverseArray.push(data[i]);
+      console.log("dataa", data[i])
+    }
+    setListSemesters(ReverseArray);
+    setSemestersStatus(Object.keys(data).length)
 
   }
 
@@ -183,6 +200,7 @@ const PlanContainer = () => {
       dataIndex: 'reason',
       key: 'reason',
     },
+
     {
       title: 'Cập nhật',
       render: (text, record, idx) => (
@@ -266,9 +284,15 @@ const PlanContainer = () => {
       ),
     },
   ]
+  const getResult = async (id) => {
+    const { data } = await apiClient.get(`/api/list-observation-slot-plan?planId=${id}`)
+    localStorage.setItem("result",data.items[0].result)
 
+}
   const handleNavigation = (record) => {
     navigation(`/head-plan/${record.id}`);
+    getResult(record.id)
+    
   }
   const [dialogOpen, setDialogOpen] = useState(false);
   const handleClickOpen = () => {
@@ -284,7 +308,7 @@ const PlanContainer = () => {
       <Header name1="Giảng viên" link1="/lecture" />
       <div className='plan-container'>
         <div className='modal-plan'>
-          <Button type="primary" disabled={count != 1 ? true : false} onClick={showModal}>
+        <Button type="primary"  disabled={count !=semestersStatus -1 ? false : true} onClick={showModal}>
             Tạo kế hoạch dự giờ
           </Button>
           <Drawer
@@ -325,7 +349,7 @@ const PlanContainer = () => {
             {listSemesters?.length > 0 && <Table columns={semesterColums} dataSource={listSemesters} pagination={false} />}
           </div>
           <div className='column'>
-            {listPlan?.length > 0 && <Table columns={columns} dataSource={listPlan} />}
+            {listPlan?.length > 0 && <TableCustom columns={columns} dataSource={listPlan} pagination={{ defaultPageSize: 5, showSizeChanger: true, pageSizeOptions: ['5', '10', '20']}} />}
           </div>
         </div>
       </div>
@@ -333,14 +357,7 @@ const PlanContainer = () => {
   );
 };
 export default PlanContainer;
-function HomeScreen({ navigation }) {
-  return (
-    <>
-      <Header screenName="Details" />
-      <Header screenName="Detailsss" />
-    </>
-  );
-}
+
 
 
 

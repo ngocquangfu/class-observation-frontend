@@ -43,10 +43,10 @@ const AdminLecture = () => {
                 type: 'select'
             },
             {
-                name: 'check',
-                label: 'Tranning pro',
-                type: 'selected'
-            },
+                name : 'trainingPro',
+                label : "Training Pro",
+                type : 'checkbox'
+            }
         ]
     )
     const [page, setPage] = useState({
@@ -131,13 +131,14 @@ const AdminLecture = () => {
             campusId: value.campusId,
             roles: [
                 {
-                    id: 3
+                    id: 3,
+                    id : value.trainingPro ? 5 : 3
                 }
             ]
         }
         try {
             const { data } = await apiClient.post('/api/admin/new-account', body)
-            openNotificationWithIcon("success", "Thêm thanh công")
+            openNotificationWithIcon("success", "Thêm thành công")
         } catch (error) {
             openNotificationWithIcon("error", "Thêm thất bại")
 

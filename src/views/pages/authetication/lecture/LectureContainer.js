@@ -6,6 +6,7 @@ import { apiClient } from '../../../../api/api-client';
 import LectureDetailContainer from './LectureDetailContainer';
 import Header from '../Header';
 import { useId } from 'react';
+import { TableCustom } from '../../helper/style-component';
 
 const LectureContainer = () => {
 
@@ -32,7 +33,13 @@ const LectureContainer = () => {
 
   const getSemesters = async () => {
     const { data } = await apiClient.get('/api/semester-list')
-    setListSemesters(data);
+    var ReverseArray = [];
+    var length = Object.keys(data).length;
+    for (var i = length - 1; i >= 0; i--) {
+      ReverseArray.push(data[i]);
+      console.log("dataa", data[i])
+    }
+    setListSemesters(ReverseArray);
   }
 
   useEffect(() => {
@@ -149,7 +156,7 @@ const LectureContainer = () => {
 
         </div>
         <div className='column'>
-          {listData?.length > 0 && <Table columns={columns} dataSource={listData} />}
+          {listData?.length > 0 && <TableCustom columns={columns} dataSource={listData} pagination={{ defaultPageSize: 5, showSizeChanger: true, pageSizeOptions: ['5', '10', '20']}}/>}
         </div>
       </div>
     </div>
