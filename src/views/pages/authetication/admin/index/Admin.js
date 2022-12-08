@@ -30,13 +30,13 @@ const Admin = () => {
                 <img style={{ marginLeft: 20, marginRight: 20 }} src={image1} height="40" alt=''/>
                     <div  style={{marginLeft:'20px',  justifyContent: 'space-between', fontSize:"25px"}}>
                         <span type="ghost" onClick={() => handleClick(1)} style={{marginLeft:"20px", color:'white'}}>
-                            Lecture
+                            Giảng viên
                         </span>
                         <span type="ghost" onClick={() => handleClick(2)} style={{marginLeft:"20px", color:'white'}}>
-                            Head Of Subject
+                            Chủ nhiệm bộ môn
                         </span>
                         <span type="ghost" onClick={() => handleClick(3)} style={{marginLeft:"20px", color:'white'}}>
-                            Training
+                            Trưởng ban đào tạo 
                         </span>
                     </div>
                 </div>

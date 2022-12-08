@@ -1,4 +1,4 @@
-import { Button, Select, Table, Drawer } from 'antd';
+import { Button, Select, Table, Drawer, Input } from 'antd';
 import React, { useEffect, useState } from 'react';
 import ModalPlanContainer from './ModalPlanContainer';
 import '../../styles/plan.css';
@@ -15,9 +15,8 @@ const PlanContainer = () => {
   const [open, setOpen] = useState(false);
   const [listPlan, setListPlan] = useState();
   const [listSemesters, setListSemesters] = useState();
-  const [semesterId, setSemesterId] = useState(1);
+  const [semesterId, setSemesterId] = useState(2);
   const userId = localStorage.getItem('userId');
-  const role = localStorage.getItem('role');
   const [count, setCount] = useState(1);
   const [isDone, setIsDone] = useState(false);
   const [isDoneAccount, setIsDoneAccount] = useState(false);
@@ -27,15 +26,9 @@ const PlanContainer = () => {
   const [accounts, setAccounts] = useState([]);
   const campusId = localStorage.getItem('campusId');
   const [semestersStatus, setSemestersStatus] = useState();
-  const [result1, setResult1] = useState(0);
+  const [classes, setClass] = useState([]);
 
-  const getSemestersStatus = async (id) => {
-    const { data } = await apiClient.get(`/api/status-observation-plan?planId=${id}`)
-    if(data.items==1){
-      return 1
-    } return 0
-    
-  }
+
   const _requestData = async () => {
     const { data } = await apiClient.get(`/api/list-observation-slot?semesterId=${semesterId}&accountId=${userId}`)
     data.items = data.items.map((item, idx) => {
@@ -48,7 +41,7 @@ const PlanContainer = () => {
       var subjectCode = subject.find(o => o.value == item.subjectId)?.name;
       var slotName = slot.find(o => o.value == item.slotId)?.name;
       return { ...item, accountName1: accountName1, accountName2: accountName2, roomName: roomName, subjectCode: subjectCode, slotName: slotName };
-    
+
     })
     setListPlan(data.items);
   }
@@ -179,11 +172,13 @@ const PlanContainer = () => {
       title: 'Tên môn',
       dataIndex: 'subjectName',
       key: 'subjectName',
+
     },
     {
       title: 'Lớp',
       dataIndex: 'className',
       key: 'className',
+      width: '10%'
     },
     {
       title: 'Tên GV1',
@@ -199,6 +194,11 @@ const PlanContainer = () => {
       title: 'Lý do',
       dataIndex: 'reason',
       key: 'reason',
+    },
+    {
+      title: 'Trạng thái',
+      dataIndex: 'status',
+      key: 's',
     },
 
     {
@@ -228,7 +228,7 @@ const PlanContainer = () => {
 
   const [result, setResult] = useState({});
   const handleRoomChange = (e, record) => {
-    var values = { ...record, roomId: e }
+    var values = { roomId: e }
     setResult(values);
   }
   const handleSlotChange = (e, record) => {
@@ -237,6 +237,10 @@ const PlanContainer = () => {
   }
   const handleSubjectChange = (e, record) => {
     var values = { ...record, subjectId: e }
+    setResult(values);
+  }
+  const handleClassChange = (e, record) => {
+    var values = { ...record, className: e }
     setResult(values);
   }
   const [isUpdate, setIsUpdate] = useState(false);
@@ -286,13 +290,13 @@ const PlanContainer = () => {
   ]
   const getResult = async (id) => {
     const { data } = await apiClient.get(`/api/list-observation-slot-plan?planId=${id}`)
-    localStorage.setItem("result",data.items[0].result)
+    localStorage.setItem("result", data.items[0].result)
 
-}
+  }
   const handleNavigation = (record) => {
     navigation(`/head-plan/${record.id}`);
     getResult(record.id)
-    
+
   }
   const [dialogOpen, setDialogOpen] = useState(false);
   const handleClickOpen = () => {
@@ -308,7 +312,7 @@ const PlanContainer = () => {
       <Header name1="Giảng viên" link1="/lecture" />
       <div className='plan-container'>
         <div className='modal-plan'>
-        <Button type="primary"  disabled={count !=semestersStatus -1 ? false : true} onClick={showModal}>
+          <Button type="primary" disabled={count != semestersStatus - 1 ? false : true} onClick={showModal}>
             Tạo kế hoạch dự giờ
           </Button>
           <Drawer
@@ -349,7 +353,7 @@ const PlanContainer = () => {
             {listSemesters?.length > 0 && <Table columns={semesterColums} dataSource={listSemesters} pagination={false} />}
           </div>
           <div className='column'>
-            {listPlan?.length > 0 && <TableCustom columns={columns} dataSource={listPlan} pagination={{ defaultPageSize: 5, showSizeChanger: true, pageSizeOptions: ['5', '10', '20']}} />}
+            {listPlan?.length > 0 && <TableCustom columns={columns} dataSource={listPlan} pagination={{ defaultPageSize: 5, showSizeChanger: true, pageSizeOptions: ['5', '10', '20'] }} />}
           </div>
         </div>
       </div>

@@ -38,7 +38,7 @@ const AdminLecture = () => {
             },
             {
                 name: 'campusId',
-                label: 'Campus',
+                label: 'Cơ Sở',
                 data: [],
                 type: 'select'
             },
@@ -176,7 +176,7 @@ const AdminLecture = () => {
     return (
         <div style={{}}>
             <CardCustom
-                title="Table Training"
+                title="Trưởng ban đào tạo"
                 extra={<Extra
                     showDel={selectedRow && selectedRow[0]}
                     listColumn={[]}
@@ -195,7 +195,7 @@ const AdminLecture = () => {
                             render: (text, record, index) => index + 1,
                         },
                         {
-                            title: 'Name',
+                            title: 'Tên',
                             dataIndex: 'userName',
                             key: 'userName',
                         },
@@ -205,7 +205,7 @@ const AdminLecture = () => {
                             key: 'email',
                         },
                         {
-                            title: 'CampusName',
+                            title: 'Cơ sở',
                             dataIndex: 'campusName',
                             key: 'campusName',
                         }

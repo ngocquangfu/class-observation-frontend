@@ -20,17 +20,14 @@ const ModalPlanContainer = ({ handleCancel }) => {
   const [slot, setSlot] = useState([]);
 
 
-  const getDepartments = async (searchText) => {
-    const { data } = await apiClient.get(`/api/list-department?id=${campusId}&name=${searchText}`)
-    return data[0].value;
+  const getDepartments = async () => {
+    // const { data } = await apiClient.get(`/api/list-department?id=${campusId}&name=${searchText}`)
+    return userId;
   }
 
   const getSemesters = async () => {
     const { data } = await apiClient.get('/api/semester-list')
     var rooms = data;
-    rooms = rooms.map((item, idx) => {
-      return { ...item, label: item.name }
-    })
     var ReverseArray = [];
     var length = Object.keys(data).length;
     for (var i = length - 1; i >= 0; i--) {
@@ -38,7 +35,7 @@ const ModalPlanContainer = ({ handleCancel }) => {
       console.log("dataa", data[i])
     }
 
-    setSemesters(rooms);
+    setSemesters(ReverseArray);
   }
   const getSlot = async () => {
     const { data } = await apiClient.get('/api/slot-list')
@@ -82,25 +79,23 @@ const ModalPlanContainer = ({ handleCancel }) => {
   }, [])
 
 
-  const onDepartmentSearch = async (searchText) => {
-    const { data } = await apiClient.get(`/api/list-department?id=${campusId}&name=${searchText}`)
-    const searchData = [];
-    if (!searchText) {
-      searchData = [];
-    }
-    if (data && data.length > 0) {
-      for (let i = 0; i < data.length; i++) {
-        searchData.push({ value: data[i].name })
-      }
-    }
-    setDepartmentOptions(
-      !searchText ? [] : searchData,
-    );
-  };
+  // const onDepartmentSearch = async (searchText) => {
+  //   const { data } = await apiClient.get(`/api/list-department?id=${campusId}&name=${searchText}`)
+  //   const searchData = [];
+  //   if (!searchText) {
+  //     searchData = [];
+  //   }
+  //   if (data && data.length > 0) {
+  //     for (let i = 0; i < data.length; i++) {
+  //       searchData.push({ value: data[i].name })
+  //     }
+  //   }
+  //   setDepartmentOptions(
+  //     !searchText ? [] : searchData,
+  //   );
+  // };
 
   const onFinish = (fieldValues) => {
-
-
     var observationSlotsRequest = fieldValues.observationSlotsRequest;
     observationSlotsRequest = observationSlotsRequest.map((item) => {
       var date = new Date(item.slotTime._d),
@@ -108,9 +103,6 @@ const ModalPlanContainer = ({ handleCancel }) => {
         day = ("0" + date.getDate()).slice(-2);
       var dateResult = [date.getFullYear(), mnth, day].join("-");
       console.log("accountId", item.accountId1)
-
-
-
       return {
         ...item,
         headSubject: parseInt(userId),
@@ -119,6 +111,7 @@ const ModalPlanContainer = ({ handleCancel }) => {
         accountId: parseInt(item.accountId),
         accountId1: parseInt(item.accountId1),
         accountId2: parseInt(item.accountId2),
+        planStatus:null
       }
     })
 
@@ -126,14 +119,13 @@ const ModalPlanContainer = ({ handleCancel }) => {
       ...fieldValues,
       "observationSlotsRequest": observationSlotsRequest
     }
-    var department = getDepartments(fieldValues.departmentId);
-    department.then(function (result) {
+    var department = getDepartments();
+    department.then(function () {
       const finalValues = {
         ...values,
         "campusId": parseInt(campusId),
-        "departmentId": result,
+        "accountId": parseInt(userId),
       }
-      console.log("finalvalueee", finalValues)
       postPlan(finalValues);
     })
   };
@@ -209,26 +201,7 @@ const ModalPlanContainer = ({ handleCancel }) => {
             >
               <Select className='select-box' options={semesters} onChange={handleChange} />
             </Form.Item>
-            <Form.Item
-              name="departmentId"
-              label="Department"
-              rules={[
-                {
-                  required: true,
-                  message: 'Missing department',
-                },
-              ]}
-            >
-              <AutoComplete
-                options={departmentOptions}
-                value={departmentValue}
-                style={{
-                  width: 200,
-                }}
-                onSearch={onDepartmentSearch}
-                placeholder="Department"
-              />
-            </Form.Item>
+            
           </div>
           <Form.List name="observationSlotsRequest">
             {(fields, { add, remove }) => (
@@ -249,12 +222,12 @@ const ModalPlanContainer = ({ handleCancel }) => {
                               {() => (
                                 <Form.Item
                                   {...field}
-                                  label="AccountId"
+                                  label="Giảng viên"
                                   name={[field.name, 'accountId']}
                                   rules={[
                                     {
                                       required: true,
-                                      message: 'Missing sight',
+                                      message: 'Trường hợp bắt buộc',
                                     },
                                     ({ getFieldValue }) => ({
                                       validator(rule, value) {
@@ -270,11 +243,12 @@ const ModalPlanContainer = ({ handleCancel }) => {
                                     options={accounts}
                                     style={{
                                       width: 200,
+                                      marginLeft:5
                                     }}
                                     onSearch={onAccountSearch}
                                     onSelect={(value) => onSelect(value, 0)}
                                     onChange={handleChange}
-                                    placeholder="input here"
+                                    placeholder="Nhập"
                                     filterOption={(input, option) =>
                                       (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                                     }
@@ -296,25 +270,26 @@ const ModalPlanContainer = ({ handleCancel }) => {
                               {() => (
                                 <Form.Item
                                   {...field}
-                                  label="SubjectId"
+                                  label="Môn học"
 
                                   name={[field.name, 'subjectId']}
                                   rules={[
                                     {
                                       required: true,
-                                      message: 'Missing sight',
+                                      message: 'Trường hợp bắt buộc',
                                     },
                                   ]}
                                 >
                                   <Select
                                     options={subjectOptions}
                                     style={{
-                                      width: 200,
+                                      width: "520px",
+                                      marginLeft:20
                                     }}
                                     showSearch
                                     onSearch={onSubjectSearch}
                                     onChange={handleChange}
-                                    placeholder="input here"
+                                    placeholder="Nhập"
                                     filterOption={(input, option) =>
                                       (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                                     }
@@ -341,16 +316,19 @@ const ModalPlanContainer = ({ handleCancel }) => {
                               {() => (
                                 <Form.Item
                                   {...field}
-                                  label="SlotId"
+                                  label="Slot"
                                   name={[field.name, 'slotId']}
                                   rules={[
                                     {
                                       required: true,
-                                      message: 'Missing sight',
+                                      message: 'Trường hợp bắt buộc',
                                     },
                                   ]}
                                 >
-                                  <Select className='select-box' options={slot} onChange={handleChange} />
+                                  <Select className='select-box' options={slot} onChange={handleChange} style={{
+                                      width: 200,
+                                      marginLeft:47
+                                    }}/>
                                 </Form.Item>
                               )}
                             </Form.Item>
@@ -358,16 +336,17 @@ const ModalPlanContainer = ({ handleCancel }) => {
                           <div className='column is-flex is-justify-content-end'>
                             <Form.Item
                               {...field}
-                              label="slotTime"
+                              label="Thời gian"
                               name={[field.name, 'slotTime']}
                               rules={[
                                 {
                                   required: true,
-                                  message: 'Missing slotTime',
+                                  message: 'Trường hợp bắt buộc',
                                 },
                               ]}
                             >
-                              <DatePicker style={{ width: "13rem" }} disabledDate={(current) => {
+                              <DatePicker style={{ width: "13rem",width: 200,
+                                      marginLeft:15 }} disabledDate={(current) => {
                                 return moment().add(-1, 'days') >= current
                               }} />
                             </Form.Item>
@@ -380,32 +359,36 @@ const ModalPlanContainer = ({ handleCancel }) => {
 
                             <Form.Item
                               {...field}
-                              label="RoomId"
+                              label="Phòng"
                               name={[field.name, 'roomId']}
                               rules={[
                                 {
                                   required: true,
-                                  message: 'Missing RoomId  ',
+                                  message: 'Trường hợp bắt buộc',
                                 },
                               ]}
                             >
-                              <Select className='select-box' options={roomOptions} onChange={handleChange} />
+                              <Select className='select-box' options={roomOptions} onChange={handleChange} style={{
+                                      width: 200,
+                                      marginLeft:32
+                                    }} />
 
                             </Form.Item>
                           </div>
                           <div className='column is-flex is-justify-content-end'>
                             <Form.Item
                               {...field}
-                              label="Class Name"
+                              label="Lớp"
                               name={[field.name, 'className']}
                               rules={[
                                 {
                                   required: true,
-                                  message: 'Missing className',
+                                  message: 'Trường hợp bắt buộc',
                                 },
                               ]}
                             >
-                              <Input style={{ width: "13rem" }} />
+                              <Input style={{ width: "13rem", width: 200,
+                                      marginLeft:48 }} />
                             </Form.Item>
                           </div>
                         </div>
@@ -421,12 +404,12 @@ const ModalPlanContainer = ({ handleCancel }) => {
                               {() => (
                                 <Form.Item
                                   {...field}
-                                  label="AccountId1"
+                                  label="Giảng viên 1"
                                   name={[field.name, 'accountId1']}
                                   rules={[
                                     {
                                       required: true,
-                                      message: 'Missing sight',
+                                      message: 'Trường hợp bắt buộc',
                                     },
                                     ({ getFieldValue }) => ({
                                       validator(rule, value) {
@@ -446,7 +429,7 @@ const ModalPlanContainer = ({ handleCancel }) => {
                                     onSearch={onAccountSearch}
                                     onSelect={(value) => onSelect(value, 1)}
                                     onChange={handleChange}
-                                    placeholder="input here"
+                                    placeholder="Nhập"
                                     filterOption={(input, option) =>
                                       (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                                     }
@@ -466,12 +449,12 @@ const ModalPlanContainer = ({ handleCancel }) => {
                               {() => (
                                 <Form.Item
                                   {...field}
-                                  label="AccountId2"
+                                  label="Giảng viên 2"
                                   name={[field.name, 'accountId2']}
                                   rules={[
                                     {
                                       required: true,
-                                      message: 'Missing accountId2',
+                                      message: 'Trường hợp bắt buộc',
                                     },
                                     ({ getFieldValue }) => ({
                                       validator(rule, value) {
@@ -491,7 +474,7 @@ const ModalPlanContainer = ({ handleCancel }) => {
                                     onSearch={onAccountSearch}
                                     onSelect={(value) => onSelect(value, 2)}
                                     onChange={handleChange}
-                                    placeholder="input here"
+                                    placeholder="Nhập"
                                     filterOption={(input, option) =>
                                       (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                                     }
@@ -506,16 +489,19 @@ const ModalPlanContainer = ({ handleCancel }) => {
                         <div className=''>
                           <Form.Item
                             {...field}
-                            label="Reason"
+                            label="Lý do"
                             name={[field.name, 'reason']}
                             rules={[
                               {
                                 required: true,
-                                message: 'Missing reason',
+                                message: 'Trường hợp bắt buộc',
                               },
                             ]}
                           >
-                            <Input />
+                            <Input style={{
+                                      width: "520px",
+                                      marginLeft:47
+                                    }}/>
                           </Form.Item>
 
                           <Form.Item

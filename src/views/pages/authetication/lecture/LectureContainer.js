@@ -37,7 +37,6 @@ const LectureContainer = () => {
     var length = Object.keys(data).length;
     for (var i = length - 1; i >= 0; i--) {
       ReverseArray.push(data[i]);
-      console.log("dataa", data[i])
     }
     setListSemesters(ReverseArray);
   }

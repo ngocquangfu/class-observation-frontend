@@ -1,7 +1,7 @@
 import {public_route} from './router/Router'
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Login from './views/pages/authetication/login/Login';
-
+import Home from './views/pages/home/Home';
 
 function App() {
     const isLogin = localStorage.getItem("access_token") ? true : false;
@@ -11,6 +11,7 @@ function App() {
       <div>
         <BrowserRouter>
           <Routes>
+          
             {
               public_route.map(route => {
                 const checkRole = isLogin && route.role.filter(i => role?.includes(i)).length > 0

@@ -11,7 +11,9 @@ const AdminLecture = () => {
     const [selectedRow, setSelectRow] = useState([]);
     const [dataTable, setDataTable] = useState([])
     const [total, setTotal] = useState(10)
+    const campusId=localStorage.getItem("campusId")
     const [listCampus, setListCampus] = React.useState([])
+    const [listDepartment, setListDepartment] = React.useState([])
     const [formAdd, setFormAdd] = React.useState(
         [
             {
@@ -24,7 +26,13 @@ const AdminLecture = () => {
             },
             {
                 name: 'campusId',
-                label: 'Campus',
+                label: 'Cơ sở',
+                data: [],
+                type: 'select'
+            },
+            {
+                name: 'departmentId',
+                label: 'Bộ môn',
                 data: [],
                 type: 'select'
             },
@@ -38,15 +46,22 @@ const AdminLecture = () => {
     const [showAddNew, setShowAddNew] = useState(false);
     const [showDetail, setShowDetail] = useState(false);
 
+    const getListDepartment = async (campusId) => {
+        const { data } = await apiClient.get(`/api/list-department?id=${campusId}&name=`)
+        setListDepartment(data)
+    }
     const _requestData = async () => {
-        const { data } = await apiClient.get('/api/campus-dropdown-list')
+        const { data } = await apiClient.get(`/api/campus-dropdown-list`)
         const convertData = data.map((i, idx) => {
             return {
                 value: i.value,
                 label: i.name
             }
         })
+       
         setListCampus(convertData)
+        
+
         const convertDataFormAdd = formAdd.map(i => {
             if (i.type == "select") {
                 return {
@@ -97,6 +112,7 @@ const AdminLecture = () => {
             userName: value.userName,
             email: value.email,
             campusId: value.campusId,
+            departmentId: value.departmentId,
             roles: [
                 {
                     id: 2
@@ -118,6 +134,7 @@ const AdminLecture = () => {
             userName: value.userName,
             email: value.email,
             campusId: value.campusId,
+            departmentId: value.departmentId,
             roles: [
                 {
                     id: 2
@@ -138,13 +155,14 @@ const AdminLecture = () => {
         _requestDataTable()
     }
     useEffect(() => {
+        getListDepartment(campusId)
         _requestDataTable()
         _requestData()
     }, [page])
     return (
         <div style={{}}>
             <CardCustom
-                title="Table Head Of Subject"
+                title="Chủ nhiệm bộ môn"
                 extra={<Extra
                     showDel={selectedRow && selectedRow[0]}
                     listColumn={[]}
@@ -164,7 +182,7 @@ const AdminLecture = () => {
                             render: (text, record, index) => index + 1,
                         },
                         {
-                            title: 'Name',
+                            title: 'Tên',
                             dataIndex: 'userName',
                             key: 'userName',
                         },
@@ -174,9 +192,14 @@ const AdminLecture = () => {
                             key: 'email',
                         },
                         {
-                            title: 'CampusName',
+                            title: 'Cơ sở',
                             dataIndex: 'campusName',
                             key: 'campusName',
+                        },
+                        {
+                            title: 'Bộ môn',
+                            dataIndex: 'departmentName',
+                            key: 'departmentName',
                         },
                     ]}
                     scroll={{ y: 'calc(100vh - 190px)' }} pagination={{ defaultPageSize: 10, showSizeChanger: true, pageSizeOptions: ['10', '15', '30'] }}
@@ -185,6 +208,7 @@ const AdminLecture = () => {
                         onChange: (selectedRowKeys, selectedRows) => {
                             setSelectRow(selectedRowKeys)
                         }
+                        
                     }}
                     onRow={(r) => ({
                         onClick: () => {
@@ -194,8 +218,8 @@ const AdminLecture = () => {
                                     id: r.id,
                                     userName: r.userName,
                                     email: r.email,
-                                    campusId: listCampus.find(i => i.label == r.campusName).value
-                                }, type: "EDIT"
+                                    campusId: listCampus.find(i => i.label == r.campusName).value,
+                                }, type: "Sửa"
                             })
                         }
                     })}

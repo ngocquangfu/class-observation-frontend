@@ -26,7 +26,7 @@ const AdminLecture = () => {
             },
             {
                 name : 'campusId',
-                label : 'Campus',
+                label : 'Cơ sở',
                 data : [],
                 type : 'select'
             },
@@ -65,6 +65,7 @@ const AdminLecture = () => {
                 return i
             }
         })
+        console.log("convertDataFormAdd:", convertDataFormAdd)
         setFormAdd(convertDataFormAdd)
     }
     const _requestDataTable = async () => {
@@ -151,7 +152,7 @@ const AdminLecture = () => {
     return (
         <div style={{}}>
             <CardCustom
-                title="Table Lecture"
+                title="Giảng viên"
                 extra={<Extra
                     showDel={selectedRow && selectedRow[0]}
                     listColumn={[]}

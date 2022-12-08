@@ -14,7 +14,7 @@ export const RenderForm = ({ jsonFrom = () => { } }) => {
                             label={item.label}
                             rules={item.rules}
                             style={item.hidden ? { display: 'none' } : { margin: '0', width: '45%' }}>
-                            <Select placeholder="Chọn Campus">
+                            <Select placeholder="Vui lòng chọn">
                                 {
                                     item.data.map(i => {
                                         return <Option key={i.value} value={i.value}>{i.label}</Option>

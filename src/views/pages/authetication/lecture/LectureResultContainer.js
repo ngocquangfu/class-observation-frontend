@@ -12,7 +12,7 @@ const LectureResultContainer= () => {
 
     const [listData, setListData] = useState();
     const [listSemesters, setListSemesters] = useState();
-    const [semesterId, setSemesterId] = useState(1);
+    const [semesterId, setSemesterId] = useState(2);
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [detail, setDetail] = useState({});
