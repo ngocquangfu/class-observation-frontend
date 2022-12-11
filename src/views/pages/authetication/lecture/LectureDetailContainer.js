@@ -219,7 +219,7 @@ const LectureDetailContainer = (props) => {
               rules={[
                 {
                   required: true,
-                  message: 'Missing lecture advantage',
+                  message: 'Trường hợp này là bắt buộc',
                 },
               ]}
             >
@@ -231,7 +231,7 @@ const LectureDetailContainer = (props) => {
               rules={[
                 {
                   required: true,
-                  message: 'Missing lecture disadvantage',
+                  message: 'Trường hợp này là bắt buộc',
                 },
               ]}
             >
@@ -243,7 +243,7 @@ const LectureDetailContainer = (props) => {
               rules={[
                 {
                   required: true,
-                  message: 'Missing lecture comment',
+                  message: 'Trường hợp này là bắt buộc',
                 },
               ]}
             >

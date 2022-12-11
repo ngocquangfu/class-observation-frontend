@@ -16,6 +16,8 @@ const ModalPlanContainer = ({ handleCancel }) => {
   const [subjectOptions, setSubjectOptions] = useState([]);
   const [roomOptions, setRoomOptions] = useState([]);
   const [semesters, setSemesters] = useState([]);
+  const [semestersOption, setSemestersOption] = useState([]);
+
   const [accounts, setAccounts] = useState([]);
   const [slot, setSlot] = useState([]);
 
@@ -28,14 +30,18 @@ const ModalPlanContainer = ({ handleCancel }) => {
   const getSemesters = async () => {
     const { data } = await apiClient.get('/api/semester-list')
     var rooms = data;
+    
     var ReverseArray = [];
     var length = Object.keys(data).length;
     for (var i = length - 1; i >= 0; i--) {
       ReverseArray.push(data[i]);
-      console.log("dataa", data[i])
+      console.log("dataa1", data[i])
     }
-
+    rooms = rooms.map((item, idx) => {
+      return { ...item, label: item.name }
+    })
     setSemesters(ReverseArray);
+    setSemestersOption(rooms)
   }
   const getSlot = async () => {
     const { data } = await apiClient.get('/api/slot-list')
@@ -51,6 +57,7 @@ const ModalPlanContainer = ({ handleCancel }) => {
     subjects = subjects.map((item, idx) => {
       return { ...item, label: item.name }
     })
+    console.log("ssssss", subjects)
     setSubjectOptions(subjects);
   }
   const getRooms = async () => {
@@ -199,7 +206,7 @@ const ModalPlanContainer = ({ handleCancel }) => {
                 },
               ]}
             >
-              <Select className='select-box' options={semesters} onChange={handleChange} />
+              <Select className='select-box' options={semestersOption} onChange={handleChange} />
             </Form.Item>
             
           </div>

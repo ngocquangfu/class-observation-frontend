@@ -6,10 +6,17 @@ import { apiClient } from '../../../../api/api-client';
 import { gapi } from "gapi-script";
 import { useNavigate } from 'react-router-dom';
 import '../../styles/login.css';
-import image1 from '../../../../assets/images/svg-1.svg';
+import { Select } from 'antd';
+import image1 from '../../../../assets/images/logofpoly.png';
+import image2 from '../../../../assets/images/logogg.png';
+import { openNotificationWithIcon } from '../../request/notification';
+
 const Login = () => {
     const [listCampus, setListCampus] = React.useState([])
     const [campus, setCampus] = React.useState(null)
+    const [notify, setNotify] = React.useState("")
+
+
     const navigation = useNavigate()
     const _requestData = async () => {
         const { data } = await apiClient.get('/api/campus-dropdown-list')
@@ -21,15 +28,13 @@ const Login = () => {
         })
         setListCampus(convertData)
     }
-
-
     const handleLogin = async (ggApi) => {
+        console.log('gg', ggApi);
         if (campus) {
             const body = {
                 token: ggApi.tokenId,
                 campusId: campus
             }
-
             const { data } = await apiClient.post('/auth/google', body)
             if (data.accessToken) {
                 console.log('data', data);
@@ -40,6 +45,7 @@ const Login = () => {
                 localStorage.setItem("userId", data.userId)
                 localStorage.setItem("userName", data.userName)
                 localStorage.setItem("role", JSON.stringify(role))
+
                 if (parseInt(role) === 1) {
                     navigation("/admin")
                 } if (parseInt(role) === 2) {
@@ -54,15 +60,24 @@ const Login = () => {
                 if (role == 5) {
                     navigation("/train")
                 }
+
+
+            } 
+            else {
+                openNotificationWithIcon("", "Tài khoản của bạn không được phép đăng nhập vào hệ thống")
+
             }
-
-
         }
     }
-
-
+    const onChange = (value) => {
+        setCampus(value)
+    };
+    const onSearch = (value) => {
+        console.log('search:', value);
+    };
     const handleFailLogin = (err) => {
         console.log(err);
+        openNotificationWithIcon("", "Đăng nhập thất bại")
     }
     useEffect(() => {
         _requestData()
@@ -78,40 +93,48 @@ const Login = () => {
         gapi.load('client:auth2', start);
     }, []);
     return (
-        <>
-            <NavBar />
-            <div className="login" >
-                <div className='form-login'>
-                    <div style={{ display: 'relative', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                        <div>
-                            <img src={image1} width='280' />
-                        </div>
-                        <span className="custom-dropdown big">
-                            <select onChange={e => setCampus(parseInt(e.target.options.selectedIndex))} >
-                                <option hidden >Choose campus</option>
-                                {listCampus.map((campus) => (
-                                    <option key={campus.value + 1} value={campus.value + 1} >
-                                        {campus.label}
-
-                                    </option>
-                                ))}
-                            </select>
-                        </span>
-                        <GoogleLogin
-                            clientId={process.env.REACT_APP_GOOGLE_API_ID}
-                            buttonText="Sign in with @fpt.edu.vn"
-                            className='login-with-google-btn'
-                            onSuccess={handleLogin}
-                            onFailure={handleFailLogin}
-                            cookiePolicy={'single_host_origin'}
-                        >
-                        </GoogleLogin>
-
-                        <br />
-
-
+        <><NavBar />
+            <div className="wrap-login">
+                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                    <div>
+                        <img src={image1} width='280' />
                     </div>
-
+                    <div className='box-login'>
+                        <div style={{ color: '#252525', fontSize: 32, fontWeight: 600 }}>Login</div>
+                        <div style={{ margin: "20px 0" }}>
+                            <span style={{ color: 'red' }}>{notify}</span>
+                            <Select
+                                size='large'
+                                showSearch
+                                placeholder="Chọn cơ sở"
+                                optionFilterProp="children"
+                                onChange={onChange}
+                                onSearch={onSearch}
+                                filterOption={(input, option) =>
+                                    (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                                }
+                                options={listCampus}
+                                style={{ width: "370px", alignItems: 'center' }}
+                                className='choose-campus'
+                            />
+                        </div>
+                        <div className='login-google'>
+                            <div style={{ marginTop: "5px", marginLeft: "15px" }}>
+                                <img src={image2} width='28' style={{ alignItems: 'center' }} />
+                            </div>
+                            <GoogleLogin
+                                clientId={process.env.REACT_APP_GOOGLE_API_ID}
+                                buttonText="Sign in with @fpt.edu.vn"
+                                onSuccess={handleLogin}
+                                onFailure={handleFailLogin}
+                                cookiePolicy={'single_host_origin'}
+                                className='button-google'
+                                icon={false}
+                                style={{ boxShadow: "none" }}
+                            >
+                            </GoogleLogin>
+                        </div>
+                    </div>
                 </div>
             </div>
             <Footer />
@@ -119,5 +142,4 @@ const Login = () => {
     );
 };
 
-export default Login
-
+export default Login;

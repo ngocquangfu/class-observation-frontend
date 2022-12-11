@@ -81,7 +81,6 @@ const PlanContainer = () => {
 
   const getSemesters = async () => {
     const { data } = await apiClient.get('/api/semester-list')
-    console.log("ffff", Object.keys(data).length)
     var ReverseArray = [];
     var length = Object.keys(data).length;
     for (var i = length - 1; i >= 0; i--) {

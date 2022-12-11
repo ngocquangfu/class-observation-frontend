@@ -8,7 +8,8 @@ import Header from '../Header';
 import { green } from '@mui/material/colors';
 const AssessmentPlan = () => {
     const [listData, setListData] = useState([]);
-    const [result, setResult] = useState();
+    const [result, setResult] = useState(0);
+    const [show , setShow] = useState(true)
     const id = window.location.pathname.split("/")[2];
     const navigation = useNavigate()
     const onChange = () => {
@@ -18,15 +19,24 @@ const AssessmentPlan = () => {
         setListData(data.items)
 
     }
-    const getResultId = async () => {
-        const { data } = await apiClient.get(`/api/list-observation-slot-plan?planId=${id}`)
-        console.log("dddsf", data.items[0].result)
-        setResult(data.items[0].result)
+    // const getResultId = async () => {
+    //     const { data } = await apiClient.get(`/api/list-observation-slot-plan?planId=${id}`)
+    //     console.log("dddsf", data.items[0].result)
+    //     setResult(data.items[0].result)
 
+    // }
+    const checkShowReview = async () => {
+        const { data } = await apiClient.get(`/api/status-observation-slot?slotId=${id}`)
+        if(data?.items != 0){
+            setResult(data.items)
+            console.log("test result", data.items)
+            setShow(false)
+            
+        }
     }
     useEffect(() => {
         _requestData()
-        getResultId()
+        checkShowReview()
 
     }, [])
     return (<>
@@ -48,7 +58,7 @@ const AssessmentPlan = () => {
                     };
                 })}
             />
-                <div className='columns mt-5'>
+                {show &&<div className='columns mt-5'>
                     <div className='column is-1' style={{ marginLeft: "40rem" }}>
                         <button  onClick={async () => {
                             const { data } = await apiClient.post(`api/pass-observation-slot?oSlotId=${id}&pass=${2}`)
@@ -72,7 +82,7 @@ const AssessmentPlan = () => {
                             Đạt yêu cầu
                         </button>
                     </div>
-                </div> 
+                </div> }
         </div>
     </>
     );

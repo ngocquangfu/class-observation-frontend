@@ -4,6 +4,8 @@
   justify-content: end;
   display: flex;
   margin-bottom: 2rem;
+  background-image: url('../../../assets/images/BG2.png');
+
 }
 
 .ant-modal{

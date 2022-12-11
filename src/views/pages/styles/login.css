@@ -1,86 +1,69 @@
-p {
-  line-height: 1.5em;
-}
-
-
-
-.login {
-  margin: 60px auto ;
-  width: 350px;
-  padding: 22px 22px 22px 22px;
-  border-radius: 10px;
-  background: #fff;
-  border: 2px solid #757575;
-  box-shadow: 2px 10px 10px 10px rgba(0, 0, 0, .04), 0 1px 1px rgba(0, 0, 0, .25);
-}
-
-
-.login-with-google-btn {
-  transition: background-color .3s, box-shadow .3s;
-  width: 300px;
-  height: 42px;
-  border: none;
-  margin-top: 4px;
-  justify-content: center;
-  border-radius: 3px;
-  box-shadow: 2px 10px 0 rgba(0, 0, 0, .04), 0 1px 1px rgba(0, 0, 0, .25);
-  color: #757575;
-  font-size: 14px;
-  font-weight: 500;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  background-color: white;
+.wrap-login{
+  background-image: url('../../../assets/images/BG2.png');
+  background-position: center center;
   background-repeat: no-repeat;
-  background-position: 12px 11px;
+  background-size: cover;
+  /* background-color: aquamarine; */
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-
-
-.big {
-  font-size: 1.2em;
-}
-
-.custom-dropdown {
-  position: relative;
-  display: inline-block;
-  vertical-align: middle;
-  margin-top: 15px;
-}
-
-.custom-dropdown select {
-  background-color: #265a88;
-  color: #fff;
-  font-size: inherit;
-  width: 300px;
-  height: 42px;
-  border: 0;
-  margin: 0;
+.box-login{
+  padding: 20px;
   text-align: center;
-  border-radius: 3px;
-  text-indent: 0.01px;
-  text-overflow: '';
+  width: 450px;
+  box-shadow: 0px 8px 32px rgb(0 0 0 / 7%);
+  border-radius: 15px;
+  margin-top: 30px;
+  background-color: white;
 }
 
-.custom-dropdown::before,
-.custom-dropdown::after {
-  content: "";
-  position: absolute;
-  pointer-events: none;
+.google-login{
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 1px 1px 3px rgb(0 0 0 / 17%);
+  text-decoration: none;
+  transition: all 300ms;
+  color: black;
+  display: flex;
 }
 
-.custom-dropdown::after {
-  content: "\25BC";
-  height: 1em;
-  font-size: .625em;
-  line-height: 1;
-  right: 1.2em;
-  top: 50%;
-  margin-top: -.5em;
+.ant-form-item-row{
+  width: 100% !important;
+  margin-right: 0px !important;
+
 }
 
-.custom-dropdown::before {
-  width: 2em;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  border-radius: 0 3px 3px 0;
+.admin-header:hover{
+  color: yellow !important;
+}
+.button-google{
+  height: 40px !important;
+  border: none;
+  margin: auto;
+  margin-left: 60px;
+  box-shadow: none !important;
+}
+.choose-campus{
+  background-color: azure !important;
+  border-radius: 8px;
+  color: white;
+}
+.login-google{
+  display: flex;
+  width: 370px;
+  align-items: center;
+  margin-left: 20px;
+  border: 1px solid black;
+  border-radius: 8px;
+}
+
+.ant-select-selector{
+  background-color: white !important;
+  border: 1px solid;
+  border-radius: 8px;
 }
