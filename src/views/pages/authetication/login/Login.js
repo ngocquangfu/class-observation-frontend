@@ -30,13 +30,18 @@ const Login = () => {
     }
     const handleLogin = async (ggApi) => {
         console.log('gg', ggApi);
+       
         if (campus) {
             const body = {
                 token: ggApi.tokenId,
                 campusId: campus
             }
+
+            
             const { data } = await apiClient.post('/auth/google', body)
-            if (data.accessToken) {
+            console.log('data9998', data.accessToken);
+
+            if (data.accessToken!=null) {
                 console.log('data', data);
                 const role = data.setRole.map(i => i.id)
                 console.log("role", role);
@@ -60,13 +65,15 @@ const Login = () => {
                 if (role == 5) {
                     navigation("/train")
                 }
+                
 
 
-            } 
-            else {
-                openNotificationWithIcon("", "Tài khoản của bạn không được phép đăng nhập vào hệ thống")
-
+            } else{
+            openNotificationWithIcon("error", "Tài khoản của bạn không được phép đăng nhập vào hệ thống")
             }
+            
+
+            
         }
     }
     const onChange = (value) => {

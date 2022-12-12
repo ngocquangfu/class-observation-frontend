@@ -7,15 +7,35 @@ import { useNavigate, NavigationContainer } from 'react-router-dom';
 import { openNotificationWithIcon } from '../../request/notification';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import Header from '../Header';
-import { TableCustom } from '../../helper/style-component';
-
+import { TableCustom, CardCustom } from '../../helper/style-component';
+import { DeleteOutlined,  ReloadOutlined, PlusOutlined} from "@ant-design/icons";
+const dataStatus = [
+  {
+    name: 'Đợi duyệt',
+    backgroundColor: 'yellow',
+    color: 'black',
+    disabled: false
+  },
+  {
+    name: 'Đã duyệt',
+    backgroundColor: '#1677ff',
+    color: 'black',
+    disabled: true
+  },
+  {
+    name: 'Từ chối',
+    backgroundColor: '#ff4d4f',
+    color: 'black',
+    disabled: false
+  }
+]
 const PlanContainer = () => {
   const navigation = useNavigate();
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [listPlan, setListPlan] = useState();
   const [listSemesters, setListSemesters] = useState();
-  const [semesterId, setSemesterId] = useState(2);
+  const [semesterId, setSemesterId] = useState(1);
   const userId = localStorage.getItem('userId');
   const [count, setCount] = useState(1);
   const [isDone, setIsDone] = useState(false);
@@ -25,14 +45,28 @@ const PlanContainer = () => {
   const [subject, setSubject] = useState([]);
   const [accounts, setAccounts] = useState([]);
   const campusId = localStorage.getItem('campusId');
-  const [semestersStatus, setSemestersStatus] = useState();
-  const [classes, setClass] = useState([]);
-
-
+  const [selectedRow, setSelectRow] = useState([]);
+  const [status, setStatus] = useState({});
+  const [listSemestersOption, setListSemestersOption] = useState([]);
+  const [semesterNow, setSemesterNow] = useState(0);
+  
+  const _getStatusListPlan = async (id) => {
+    const { data } = await apiClient.get(`/api/status-observation-plan?planId=${id}`)
+    setStatus(dataStatus[data.items])
+  }
+  const getSemestersCurrent = async () => {
+    const { data } = await apiClient.get(`/api/semester-current`)
+    setSemesterNow(data.items)
+  }
   const _requestData = async () => {
-    const { data } = await apiClient.get(`/api/list-observation-slot?semesterId=${semesterId}&accountId=${userId}`)
+    // setSemesterId(semesterNow)
+    const { data } = await apiClient.get(`/api/list-observation-slot?semesterId=${semesterNow}&accountId=${userId}`)
+    console.log(semesterNow)
+
+    // _getStatusListPlan(data.items[0].planId)
     data.items = data.items.map((item, idx) => {
       var date = new Date(`${item.slotTime}`);
+
       item.slotTime =
         ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear();
       let accountName1 = accounts.find(o => o.value == item.accountId1)?.name;
@@ -40,9 +74,9 @@ const PlanContainer = () => {
       var roomName = room.find(o => o.value == item.roomId)?.name;
       var subjectCode = subject.find(o => o.value == item.subjectId)?.name;
       var slotName = slot.find(o => o.value == item.slotId)?.name;
-      return { ...item, accountName1: accountName1, accountName2: accountName2, roomName: roomName, subjectCode: subjectCode, slotName: slotName };
-
+      return { ...item, accountName1: accountName1, accountName2: accountName2, roomName: roomName, subjectCode: subjectCode, slotName: slotName, key: item.id };
     })
+
     setListPlan(data.items);
   }
   const getSlot = async () => {
@@ -53,6 +87,7 @@ const PlanContainer = () => {
     })
     setSlot(rooms);
   }
+
   const getSubjects = async () => {
     const { data } = await apiClient.get(`/api/subject-dropdown-list?id=${campusId}&code=`)
     var subjects = data;
@@ -81,6 +116,10 @@ const PlanContainer = () => {
 
   const getSemesters = async () => {
     const { data } = await apiClient.get('/api/semester-list')
+    var rooms = data;
+    rooms = rooms.map((item, idx) => {
+      return { ...item, label: item.name }
+    })
     var ReverseArray = [];
     var length = Object.keys(data).length;
     for (var i = length - 1; i >= 0; i--) {
@@ -88,7 +127,8 @@ const PlanContainer = () => {
       console.log("dataa", data[i])
     }
     setListSemesters(ReverseArray);
-    setSemestersStatus(Object.keys(data).length)
+    setSemesterId(data.length)
+    setListSemestersOption(rooms)
 
   }
 
@@ -99,12 +139,15 @@ const PlanContainer = () => {
     getSubjects();
     getAccounts();
     setIsDone(true)
+
   }, [])
 
   useEffect(() => {
     if (isDone & isDoneAccount) {
       _requestData();
       setCount(semesterId)
+    getSemestersCurrent()
+
     }
   }, [semesterId, isDone, isDoneAccount])
 
@@ -195,12 +238,6 @@ const PlanContainer = () => {
       key: 'reason',
     },
     {
-      title: 'Trạng thái',
-      dataIndex: 'status',
-      key: 's',
-    },
-
-    {
       title: 'Cập nhật',
       render: (text, record, idx) => (
         isUpdate && idx == index ?
@@ -224,6 +261,23 @@ const PlanContainer = () => {
     },
 
   ];
+  const _handleDel = () => {
+    const isBool = window.confirm("Bạn có muốn xoá không")
+    if (isBool) {
+      selectedRow.map(async (item) => {
+        try {
+          const { data } = await apiClient.post(`/api/delete-observation-slot?slotId=${item}`)
+          openNotificationWithIcon("success", "Xoá thành công");
+          _requestData();
+        } catch (error) {
+          openNotificationWithIcon("error", error.message)
+        }
+      })
+    }
+    setTimeout(() => {
+      _requestData()
+    }, 1000)
+  }
 
   const [result, setResult] = useState({});
   const handleRoomChange = (e, record) => {
@@ -311,7 +365,8 @@ const PlanContainer = () => {
       <Header name1="Giảng viên" link1="/lecture" />
       <div className='plan-container'>
         <div className='modal-plan'>
-          <Button type="primary" disabled={count != semestersStatus - 1 ? false : true} onClick={showModal}>
+          {/* disabled={semesterId == listSemesters?.length ? false : true} */}
+          <Button  type="primary" onClick={showModal}>
             Tạo kế hoạch dự giờ
           </Button>
           <Drawer
@@ -349,17 +404,64 @@ const PlanContainer = () => {
         </Dialog>
         <div className='columns'>
           <div className='column ml-4 is-1 mr-6'>
-            {listSemesters?.length > 0 && <Table columns={semesterColums} dataSource={listSemesters} pagination={false} />}
+            {listSemesters?.length > 0 && <TableCustom columns={semesterColums} dataSource={listSemesters} pagination={false} />}
           </div>
-          <div className='column'>
-            {listPlan?.length > 0 && <TableCustom columns={columns} dataSource={listPlan} pagination={{ defaultPageSize: 5, showSizeChanger: true, pageSizeOptions: ['5', '10', '20'] }} />}
-          </div>
+          <div className='column' style={{ borderLeft: "1px solid black" }}>
+            {listPlan?.length > 0 &&
+              <CardCustom
+                title={
+                  <div style={{ display: 'flex', alignContent: 'center' }}>
+                    <p style={{ marginRight: 20 }}>Bảng trưởng bộ môn</p>
+                    <Button onClick={() => postUpdateSlot()} disabled={status.disabled} style={{ background: status?.backgroundColor || 'blue', color: status.color }}>{status?.name || ''}</Button>
+                  </div>
+                }
+                extra={<Extra
+                  showDel={selectedRow && selectedRow[0]}
+                  // listColumn={[]}
+                  _onReload={_requestData}
+                  _handleDel={selectedRow.length > 0 ? _handleDel : () => { }}
+                // _onClickAdd={() => setShowAddNew(true)}
+                // _onClickColumnShow={() => setShowColumn(true)}
+                />}
+              >
+                <TableCustom
+                  rowSelection={{
+                    type: 'checkbox',
+                    onChange: (selectedRowKeys, selectedRows) => {
+                      console.log(selectedRowKeys, selectedRows);
+                      setSelectRow(selectedRowKeys)
+                    }
+                  }}
+                  columns={columns}
+                  dataSource={listPlan} /></CardCustom>}</div>
         </div>
       </div>
     </>
   );
 };
 export default PlanContainer;
+const Extra = ({
+  showDel = true,
+
+  _handleDel = () => { },
+  _onClickAdd = () => { },
+  _onFilter = () => { },
+  _onReload = () => { },
+  // _onClickColumnShow = () => { },
+}) => {
+
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', paddingRight: 7, justifyContent: 'space-between' }}>
+      <div style={{ display: 'flex', flex: 1 }}>
+        <div style={{ display: 'flex' }}>
+        <Button onClick={_onClickAdd} className="ro-custom" type="text" icon={<PlusOutlined />} >Thêm Slot</Button>
+          {!showDel ? null : <Button onClick={_handleDel} className="ro-custom" type="text" icon={<DeleteOutlined />} >Xoá item đã chọn</Button>}
+          <Button onClick={() => _onReload()} className="ro-custom" type="text" icon={<ReloadOutlined />} >Làm mới</Button>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 
 

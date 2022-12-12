@@ -11,7 +11,7 @@ const AdminLecture = () => {
     const [selectedRow, setSelectRow] = useState([]);
     const [dataTable, setDataTable] = useState([])
     const [total, setTotal] = useState(10)
-    const campusId=localStorage.getItem("campusId")
+    const campusId = localStorage.getItem("campusId")
     const [listCampus, setListCampus] = React.useState([])
     const [listDepartment, setListDepartment] = React.useState([])
     const [formAdd, setFormAdd] = React.useState(
@@ -31,10 +31,10 @@ const AdminLecture = () => {
                 type: 'select'
             },
             {
-                name: 'departmentId',
+                name: 'department',
                 label: 'Bộ môn',
                 data: [],
-                type: 'select'
+                type: 'department'
             },
         ]
     )
@@ -58,9 +58,9 @@ const AdminLecture = () => {
                 label: i.name
             }
         })
-       
+
         setListCampus(convertData)
-        
+
 
         const convertDataFormAdd = formAdd.map(i => {
             if (i.type == "select") {
@@ -106,13 +106,12 @@ const AdminLecture = () => {
 
 
     const _handleAddNew = async (value) => {
-        console.log("value", value);
 
         const body = {
             userName: value.userName,
             email: value.email,
             campusId: value.campusId,
-            departmentId: value.departmentId,
+            departmentId: value.department,
             roles: [
                 {
                     id: 2
@@ -121,6 +120,8 @@ const AdminLecture = () => {
         }
         try {
             const { data } = await apiClient.post('/api/admin/new-account', body)
+            console.log("body", body);
+
             openNotificationWithIcon("success", "Thêm thành công")
         } catch (error) {
             openNotificationWithIcon("error", "Thêm thất bại")
@@ -134,7 +135,7 @@ const AdminLecture = () => {
             userName: value.userName,
             email: value.email,
             campusId: value.campusId,
-            departmentId: value.departmentId,
+            departmentId: value.department,
             roles: [
                 {
                     id: 2
@@ -208,7 +209,7 @@ const AdminLecture = () => {
                         onChange: (selectedRowKeys, selectedRows) => {
                             setSelectRow(selectedRowKeys)
                         }
-                        
+
                     }}
                     onRow={(r) => ({
                         onClick: () => {
@@ -265,7 +266,7 @@ const Extra = ({
         <div style={{ display: 'flex', alignItems: 'center', paddingRight: 7, justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', flex: 1 }}>
                 <div style={{ display: 'flex' }}>
-                    {!showDel ? null : <Button onClick={_handleDel} className="ro-custom" type="text" icon={<DeleteOutlined />} >Xoá item đã chọn</Button>}
+                    {!showDel ? null : <Button onClick={_handleDel} className="ro-custom" type="text" icon={<DeleteOutlined />} >Vô hiệu hóa tài khoản</Button>}
                     <Button onClick={() => _onReload()} className="ro-custom" type="text" icon={<ReloadOutlined />} >Làm mới</Button>
                     <Button onClick={_onClickAdd} className="ro-custom" type="text" icon={<PlusOutlined />} >Thêm</Button>
                 </div>

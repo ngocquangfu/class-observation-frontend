@@ -204,7 +204,7 @@ const LectureDetailContainer = (props) => {
               rules={[
                 {
                   required: true,
-                  message: 'Missing lecture name',
+                  message: 'Trường hợp này là bắt buộc',
                 },
               ]}
             >

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from "antd";
+import { Button ,Checkbox} from "antd";
 import { PlusOutlined, DeleteOutlined, ReloadOutlined } from "@ant-design/icons";
 import { CardCustom, TableCustom } from '../../../helper/style-component'
 import { apiClient } from '../../../../../api/api-client';
@@ -13,19 +13,7 @@ const AdminLecture = () => {
     const [dataTable, setDataTable] = useState([])
     const [total] = useState(10)
     const [listCampus, setListCampus] = React.useState([])
-    const [yesNo, setYesNo] = useState([
-        {
-            label: 'Yes',
-            name: "yes",
-            value: 1
-        },
-        {
-
-            label: 'No',
-            name: "no",
-            value: 0
-        },
-    ])
+    
     const [formAdd, setFormAdd] = React.useState(
         [
             {
@@ -44,7 +32,7 @@ const AdminLecture = () => {
             },
             {
                 name : 'trainingPro',
-                label : "Training Pro",
+                label : 'Trưởng ban HO',
                 type : 'checkbox'
             }
         ]
@@ -71,13 +59,7 @@ const AdminLecture = () => {
             }
         })
         setListCampus(convertData)
-        const convertDatayn = yesNo.map((i, idx) => {
-            return {
-                value: i.value,
-                label: i.name,
-            }
-        })
-        setYesNo(convertDatayn)
+        
         const convertDataFormAdd = formAdd.map(i => {
             if (i.type == "select") {
                 return {
@@ -97,13 +79,23 @@ const AdminLecture = () => {
     const _requestDataTable = async () => {
         const start = page.current === 1 ? 0 : page.current * page.number_of_page - page.number_of_page
         const end = page.current * page.number_of_page
-        const { data } = await apiClient.get(`/api/admin/list-account-role?roleId=3&start=${start}&end=${end}`)
-        const convertData = data.items.map(item => {
+        const  dataRole3  = await apiClient.get(`/api/admin/list-account-role?roleId=3&start=${start}&end=${end}`)
+        const  dataRole5  = await apiClient.get(`/api/admin/list-account-role?roleId=5&start=${start}&end=${end}`)
+
+        const convertData = [...dataRole3.data.items.map(item => {
             return {
                 key: item.id,
                 ...item
             }
+        }) ,
+        ...dataRole5.data.items.map(item => {
+            return {
+                key: item.id,
+                trainingPro : true,
+                ...item
+            }
         })
+    ]
         setDataTable(convertData)
     }
     const _handleDel = () => {
@@ -131,7 +123,7 @@ const AdminLecture = () => {
             campusId: value.campusId,
             roles: [
                 {
-                    id: 3,
+                    
                     id : value.trainingPro ? 5 : 3
                 }
             ]
@@ -153,7 +145,7 @@ const AdminLecture = () => {
             campusId: value.campusId,
             roles: [
                 {
-                    id: 3
+                    id : value.trainingPro ? 5 : 3
                 }
             ]
         }
@@ -208,7 +200,16 @@ const AdminLecture = () => {
                             title: 'Cơ sở',
                             dataIndex: 'campusName',
                             key: 'campusName',
-                        }
+                        },,
+                        {
+                            title: 'Trưởng ban HO',
+                            dataIndex: 'trainingPro',
+                            render: (_,record) => {
+                                console.log("trương ho",record.trainingPro);
+
+                                return <Checkbox disabled checked={record.trainingPro}></Checkbox>
+                            },
+                        },
 
                     ]}
                     scroll={{ y: 'calc(100vh - 190px)' }} pagination={{ defaultPageSize: 10, showSizeChanger: true, pageSizeOptions: ['10', '15', '20'] }}
@@ -245,7 +246,7 @@ const AdminLecture = () => {
                 _onSubmit={_handleAddNew}
             />
             <ModalFormDetail
-                visible={showDetail} jsonFormInput={formAdd}
+                visible={showDetail} jsonFormInput={formAdd.filter(i => i.name != 'trainingPro')}
                 _onClose={() => {
                     setShowDetail(false)
                     setTimeout(() => {
@@ -272,7 +273,7 @@ const Extra = ({
         <div style={{ display: 'flex', alignItems: 'center', paddingRight: 7, justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', flex: 1 }}>
                 <div style={{ display: 'flex' }}>
-                    {!showDel ? null : <Button onClick={_handleDel} className="ro-custom" type="text" icon={<DeleteOutlined />} >Xoá item đã chọn</Button>}
+                    {!showDel ? null : <Button onClick={_handleDel} className="ro-custom" type="text" icon={<DeleteOutlined />} >Vô hiệu hóa tài khoản</Button>}
                     <Button onClick={() => _onReload()} className="ro-custom" type="text" icon={<ReloadOutlined />} >Làm mới</Button>
                     <Button onClick={_onClickAdd} className="ro-custom" type="text" icon={<PlusOutlined />} >Thêm</Button>
                 </div>

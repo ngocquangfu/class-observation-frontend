@@ -17,7 +17,7 @@ const ModalPlanContainer = ({ handleCancel }) => {
   const [roomOptions, setRoomOptions] = useState([]);
   const [semesters, setSemesters] = useState([]);
   const [semestersOption, setSemestersOption] = useState([]);
-
+  const [semesterNow, setSemesterNow] = useState(0);
   const [accounts, setAccounts] = useState([]);
   const [slot, setSlot] = useState([]);
 
@@ -26,11 +26,14 @@ const ModalPlanContainer = ({ handleCancel }) => {
     // const { data } = await apiClient.get(`/api/list-department?id=${campusId}&name=${searchText}`)
     return userId;
   }
+  const getSemestersCurrent = async () => {
+    const { data } = await apiClient.get(`/api/semester-current`)
+    setSemesterNow(data.items)
+  }
 
   const getSemesters = async () => {
     const { data } = await apiClient.get('/api/semester-list')
     var rooms = data;
-    
     var ReverseArray = [];
     var length = Object.keys(data).length;
     for (var i = length - 1; i >= 0; i--) {
@@ -69,7 +72,7 @@ const ModalPlanContainer = ({ handleCancel }) => {
     setRoomOptions(rooms);
   }
   const getAccounts = async () => {
-    const { data } = await apiClient.get(`/api/list-account?id=${campusId}&email=`)
+    const { data } = await apiClient.get(`/api/list-account-lecture?id=1&email=`)
     var rooms = data;
     rooms = rooms.map((item, idx) => {
       return { ...item, label: item.name }
@@ -79,6 +82,7 @@ const ModalPlanContainer = ({ handleCancel }) => {
 
   useEffect(() => {
     getSubjects();
+    getSemestersCurrent();
     getRooms();
     getSemesters();
     getAccounts();
@@ -132,7 +136,10 @@ const ModalPlanContainer = ({ handleCancel }) => {
         ...values,
         "campusId": parseInt(campusId),
         "accountId": parseInt(userId),
+        "semesterId": semesterNow,
+
       }
+      console.log("finalValues", finalValues)
       postPlan(finalValues);
     })
   };
@@ -154,7 +161,7 @@ const ModalPlanContainer = ({ handleCancel }) => {
   const [array, setArray] = useState([0, 0, 0, 0]);
   const [options, setOptions] = useState([]);
   const onAccountSearch = async (searchText) => {
-    const { data } = await apiClient.get(`/api/list-account?id=${campusId}&email=${searchText}`)
+    const { data } = await apiClient.get(`/api/list-account-lecture?id=1&email=${searchText}`)
     const searchData = [];
     if (!searchText) {
       searchData = [];
@@ -195,7 +202,7 @@ const ModalPlanContainer = ({ handleCancel }) => {
     <div>
       <div className='form-container'>
         <Form form={form} name="dynamic_form_nest_item" onFinish={onFinish} autoComplete="off">
-          <div className='form-util'>
+          {/* <div className='form-util'>
             <Form.Item
               name="semesterId"
               label="Semester"
@@ -209,7 +216,7 @@ const ModalPlanContainer = ({ handleCancel }) => {
               <Select className='select-box' options={semestersOption} onChange={handleChange} />
             </Form.Item>
             
-          </div>
+          </div> */}
           <Form.List name="observationSlotsRequest">
             {(fields, { add, remove }) => (
               <>
