@@ -78,7 +78,7 @@ export const RenderForm = ({ jsonFrom = () => { } }) => {
                               ]}
                             style={item.hidden ? { display: 'none' } : { margin: '0', width: '45%' }}
                         >
-                            <AutoComplete
+                            <Select
                                 options={departmentOptions}
                                 style={{
                                     width: 200,

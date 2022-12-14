@@ -88,12 +88,12 @@ const AdminLecture = () => {
         setDataTable(convertData)
     }
     const _handleDel = () => {
-        const isBool = window.confirm("Bạn có muốn xoá không")
+        const isBool = window.confirm("Bạn muốn vô hiệu tài khoản?")
         if (isBool) {
             selectedRow.map(async (item) => {
                 try {
                     const { data } = await apiClient.post(`/api/admin/delete-account?id=${item}`)
-                    openNotificationWithIcon("success", "Xoá thành công");
+                    openNotificationWithIcon("success", "Vô hiệu thành công");
                 } catch (error) {
                     openNotificationWithIcon("error", error.message)
                 }

@@ -35,11 +35,13 @@ const ModalForm = ({
     <Drawer bodyStyle={{ padding: 10 }} title={false}
       placement={'right'} closable={false} onClose={_onClose} open={visible} width={650}>
       <TitleDetail _onClose={_onClose} _onReset={() => form.resetFields()} />
-      <StyledForm onFinish={onFinish} form={form} initialValues={dataInit}
+      <StyledForm onFinish={onFinish} form={form} initialValues={dataInit} onValuesChange={(value) => {
+        console.log(value);
+
+      }}
         style={{ padding: '0px 10px' }} layout="vertical" >
         <Form.Item> <HeaderForm loading={loading} type={type} /> </Form.Item>
-        <RenderForm jsonFrom={jsonFormInput} type={type} form={form} />
-      </StyledForm>
+        <RenderForm jsonFrom={jsonFormInput} type={type} form={form} /> </StyledForm>
     </Drawer>
   )
 };

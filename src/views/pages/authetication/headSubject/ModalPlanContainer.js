@@ -118,7 +118,7 @@ const ModalPlanContainer = ({ handleCancel }) => {
         ...item,
         headSubject: parseInt(userId),
         slotTime: dateResult,
-        headTraining: 1,
+        headTraining: parseInt(userId),
         accountId: parseInt(item.accountId),
         accountId1: parseInt(item.accountId1),
         accountId2: parseInt(item.accountId2),

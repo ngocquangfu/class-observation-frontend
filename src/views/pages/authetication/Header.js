@@ -7,7 +7,8 @@ import '../styles/login.css'
 function Header(props) {
     const userName = localStorage.getItem("userName")
     const navigation = useNavigate()
-
+    const profileObj = JSON.parse(localStorage.getItem("profileObj"));
+    console.log('profileObj', profileObj);
   return (
     <div style={{ height: 60, background: '#0a8cf1', display: 'flex', justifyContent: 'space-between', alignItems: 'center' , marginBottom : 40 }}>
         <div style={{ display: 'flex', width: '90', height: "80%" }}>
@@ -21,20 +22,21 @@ function Header(props) {
         </div>
         
 
-        <div style={{ display: 'flex', color: 'black', fontSize: 24, fontWeight: 500 }}>
-            <div>
-                {userName}
-            </div>
-            <div style={{marginLeft: 20, marginRight: 20}}>
-                <UserOutlined height='60px' />
-            </div>
-            <div className="admin-header" onClick={() => {
-                localStorage.clear()
-                navigation('/login')
-            }} style={{marginRight : 20 , cursor : 'pointer'}}>
-                LogOut
-            </div>
-        </div>
+        <div style={{ display: 'flex', alignItems: 'center', color: 'black', fontSize: 24, fontWeight: 500 }}>
+                    <div>
+                        {profileObj?.name}
+                    </div>
+                    <div className="img-cover" style={{ marginRight: 20, marginLeft: 30, position: 'relative' }}>
+                        <img style={{ borderRadius: '50%' }} src={profileObj?.imageUrl} width="40px" />
+                        <div className='tooltip-avatar'>
+                            <div className="tooltip-avatar-item" style={{ fontSize: 16, padding: '4px 10px', display: 'flex', alignContent: 'center', flex: 1 }}>Xem thông tin</div>
+                            <div onClick={() => {
+                                localStorage.clear()
+                                navigation('/login')
+                            }} className="tooltip-avatar-item" style={{ fontSize: 16, padding: '4px 10px', display: 'flex', alignContent: 'center', flex: 1 }}>Logout</div>
+                        </div>
+                    </div>
+                </div>
     </div>
   );
 };

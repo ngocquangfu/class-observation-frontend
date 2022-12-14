@@ -5,11 +5,12 @@ import AssessmentPlanDetail from './AssessmentPlanDetail';
 import { apiClient } from '../../../../api/api-client';
 import { openNotificationWithIcon } from '../../request/notification';
 import Header from '../Header';
-import { green } from '@mui/material/colors';
 const AssessmentPlan = () => {
     const [listData, setListData] = useState([]);
     const [result, setResult] = useState(0);
     const [show , setShow] = useState(true)
+    const [reviewnum , setReviewnum] = useState(0)
+
     const id = window.location.pathname.split("/")[2];
     const navigation = useNavigate()
     const onChange = () => {

@@ -99,12 +99,12 @@ const AdminLecture = () => {
         setDataTable(convertData)
     }
     const _handleDel = () => {
-        const isBool = window.confirm("Bạn có muốn xoá không")
+        const isBool = window.confirm("Bạn muốn vô hiệu tài khoản?")
         if (isBool) {
             selectedRow.map(async (item) => {
                 try {
                     const { data } = await apiClient.post(`/api/admin/delete-account?id=${item}`)
-                    openNotificationWithIcon("success", "Xoá thành công");
+                    openNotificationWithIcon("success", "Vô hiệu thành công");
                 } catch (error) {
                     openNotificationWithIcon("error", error.message)
                 }
@@ -227,7 +227,8 @@ const AdminLecture = () => {
                                     id: r.id,
                                     userName: r.userName,
                                     email: r.email,
-                                    campusId: listCampus.find(i => i.label == r.campusName).value
+                                    campusId: listCampus.find(i => i.label == r.campusName).value,
+                                    trainingPro : r.trainingPro
                                 }, type: "EDIT"
                             })
                         }
@@ -246,7 +247,7 @@ const AdminLecture = () => {
                 _onSubmit={_handleAddNew}
             />
             <ModalFormDetail
-                visible={showDetail} jsonFormInput={formAdd.filter(i => i.name != 'trainingPro')}
+                visible={showDetail} jsonFormInput={formAdd}
                 _onClose={() => {
                     setShowDetail(false)
                     setTimeout(() => {

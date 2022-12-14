@@ -56,13 +56,13 @@ const PlanContainer = () => {
   }
   const getSemestersCurrent = async () => {
     const { data } = await apiClient.get(`/api/semester-current`)
-    setSemesterNow(data.items)
+    setSemesterId(data?.items)
+
   }
   const _requestData = async () => {
+    console.log(semesterId)
     // setSemesterId(semesterNow)
-    const { data } = await apiClient.get(`/api/list-observation-slot?semesterId=${semesterNow}&accountId=${userId}`)
-    console.log(semesterNow)
-
+    const { data } = await apiClient.get(`/api/list-observation-slot?semesterId=${semesterId}&accountId=${userId}`)
     // _getStatusListPlan(data.items[0].planId)
     data.items = data.items.map((item, idx) => {
       var date = new Date(`${item.slotTime}`);
@@ -139,6 +139,7 @@ const PlanContainer = () => {
     getSubjects();
     getAccounts();
     setIsDone(true)
+    getSemestersCurrent()
 
   }, [])
 
@@ -146,8 +147,6 @@ const PlanContainer = () => {
     if (isDone & isDoneAccount) {
       _requestData();
       setCount(semesterId)
-    getSemestersCurrent()
-
     }
   }, [semesterId, isDone, isDoneAccount])
 

@@ -30,7 +30,7 @@ const Login = () => {
     }
     const handleLogin = async (ggApi) => {
         console.log('gg', ggApi);
-       
+        localStorage.setItem("profileObj", JSON.stringify(ggApi.profileObj))
         if (campus) {
             const body = {
                 token: ggApi.tokenId,
