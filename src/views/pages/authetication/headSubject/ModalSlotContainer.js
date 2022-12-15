@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { openNotificationWithIcon } from '../../request/notification';
 
-const ModalPlanContainer = ({ handleCancel }) => {
+const ModalSlotContainer = ({ handleCancel, planId }) => {
   const [form] = Form.useForm();
   const campusId = localStorage.getItem('campusId');
   const userId = localStorage.getItem('userId');
@@ -20,6 +20,7 @@ const ModalPlanContainer = ({ handleCancel }) => {
   const [semesterNow, setSemesterNow] = useState(0);
   const [accounts, setAccounts] = useState([]);
   const [slot, setSlot] = useState([]);
+  const [listPlan, setListPlan] = useState();
 
 
   const getDepartments = async () => {
@@ -38,7 +39,6 @@ const ModalPlanContainer = ({ handleCancel }) => {
     var length = Object.keys(data).length;
     for (var i = length - 1; i >= 0; i--) {
       ReverseArray.push(data[i]);
-      console.log("dataa1", data[i])
     }
     rooms = rooms.map((item, idx) => {
       return { ...item, label: item.name }
@@ -60,7 +60,6 @@ const ModalPlanContainer = ({ handleCancel }) => {
     subjects = subjects.map((item, idx) => {
       return { ...item, label: item.name }
     })
-    console.log("ssssss", subjects)
     setSubjectOptions(subjects);
   }
   const getRooms = async () => {
@@ -122,30 +121,29 @@ const ModalPlanContainer = ({ handleCancel }) => {
         accountId: parseInt(item.accountId),
         accountId1: parseInt(item.accountId1),
         accountId2: parseInt(item.accountId2),
-        planStatus:null
       }
     })
 
     var values = {
-      ...fieldValues,
+
       "observationSlotsRequest": observationSlotsRequest
     }
     var department = getDepartments();
-    department.then(function () {
-      const finalValues = {
-        ...values,
-        "campusId": parseInt(campusId),
-        "accountId": parseInt(userId),
-        "semesterId": semesterNow,
+    // department.then(function () {
+    //   const finalValues = {
+    //     ...values,
+    //     "campusId": parseInt(campusId),
+    //     "accountId": parseInt(userId),
+    //     "semesterId": semesterNow,
 
-      }
-      console.log("finalValues", finalValues)
-      postPlan(finalValues);
-    })
+    //   }
+    console.log("finalValues", observationSlotsRequest)
+    postPlan(observationSlotsRequest[0]);
+    // })
   };
 
   const postPlan = async (values) => {
-    const { data } = await apiClient.post(`/api/create-observation-plan`, values)
+    const { data } = await apiClient.post(`/api/add-new-slot?planId=${planId}`, values)
     if (data.status == 200) {
       openNotificationWithIcon("success", "Tạo mới thành công")
       handleCancel()
@@ -257,7 +255,7 @@ const ModalPlanContainer = ({ handleCancel }) => {
                                     options={accounts}
                                     style={{
                                       width: 200,
-                                      marginLeft:5
+                                      marginLeft: 5
                                     }}
                                     onSearch={onAccountSearch}
                                     onSelect={(value) => onSelect(value, 0)}
@@ -298,7 +296,7 @@ const ModalPlanContainer = ({ handleCancel }) => {
                                     options={subjectOptions}
                                     style={{
                                       width: "520px",
-                                      marginLeft:20
+                                      marginLeft: 20
                                     }}
                                     showSearch
                                     onSearch={onSubjectSearch}
@@ -340,9 +338,9 @@ const ModalPlanContainer = ({ handleCancel }) => {
                                   ]}
                                 >
                                   <Select className='select-box' options={slot} onChange={handleChange} style={{
-                                      width: 200,
-                                      marginLeft:47
-                                    }}/>
+                                    width: 200,
+                                    marginLeft: 47
+                                  }} />
                                 </Form.Item>
                               )}
                             </Form.Item>
@@ -359,8 +357,10 @@ const ModalPlanContainer = ({ handleCancel }) => {
                                 },
                               ]}
                             >
-                              <DatePicker style={{ width: "13rem",width: 200,
-                                      marginLeft:15 }} disabledDate={(current) => {
+                              <DatePicker style={{
+                                width: "13rem", width: 200,
+                                marginLeft: 15
+                              }} disabledDate={(current) => {
                                 return moment().add(-1, 'days') >= current
                               }} />
                             </Form.Item>
@@ -383,9 +383,9 @@ const ModalPlanContainer = ({ handleCancel }) => {
                               ]}
                             >
                               <Select className='select-box' options={roomOptions} onChange={handleChange} style={{
-                                      width: 200,
-                                      marginLeft:32
-                                    }} />
+                                width: 200,
+                                marginLeft: 32
+                              }} />
 
                             </Form.Item>
                           </div>
@@ -398,14 +398,17 @@ const ModalPlanContainer = ({ handleCancel }) => {
                                 {
                                   required: true,
                                   message: 'Trường hợp bắt buộc',
+
                                 }, {
                                   pattern: new RegExp(/^[a-zA-Z0-9]*$/),
                                   message: "Vui lòng nhập chữ cái và số"
                                 }
                               ]}
                             >
-                              <Input style={{ width: "13rem", width: 200,
-                                      marginLeft:48 }} />
+                              <Input style={{
+                                width: "13rem", width: 200,
+                                marginLeft: 48
+                              }} />
                             </Form.Item>
                           </div>
                         </div>
@@ -519,9 +522,9 @@ const ModalPlanContainer = ({ handleCancel }) => {
                             ]}
                           >
                             <Input style={{
-                                      width: "535px",
-                                      marginLeft:47
-                                    }}/>
+                              width: "535px",
+                              marginLeft: 47
+                            }} />
                           </Form.Item>
 
                           <Form.Item
@@ -559,4 +562,4 @@ const ModalPlanContainer = ({ handleCancel }) => {
     </div>
   );
 };
-export default ModalPlanContainer;
+export default ModalSlotContainer;

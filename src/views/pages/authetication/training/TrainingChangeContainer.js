@@ -27,7 +27,10 @@ const TrainingChangeContainer = (props) => {
   const handlePostCreate = async () => {
     if(create == ''){
       openNotificationWithIcon("error", "Không được bỏ trống")
-    } else {
+    }if(!create.match("[a-z A-Z]")){
+      openNotificationWithIcon("error", "Tiêu chí chứa số và ký tự đặc biệt")
+
+    }else {
       
       const values = {"campusId": campusId, "criteriaName": create}
       const {data} = await apiClient.post(`/api/training/create-criteria`, values);
@@ -105,11 +108,11 @@ const TrainingChangeContainer = (props) => {
               {count == idx ?
               <button className='button is-primary' onClick={(e) => handlePostUpdate(item.id, e)}>Xác nhận</button>
               : 
-              <button className='button is-primary' onClick={() => handleUpdate(idx, item.criteriaName)}>Update</button>
+              <button className='button is-primary' onClick={() => handleUpdate(idx, item.criteriaName)}>Cập nhật</button>
               }
             </div>
             <div className='column is-2'>
-              <button className='button is-danger' onClick={() => handleDelete(item.id)}>Delete</button>
+              <button className='button is-danger' onClick={() => handleDelete(item.id)}>Xóa</button>
             </div>
           </div>
         )

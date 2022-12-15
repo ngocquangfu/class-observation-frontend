@@ -1,4 +1,4 @@
-.wrap-login{
+.wrap-login {
   background-image: url('../../../assets/images/BG2.png');
   background-position: center center;
   background-repeat: no-repeat;
@@ -11,7 +11,7 @@
   align-items: center;
 }
 
-.box-login{
+.box-login {
   padding: 20px;
   text-align: center;
   width: 450px;
@@ -21,7 +21,7 @@
   background-color: white;
 }
 
-.google-login{
+.google-login {
   margin-top: 20px;
   padding: 10px;
   border-radius: 8px;
@@ -32,28 +32,49 @@
   display: flex;
 }
 
-.ant-form-item-row{
+.ant-form-item-row {
   width: 100% !important;
   margin-right: 0px !important;
 
 }
 
-.admin-header:hover{
+.admin-header:hover {
   color: yellow !important;
 }
-.button-google{
+
+.position-header {
+  margin-left: 10px;
+  margin-right: 10px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.position-header-active {
+  border-bottom: 3px solid aqua;
+  color: aqua;
+}
+
+.position-header:hover {
+  color: aqua;
+  cursor: pointer;
+}
+
+.button-google {
   height: 40px !important;
   border: none;
   margin: auto;
   margin-left: 60px;
   box-shadow: none !important;
 }
-.choose-campus{
+
+.choose-campus {
   background-color: azure !important;
   border-radius: 8px;
   color: white;
 }
-.login-google{
+
+.login-google {
   display: flex;
   width: 370px;
   align-items: center;
@@ -62,7 +83,7 @@
   border-radius: 8px;
 }
 
-.wrap-login.ant-select-selector{
+.wrap-login.ant-select-selector {
   background-color: white !important;
   border: 1px solid;
   border-radius: 8px;

@@ -23,6 +23,7 @@ const AdminLecture = () => {
             {
                 name: 'email',
                 label: "Email"
+                
             },
             {
                 name: 'campusId',
@@ -76,6 +77,7 @@ const AdminLecture = () => {
 
 
     }
+   
     const _requestDataTable = async () => {
         const start = page.current === 1 ? 0 : page.current * page.number_of_page - page.number_of_page
         const end = page.current * page.number_of_page

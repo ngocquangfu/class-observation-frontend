@@ -1,5 +1,5 @@
-import React , { useState, useEffect }from 'react';
-import { Checkbox, Form, Input, Select, AutoComplete} from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Checkbox, Form, Input, Select, AutoComplete } from 'antd';
 import { apiClient } from '../../../../../api/api-client';
 const { Option } = Select;
 export const RenderForm = ({ jsonFrom = () => { } }) => {
@@ -16,8 +16,8 @@ export const RenderForm = ({ jsonFrom = () => { } }) => {
         setDepartmentOptions(
             data.map(item => {
                 return {
-                    label : item.name,
-                    value : item.value
+                    label: item.name,
+                    value: item.value
                 }
             }),
         );
@@ -34,15 +34,15 @@ export const RenderForm = ({ jsonFrom = () => { } }) => {
                             key={String(index)}
                             name={item.name}
                             label={item.label}
-                            
+
                             style={item.hidden ? { display: 'none' } : { margin: '0', width: '45%' }}
                             rules={[
                                 {
-                                  required: true,
-                                  message: 'Trường hợp bắt buộc',
+                                    required: true,
+                                    message: 'Trường hợp bắt buộc',
                                 },
-                              ]}
-                            >
+                            ]}
+                        >
                             <Select placeholder="Vui lòng chọn">
                                 {
                                     item.data.map(i => {
@@ -54,15 +54,15 @@ export const RenderForm = ({ jsonFrom = () => { } }) => {
                     )
                 }
                 if (item.type == 'checkbox') {
-                    return(
-                    <Form.Item
-                        key={String(index)}
-                        name={item.name}
-                        valuePropName="checked"
-                        style={item.hidden ? { display: 'none' } : { margin: '0', width: '45%' , marginTop : 25}}
-                    >
-                        <Checkbox>{item.label}</Checkbox>
-                    </Form.Item>)
+                    return (
+                        <Form.Item
+                            key={String(index)}
+                            name={item.name}
+                            valuePropName="checked"
+                            style={item.hidden ? { display: 'none' } : { margin: '0', width: '45%', marginTop: 25 }}
+                        >
+                            <Checkbox>{item.label}</Checkbox>
+                        </Form.Item>)
                 }
                 if (item.type == "department") {
                     return (
@@ -72,10 +72,10 @@ export const RenderForm = ({ jsonFrom = () => { } }) => {
                             label={item.label}
                             rules={[
                                 {
-                                  required: true,
-                                  message: 'Trường hợp bắt buộc',
+                                    required: true,
+                                    message: 'Trường hợp bắt buộc',
                                 },
-                              ]}
+                            ]}
                             style={item.hidden ? { display: 'none' } : { margin: '0', width: '45%' }}
                         >
                             <Select
@@ -89,7 +89,7 @@ export const RenderForm = ({ jsonFrom = () => { } }) => {
                         </Form.Item>
                     )
                 }
-                
+
                 return (
                     <Form.Item
                         key={String(index)}
@@ -97,13 +97,16 @@ export const RenderForm = ({ jsonFrom = () => { } }) => {
                         label={item.label}
                         rules={[
                             {
-                              required: true,
-                              message: 'Trường hợp bắt buộc',
-                            },
-                          ]}
+                                required: true,
+                                message: 'Trường hợp bắt buộc',
+                            }, {
+                                pattern: new RegExp(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),
+                                message: "Vui lòng nhập email"
+                            }
+                        ]}
                         xx={item.xx}
                         style={item.hidden ? { display: 'none' } : { margin: '0', width: '45%' }}>
-                        <Input disabled={item.disabled}/>
+                        <Input disabled={item.disabled} />
                     </Form.Item>
                 )
             })

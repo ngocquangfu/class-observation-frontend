@@ -37,7 +37,7 @@ export default class Home extends Component {
             buttonStyle='btn--primary'
             buttonSize='btn--mobile'
           >
-            Login
+            Đăng nhập
           </Button></Link></div>);
     } else {
       button = (<div className='nav-btn'>
@@ -46,15 +46,14 @@ export default class Home extends Component {
             buttonStyle='btn--outline'
             buttonSize='btn--medium'
           >
-            Login
+            Đăng nhập
           </Button></Link></div>);
     }
     return (
       <>
         <NavBar custom={button} />
         <Sections {...homeObjOne} />
-        <Sections {...homeObjThree} />
-        <Sections {...homeObjTwo} />
+      
       <Footer/>
 
       </>

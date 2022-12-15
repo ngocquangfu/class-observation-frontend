@@ -30,14 +30,14 @@ const Admin = () => {
             <div style={{ height: 60, background: '#0a8cf1', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 40 }}>
                 <div style={{ display: 'flex', width: '90', height: "80%" }}>
                     <img style={{ marginLeft: 20, marginRight: 20 }} src={image1} height="40" alt='' />
-                    <div style={{ display: 'flex', alignItems: 'center', fontSize: 22, cursor: 'pointer' }}>
-                        <div className="admin-header" onClick={() => handleClick(1)} style={{ color: adminIndex == 1 ? 'yellow' : 'black' }}>
+                    <div className='columns' style={{ color: "white", fontSize: 20, margin: 0, height: '100%', display: 'flex', alignItems: 'center' }}>
+                        <div className={adminIndex == 1 ? "position-header position-header-active" : "position-header"} onClick={() => handleClick(1)}>
                             Giảng viên
                         </div>
-                        <div className="admin-header" onClick={() => handleClick(2)} style={{ color: adminIndex == 2 ? 'yellow' : 'black', marginLeft: 20, marginRight: 20 }} >
+                        <div className={adminIndex == 2 ? "position-header position-header-active" : "position-header"} onClick={() => handleClick(2)}>
                             Chủ nhiệm bộ môn
                         </div>
-                        <div className="admin-header" onClick={() => handleClick(3)} style={{ color: adminIndex == 3 ? 'yellow' : 'black' }}>
+                        <div className={adminIndex == 3 ? "position-header position-header-active" : "position-header"} onClick={() => handleClick(3)}>
                             Trưởng ban đào tạo
                         </div>
                     </div>
@@ -48,7 +48,7 @@ const Admin = () => {
                         {profileObj?.name}
                     </div>
                     <div className="img-cover" style={{ marginRight: 20, marginLeft: 30, position: 'relative' }}>
-                        <img style={{ borderRadius: '50%' }} src={profileObj?.imageUrl} width="40px" />
+                        <img style={{ borderRadius: '50%' }} src={profileObj?.imageUrl} width="40px" referrerpolicy="no-referrer" />
                         <div className='tooltip-avatar'>
                             <div className="tooltip-avatar-item" style={{ fontSize: 16, padding: '4px 10px', display: 'flex', alignContent: 'center', flex: 1 }}>Xem thông tin</div>
                             <div onClick={() => {

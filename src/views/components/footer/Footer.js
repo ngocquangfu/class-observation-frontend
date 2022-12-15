@@ -1,111 +1,60 @@
 import React from 'react';
 import './Footer.css';
-import { Link } from 'react-router-dom';
-import {
-  FaFacebook,
-  FaInstagram,
-  FaYoutube,
-  FaTwitter,
-  FaLinkedin
-} from 'react-icons/fa';
-import { MdFingerprint } from 'react-icons/md';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faLocationDot, faCopy, faLocationArrow, faSearchLocation, faMailBulk, faMailForward, faVoicemail, faMailReplyAll, faMailReply, faMobilePhone, faHeadphones, faPhone, faMapMarked, faMapLocationDot, faMapPin, faMap } from "@fortawesome/free-solid-svg-icons";
+import image1 from './../../../assets/images/classlogo.png'
+
 import { Component } from 'react';
 
-export default class Footer extends Component{
-  render(){
-  return (
-    <div className='footer-container'>
-      
-      <div className='footer-links'>
-        <div className='footer-link-wrapper'>
-          <div className='footer-link-items'>
-            <h2>About Us</h2>
-            <Link to='/sign-up'>How it works</Link>
-            <Link to='/'>Testimonials</Link>
-            <Link to='/'>Careers</Link>
-            <Link to='/'>Investors</Link>
-            <Link to='/'>Terms of Service</Link>
+export default class Footer extends Component {
+  render() {
+    return (
+      <div className='has-background-light mt-5'>
+        <div className='columns px-6 pt-6 pb-0' style={{ width: '100%' }}>
+          <div className='column is-5' style={{ marginTop: '-20px' }}>
+            <img src={image1} style={{ width: "150px" }} />
+            <p className='py-3'><strong>Cơ sở Hà Nội </strong><br/>
+              Văn phòng Tuyển sinh: Tòa nhà FPT Polytechnic, phố Trịnh Văn Bô, phường Phương Canh, quận Nam Từ Liêm, TP Hà Nội<br/>
+              (024) 8582 0808</p>
+            <p>
+              <strong>Cơ sở Hải Phòng </strong><br/>
+              Văn phòng Tuyển sinh: 271 Lê Thánh Tông, phường Máy Chai, quận Ngô Quyền, TP Hải Phòng<br/>
+              0915431313</p>
+            <p>
+              <strong>Cơ sở Đà Nẵng </strong><br/>
+              Văn phòng Tuyển sinh: 137 Nguyễn Thị Thập, phường Hòa Minh, quận Liên Chiểu, TP Đà Nẵng<br/>
+              (0236) 3710 999</p>
+            <p className='has-text-danger'>*Recommendation: Best use with Chrome browser</p>
           </div>
-          <div className='footer-link-items'>
-            <h2>Contact Us</h2>
-            <Link to='/'>Contact</Link>
-            <Link to='/'>Support</Link>
-            <Link to='/'>Destinations</Link>
-            <Link to='/'>Sponsorships</Link>
+          <div className='column is-4'>
+            <p className='has-text-weight-bold'>INFORMATION</p>
+            <p className='has-text-info'>Subject</p>
+            <p className='has-text-info'>About</p>
+            <p className='has-text-info'>Terms of Use</p>
           </div>
-        </div>
-        <div className='footer-link-wrapper'>
-          <div className='footer-link-items'>
-            <h2>Videos</h2>
-            <Link to='/'>Submit Video</Link>
-            <Link to='/'>Ambassadors</Link>
-            <Link to='/'>Agency</Link>
-            <Link to='/'>Influencer</Link>
-          </div>
-          <div className='footer-link-items'>
-            <h2>Social Media</h2>
-            <Link to='/'>Instagram</Link>
-            <Link to='/'>Facebook</Link>
-            <Link to='/'>Youtube</Link>
-            <Link to='/'>Twitter</Link>
+          <div className='column'>
+            <p className='has-text-weight-bold'>ADDRESS</p>
+            <div className='columns'>
+              <div className='column is-1'>
+                <FontAwesomeIcon icon={faMapLocationDot} />
+              </div>
+              <div className='column'>Cao đẳng FPT Hà Nội</div>
+            </div>
+            <div className='columns'>
+              <div className='column is-1'>
+                <FontAwesomeIcon icon={faMailBulk} />
+              </div>
+              <div className='column has-text-info'>QuangLN@fpt.edu.vn</div>
+            </div>
+            <div className='columns'>
+              <div className='column is-1'>
+                <FontAwesomeIcon icon={faPhone} />
+              </div>
+              <div className='column has-text-info'>096.333.1972</div>
+            </div>
           </div>
         </div>
       </div>
-      <section className='social-media'>
-        <div className='social-media-wrap'>
-          <div className='footer-logo'>
-            <Link to='/' className='social-logo'>
-              <MdFingerprint className='navbar-icon' />
-              SWP490
-            </Link>
-          </div>
-          <small className='website-rights'>SWP490</small>
-          <div className='social-icons'>
-            <Link
-              className='social-icon-link'
-              to='/'
-              target='_blank'
-              aria-label='Facebook'
-            >
-              <FaFacebook />
-            </Link>
-            <Link
-              className='social-icon-link'
-              to='/'
-              target='_blank'
-              aria-label='Instagram'
-            >
-              <FaInstagram />
-            </Link>
-            <Link
-              className='social-icon-link'
-              to={
-                '/'
-              }
-              target='_blank'
-              aria-label='Youtube'
-            >
-              <FaYoutube />
-            </Link>
-            <Link
-              className='social-icon-link'
-              to='/'
-              target='_blank'
-              aria-label='Twitter'
-            >
-              <FaTwitter />
-            </Link>
-            <Link
-              className='social-icon-link'
-              to='/'
-              target='_blank'
-              aria-label='LinkedIn'
-            >
-              <FaLinkedin />
-            </Link>
-          </div>
-        </div>
-      </section>
-    </div>
-  );}
+    );
+  }
 }
