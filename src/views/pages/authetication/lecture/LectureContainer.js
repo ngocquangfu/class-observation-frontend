@@ -30,7 +30,11 @@ const LectureContainer = () => {
     })
     setListData(data.items);
   }
+  const getSemestersCurrent = async () => {
+    const { data } = await apiClient.get(`/api/semester-current`)
+    setSemesterId(data?.items)
 
+  }
   const getSemesters = async () => {
     const { data } = await apiClient.get('/api/semester-list')
     var ReverseArray = [];
@@ -43,6 +47,7 @@ const LectureContainer = () => {
 
   useEffect(() => {
     getSemesters()
+    getSemestersCurrent()
   }, [])
   useEffect(() => {
     _requestData();

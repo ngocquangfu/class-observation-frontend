@@ -516,7 +516,7 @@ const ModalSlotContainer = ({ handleCancel, planId }) => {
                                 required: true,
                                 message: 'Trường hợp bắt buộc',
                               }, {
-                                pattern: new RegExp(/^[a-zA-Z0-9]*$/),
+                                pattern: new RegExp(/^[a-zA-Z 0-9]*$/),
                                 message: "Vui lòng nhập chữ cái và số"
                               }
                             ]}

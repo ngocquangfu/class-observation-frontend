@@ -95,16 +95,6 @@ export const RenderForm = ({ jsonFrom = () => { } }) => {
                         key={String(index)}
                         name={item.name}
                         label={item.label}
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Trường hợp bắt buộc',
-                            }, {
-                                pattern: new RegExp(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),
-                                message: "Vui lòng nhập email"
-                            }
-                        ]}
-                        xx={item.xx}
                         style={item.hidden ? { display: 'none' } : { margin: '0', width: '45%' }}>
                         <Input disabled={item.disabled} />
                     </Form.Item>

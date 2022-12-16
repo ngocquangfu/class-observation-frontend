@@ -54,6 +54,7 @@ const TrainingContainer = () => {
 
   useEffect(() => {
     getSemesters()
+    getSemestersCurrent()
   }, [])
   useEffect(() => {
     _requestData();
@@ -177,6 +178,11 @@ const TrainingContainer = () => {
     } else {
       openNotificationWithIcon("error", "Thất bại")
     }
+  }
+  const getSemestersCurrent = async () => {
+    const { data } = await apiClient.get(`/api/semester-current`)
+    setSemesterId(data?.items)
+
   }
   const semesterColums = [
     {

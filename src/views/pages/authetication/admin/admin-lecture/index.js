@@ -113,7 +113,7 @@ const AdminLecture = () => {
         }
         try {
             const { data } = await apiClient.post('/api/admin/new-account', body)
-            openNotificationWithIcon("success","Thêm thanh công")
+            openNotificationWithIcon("success","Thêm thành công")
         } catch (error) {
             openNotificationWithIcon("error","Thêm thất bại")
 

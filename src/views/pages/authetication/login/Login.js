@@ -107,7 +107,7 @@ const Login = () => {
                         <img src={image1} width='280' />
                     </div>
                     <div className='box-login'>
-                        <div style={{ color: '#252525', fontSize: 32, fontWeight: 600 }}>Login</div>
+                        <div style={{ color: '#252525', fontSize: 32, fontWeight: 600 }}>Đăng nhập</div>
                         <div style={{ margin: "20px 0" }}>
                             <span style={{ color: 'red' }}>{notify}</span>
                             <Select

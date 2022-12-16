@@ -23,6 +23,11 @@ const LectureResultContainer= () => {
     const handleNavigation = (record) => {
       navigation(`/lecture-result/${record.id}`);
     }
+    const getSemestersCurrent = async () => {
+      const { data } = await apiClient.get(`/api/semester-current`)
+      setSemesterId(data?.items)
+  
+    }
     const _requestData = async () => {
       const { data } = await apiClient.get(`/api/lecture/list-result-observation-review?campusId=${campusId}&semesterId=${semesterId}&accountId=${userId}`)
       data.items = data.items.map((item, idx) => {
@@ -47,6 +52,7 @@ const LectureResultContainer= () => {
   
     useEffect(() => {
       getSemesters()
+      getSemestersCurrent()
     }, [])
     useEffect(() => {
       _requestData();

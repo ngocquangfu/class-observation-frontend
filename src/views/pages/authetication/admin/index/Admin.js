@@ -48,13 +48,13 @@ const Admin = () => {
                         {profileObj?.name}
                     </div>
                     <div className="img-cover" style={{ marginRight: 20, marginLeft: 30, position: 'relative' }}>
-                        <img style={{ borderRadius: '50%' }} src={profileObj?.imageUrl} width="40px" referrerpolicy="no-referrer" />
+                        <img style={{ borderRadius: '50%' }} src={profileObj?.imageUrl} width="40px" referrerPolicy="no-referrer" />
                         <div className='tooltip-avatar'>
                             <div className="tooltip-avatar-item" style={{ fontSize: 16, padding: '4px 10px', display: 'flex', alignContent: 'center', flex: 1 }}>Xem thông tin</div>
                             <div onClick={() => {
                                 localStorage.clear()
                                 navigation('/login')
-                            }} className="tooltip-avatar-item" style={{ fontSize: 16, padding: '4px 10px', display: 'flex', alignContent: 'center', flex: 1 }}>Logout</div>
+                            }} className="tooltip-avatar-item" style={{ fontSize: 16, padding: '4px 10px', display: 'flex', alignContent: 'center', flex: 1 }}>Đăng xuất</div>
                         </div>
                     </div>
                 </div>

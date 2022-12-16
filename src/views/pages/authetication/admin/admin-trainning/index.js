@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button ,Checkbox} from "antd";
+import { Button, Checkbox } from "antd";
 import { PlusOutlined, DeleteOutlined, ReloadOutlined } from "@ant-design/icons";
 import { CardCustom, TableCustom } from '../../../helper/style-component'
 import { apiClient } from '../../../../../api/api-client';
@@ -13,17 +13,18 @@ const AdminLecture = () => {
     const [dataTable, setDataTable] = useState([])
     const [total] = useState(10)
     const [listCampus, setListCampus] = React.useState([])
-    
+
     const [formAdd, setFormAdd] = React.useState(
         [
             {
                 name: 'userName',
-                label: 'Tên'
+                label: 'Tên',
+                
             },
             {
                 name: 'email',
                 label: "Email"
-                
+
             },
             {
                 name: 'campusId',
@@ -32,9 +33,9 @@ const AdminLecture = () => {
                 type: 'select'
             },
             {
-                name : 'trainingPro',
-                label : 'Trưởng ban HO',
-                type : 'checkbox'
+                name: 'trainingPro',
+                label: 'Trưởng ban HO',
+                type: 'checkbox'
             }
         ]
     )
@@ -60,7 +61,7 @@ const AdminLecture = () => {
             }
         })
         setListCampus(convertData)
-        
+
         const convertDataFormAdd = formAdd.map(i => {
             if (i.type == "select") {
                 return {
@@ -77,27 +78,27 @@ const AdminLecture = () => {
 
 
     }
-   
+
     const _requestDataTable = async () => {
         const start = page.current === 1 ? 0 : page.current * page.number_of_page - page.number_of_page
         const end = page.current * page.number_of_page
-        const  dataRole3  = await apiClient.get(`/api/admin/list-account-role?roleId=3&start=${start}&end=${end}`)
-        const  dataRole5  = await apiClient.get(`/api/admin/list-account-role?roleId=5&start=${start}&end=${end}`)
+        const dataRole3 = await apiClient.get(`/api/admin/list-account-role?roleId=3&start=${start}&end=${end}`)
+        const dataRole5 = await apiClient.get(`/api/admin/list-account-role?roleId=5&start=${start}&end=${end}`)
 
         const convertData = [...dataRole3.data.items.map(item => {
             return {
                 key: item.id,
                 ...item
             }
-        }) ,
+        }),
         ...dataRole5.data.items.map(item => {
             return {
                 key: item.id,
-                trainingPro : true,
+                trainingPro: true,
                 ...item
             }
         })
-    ]
+        ]
         setDataTable(convertData)
     }
     const _handleDel = () => {
@@ -125,8 +126,8 @@ const AdminLecture = () => {
             campusId: value.campusId,
             roles: [
                 {
-                    
-                    id : value.trainingPro ? 5 : 3
+
+                    id: value.trainingPro ? 5 : 3
                 }
             ]
         }
@@ -147,13 +148,13 @@ const AdminLecture = () => {
             campusId: value.campusId,
             roles: [
                 {
-                    id : value.trainingPro ? 5 : 3
+                    id: value.trainingPro ? 5 : 3
                 }
             ]
         }
         try {
             const { data } = await apiClient.post(`/api/admin/edit-account`, body)
-            openNotificationWithIcon("success", "Sửa thanh công")
+            openNotificationWithIcon("success", "Sửa thành công")
         } catch (error) {
             openNotificationWithIcon("error", "Sửa thất bại")
         }
@@ -202,12 +203,12 @@ const AdminLecture = () => {
                             title: 'Cơ sở',
                             dataIndex: 'campusName',
                             key: 'campusName',
-                        },,
+                        }, ,
                         {
                             title: 'Trưởng ban HO',
                             dataIndex: 'trainingPro',
-                            render: (_,record) => {
-                                console.log("trương ho",record.trainingPro);
+                            render: (_, record) => {
+                                console.log("trương ho", record.trainingPro);
 
                                 return <Checkbox disabled checked={record.trainingPro}></Checkbox>
                             },
@@ -230,7 +231,7 @@ const AdminLecture = () => {
                                     userName: r.userName,
                                     email: r.email,
                                     campusId: listCampus.find(i => i.label == r.campusName).value,
-                                    trainingPro : r.trainingPro
+                                    trainingPro: r.trainingPro
                                 }, type: "EDIT"
                             })
                         }
@@ -239,6 +240,8 @@ const AdminLecture = () => {
 
             </CardCustom>
             <AddNewForm
+                formAdd={formAdd}
+                setFormAdd={setFormAdd}
                 visible={showAddNew} jsonFormInput={formAdd}
                 _onClose={() => {
                     setShowAddNew(false)

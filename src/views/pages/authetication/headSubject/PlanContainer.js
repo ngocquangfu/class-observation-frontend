@@ -216,7 +216,7 @@ const PlanContainer = () => {
       key: 'slotTime',
       render: (text, record, idx) => (
         isUpdate && idx == index ?
-          <DatePicker style={{ width: "13rem" }} onChange={(e) => onDatePickerChange(e, record)} disabledDate={(current) => {
+          <DatePicker style={{ width: "8rem" }} onChange={(e) => onDatePickerChange(e, record)} disabledDate={(current) => {
             return moment().add(-1, 'days') >= current
           }} />
           // <Select className='select-box' style={{ width: '100%' }} defaultValue={text} options={accounts} onChange={(e) => handleAccount1Change(e, record)} />
@@ -232,7 +232,7 @@ const PlanContainer = () => {
           <Select className='select-box' style={{ width: '100%' }} defaultValue={text} options={slot} onChange={(e) => handleSlotChange(e, record)} />
           : <div>{text}</div>
       ),
-      width: '10%'
+      width: 150
     },
     {
       title: 'Phòng học',
@@ -240,19 +240,24 @@ const PlanContainer = () => {
       key: 'roomName',
       render: (text, record, idx) => (
         isUpdate && idx == index ?
-          <Select className='select-box' style={{ width: '100%' }} defaultValue={text} options={room} onChange={(e) => handleRoomChange(e, record)} />
+          <Select className='select-box' style={{ width: '100%' }} defaultValue={text} options={room} onChange={(e) => handleRoomChange(e, record)} showSearch
+          filterOption={(input, option) =>
+            (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}/>
           : <div>{text}</div>
       ),
-      width: '10%'
+      width: 150
 
     },
     {
       title: 'Tên môn',
       dataIndex: 'subjectCode',
       key: 'subjectCode',
+      width: 130,
       render: (text, record, idx) => (
         isUpdate && idx == index ?
-          <Select className='select-box' style={{ width: '100%' }} defaultValue={text} options={subject} onChange={(e) => handleSubjectChange(e, record)} />
+          <Select className='select-box' style={{ width: 150 }} defaultValue={text} options={subject} onChange={(e) => handleSubjectChange(e, record)} showSearch
+          filterOption={(input, option) =>
+            (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}/>
           : <div>{text}</div>
       ),
       width: '10%'
@@ -276,7 +281,9 @@ const PlanContainer = () => {
       key: 'accountName1',
       render: (text, record, idx) => (
         isUpdate && idx == index ?
-          <Select className='select-box' style={{ width: '100%' }} defaultValue={text} options={accounts} onChange={(e) => handleAccount1Change(e, record)} />
+          <Select className='select-box' style={{ width: '100%' }} defaultValue={text} options={accounts} onChange={(e) => handleAccount1Change(e, record)} showSearch
+          filterOption={(input, option) =>
+            (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}/>
           : <div>{text}</div>
       ),
     },
@@ -286,7 +293,12 @@ const PlanContainer = () => {
       key: 'accountName2',
       render: (text, record, idx) => (
         isUpdate && idx == index ?
-          <Select className='select-box' style={{ width: '100%' }} defaultValue={text} options={accounts} onChange={(e) => handleAccount2Change(e, record)} />
+          <Select className='select-box' style={{ width: '100%' }} defaultValue={text} options={accounts} onChange={(e) => handleAccount2Change(e, record)}
+          showSearch
+          filterOption={(input, option) =>
+            (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+          }
+          />
           : <div>{text}</div>
       ),
     },
@@ -297,13 +309,15 @@ const PlanContainer = () => {
     },
     {
       title: 'Cập nhật',
+      width: 130,
       render: (text, record, idx) => (
         isUpdate && idx == index ?
           <Button  type="primary" variant="outlined" onClick={handleClickOpen}>
             Xác nhận
           </Button>
           :
-          <Button type="primary" disabled={statusId!=1?false:true} onClick={() => updateSlot(record, idx)}>
+          // disabled={statusId!=1?false:true} 
+          <Button disabled={statusId!=1?false:true} type="primary"onClick={() => updateSlot(record, idx)}>
             {"Cập nhật"}
           </Button>
       ),
@@ -496,7 +510,12 @@ const PlanContainer = () => {
                   showDel={selectedRow && selectedRow[0]}
                   _onReload={_requestData}
                   _handleDel={selectedRow.length > 0 ? _handleDel : () => { }}
-                  _onClickAdd={() => showModalSlot()}
+                  _onClickAdd={() => {
+                    if(statusId!=1)
+                    showModalSlot()
+                    else
+                    openNotificationWithIcon("error", "Kế hoạch đã duyệt, không được tạo")
+                  }}
                 />}
               >
                 <TableCustom

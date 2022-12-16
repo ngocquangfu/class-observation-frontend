@@ -109,7 +109,7 @@ const LectureDetailContainer = (props) => {
       dataIndex: 'point',
       key: 'point',
       render: (text, record, index) =>
-        <Input type="number" defaultValue={dataInput.listOfObservationDetail[index].point} max={4} min={1} onChange={(e) => onPointChange(record, e, index)} />
+        <Input type="number" rules={{required: true, message:"Vui lòng nhập điểm"}} defaultValue={dataInput.listOfObservationDetail[index].point} max={4} min={1} onChange={(e) => onPointChange(record, e, index)} />
     },
   ]
 

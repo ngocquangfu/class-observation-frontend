@@ -145,7 +145,7 @@ const AdminLecture = () => {
         try {
             const { data } = await apiClient.post(`/api/admin/edit-account`, body)
             console.log("data", data);
-            openNotificationWithIcon("success", "Sửa thanh công")
+            openNotificationWithIcon("success", "Sửa thành công")
         } catch (error) {
             openNotificationWithIcon("error", "Sửa thất bại")
         }
