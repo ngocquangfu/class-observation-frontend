@@ -7,7 +7,7 @@ import AdminHOS from '../admin-head-subject/index';
 import AdminTraining from '../admin-trainning/index';
 import image1 from '../../../../../assets/images/svg-1.png'
 import Header from '../../Header';
-
+import Footer from '../../../../components/footer/Footer';
 
 
 
@@ -25,7 +25,7 @@ const Admin = () => {
     const profileObj = JSON.parse(localStorage.getItem("profileObj"));
     console.log('profileObj', profileObj);
     const navigation = useNavigate()
-    return (
+    return (<>
         <div>
             <div style={{ height: 60, background: '#0a8cf1', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 40 }}>
                 <div style={{ display: 'flex', width: '90', height: "80%" }}>
@@ -64,6 +64,8 @@ const Admin = () => {
                 {objAdmin[adminIndex]}
             </div>
         </div>
+        <Footer/>
+        </>
     );
 };
 

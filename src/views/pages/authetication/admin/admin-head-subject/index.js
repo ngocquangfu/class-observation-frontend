@@ -18,7 +18,8 @@ const AdminLecture = () => {
         [
             {
                 name: 'userName',
-                label: 'Tên'
+                label: 'Tên',
+                
             },
             {
                 name: 'email',

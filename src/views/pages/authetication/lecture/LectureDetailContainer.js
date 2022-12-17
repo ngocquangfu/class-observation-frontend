@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import '../../styles/lecture.css';
 import { apiClient } from '../../../../api/api-client';
 import { openNotificationWithIcon } from '../../request/notification';
-
+import FormItem from 'antd/es/form/FormItem';
 
 const LectureDetailContainer = (props) => {
   const { record, onCancel } = props;
@@ -19,13 +19,12 @@ const LectureDetailContainer = (props) => {
   const [loading, setLoading] = useState(false);
   const [isReveview, setIsReveview] = useState(false);
 
-
   // const state = {
   //   buttonState: 2
   // };
   const onSubmit = async (fieldValues) => {
     //if (state.buttonState === 1) {
-      showConfirm(fieldValues)
+    showConfirm(fieldValues)
     //   console.log("Button 1 clicked!");
     // }
     // if (state.buttonState === 2) {
@@ -53,11 +52,12 @@ const LectureDetailContainer = (props) => {
         setDataInput(data.items)
         setLoading(true);
         setIsReveview(true);
+      } else {
+        setDataInput({})
       }
 
-    } catch(e){
+    } catch (e) {
       setDataInput({})
-
 
     }
   }
@@ -75,43 +75,9 @@ const LectureDetailContainer = (props) => {
     }, 2000)
   }, [record.id])
 
-  const columnsEnable = [
-    {
-      title: 'STT',
-      dataIndex: 'stt',
-      render: (text, record, index) => index + 1,
-    },
-    {
-      title: 'Tên tiêu chí',
-      dataIndex: 'criteriaName',
-      key: 'criteriaName',
-    },
-    {
-      title: 'Nhập điểm',
-      render: (text, record, index) =>
-        <Input type="number" max={4} min={1} onChange={(e) => onPointChange(record, e, index)} />
-    },
-  ]
 
-  const columnsDisable = [
-    {
-      title: 'STT',
-      dataIndex: 'stt',
-      render: (text, record, index) => index + 1,
-    },
-    {
-      title: 'Tên tiêu chí',
-      dataIndex: 'name',
-      key: 'name',
-    },
-    {
-      title: 'Nhập điểm',
-      dataIndex: 'point',
-      key: 'point',
-      render: (text, record, index) =>
-        <Input type="number" rules={{required: true, message:"Vui lòng nhập điểm"}} defaultValue={dataInput.listOfObservationDetail[index].point} max={4} min={1} onChange={(e) => onPointChange(record, e, index)} />
-    },
-  ]
+
+
 
   const onPointChange = (values, e, index) => {
     const record = { "code": values.criteriaCode, "name": values.criteriaName, "point": parseInt(e.target.value) }
@@ -148,7 +114,7 @@ const LectureDetailContainer = (props) => {
     showConfirm(fieldValues)
   };
 
-  return (
+  return (<>
     <div>
       {loading &&
         <Form form={form} name="dynamic_form_nest_item" onFinish={onFinish} autoComplete="off" initialValues={Object.keys(dataInput).length !== 0 && dataInput.constructor === Object ? dataInput : {}}>
@@ -180,19 +146,19 @@ const LectureDetailContainer = (props) => {
               </div>
             </div>
             <div className='columns'>
-              <p className='column is-4'>Tên giảng viên được đánh giá:</p>
-              <p className='column'>{record.lectureName}</p>
+              <p className='column is5'>Tên giảng viên được đánh giá:</p>
+              <p className='column'><b>{record.lectureName}</b></p>
             </div>
             <div className='columns'>
               <div className='column'>
                 <div className='columns'>
-                  <div className='column is-3'>Môn học:</div>
+                  <div className='column is-4'>Môn học:</div>
                   <div className='column'>{record.subjectName}</div>
                 </div>
               </div>
               <div className='column'>
                 <div className='columns'>
-                  <div className='column is-3'>Bộ môn:</div>
+                  <div className='column is-4'>Bộ môn:</div>
                   <div className='column'>{record.departmentName}</div>
                 </div>
               </div>
@@ -208,11 +174,65 @@ const LectureDetailContainer = (props) => {
                 },
               ]}
             >
-              <Input placeholder='Tên bài giảng' style={{ width: 390 }}/>
+              <Input placeholder='Tên bài giảng'  />
 
             </Form.Item>
 
-            {listData?.length > 0 && <Table key={index} columns={Object.keys(dataInput).length !== 0 && dataInput.constructor === Object ? columnsDisable : columnsEnable} dataSource={Object.keys(dataInput).length !== 0 && dataInput.constructor === Object ? dataInput.listOfObservationDetail : listData} pagination={false} />}
+            {/* {listData?.length > 0 && <Table key={index} columns={Object.keys(dataInput).length !== 0 && dataInput.constructor === Object ? columnsDisable : columnsEnable} dataSource={Object.keys(dataInput).length !== 0 && dataInput.constructor === Object ? dataInput.listOfObservationDetail : listData} pagination={false} />} */}
+            <div className='columns px-1' style={{ borderBottom: '1px solid black' }}>
+              <div className='column has-text-weight-bold'>STT</div>
+              <div className='column has-text-weight-bold'>Tên tiêu chí</div>
+              <div className='column has-text-weight-bold'>Điểm</div>
+            </div>
+            {Object.keys(dataInput).length !== 0 && dataInput.constructor === Object ?
+              <div>
+
+                {dataInput.listOfObservationDetail?.length > 0 && dataInput.listOfObservationDetail.map((e, idx) => {
+                  return (
+                    <div className='columns'>
+                      <div className='column is-1'>{idx + 1}</div>
+                      <div className='column'>{e.name}</div>
+                      <div className='column is-2'>
+                        <FormItem
+                          name={idx}
+                          rules={[
+                            {
+                              required: true,
+                              message: 'Vui lòng nhập điểm',
+                            },
+                          ]}>
+                          <Input type="number" defaultValue={dataInput.listOfObservationDetail[idx].point} max={4} min={1} onChange={(e) => onPointChange(record, e, index)} />
+                        </FormItem>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+              :
+              <div>
+
+                {listData?.length > 0 && listData.map((e, idx) => {
+                  return (
+                    <div className='columns'>
+                      <div className='column is-1' >{idx + 1}</div>
+                      <div className='column'>{e.criteriaName}</div>
+                      <div className='column is-2'>
+                        <FormItem
+                          name={idx}
+                          rules={[
+                            {
+                              required: true,
+                              message: 'Vui lòng nhập điểm',
+                            },
+                          ]}>
+                          <Input type="number" max={4} min={1} onChange={(e) => onPointChange(record, e, index)} />
+                        </FormItem>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            }
             <h1 className='pt-4'>Ưu điểm</h1>
             <Form.Item
               name="advantage"
@@ -223,7 +243,7 @@ const LectureDetailContainer = (props) => {
                 },
               ]}
             >
-              <TextArea rows={4} className="text-area-antd" style={{ width: 500 }} />
+              <TextArea rows={4} className="text-area-antd"/>
             </Form.Item>
             <h1 className='pt-4'>Nhược điểm</h1>
             <Form.Item
@@ -235,7 +255,7 @@ const LectureDetailContainer = (props) => {
                 },
               ]}
             >
-              <TextArea rows={4} className="text-area-antd" style={{ width: 500 }}/>
+              <TextArea rows={4} className="text-area-antd" />
             </Form.Item>
             <h1 className='pt-4'>Đánh giá chung</h1>
             <Form.Item
@@ -247,11 +267,11 @@ const LectureDetailContainer = (props) => {
                 },
               ]}
             >
-              <TextArea rows={4} className="text-area-antd" style={{ width: 500 }}/>
+              <TextArea rows={4} className="text-area-antd"  />
             </Form.Item>
             <div className='is-flex is-justify-content-end'>
               <Space wrap>
-                <Button className='button mt-5 ml-6'  disabled={isReveview} htmlType="submit">
+                <Button className='button mt-5 ml-6' disabled={isReveview} htmlType="submit">
                   Submit
                 </Button>
                 <Button className='button mt-5 ml-6' disabled={isReveview} htmlType="submit" >
@@ -263,6 +283,7 @@ const LectureDetailContainer = (props) => {
         </Form>
       }
     </div>
+  </>
   );
 };
 

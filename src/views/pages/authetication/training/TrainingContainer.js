@@ -8,7 +8,7 @@ import TrainingChangeContainer from './TrainingChangeContainer';
 import TrainingDetail from './TrainingDetail';
 import Header from '../Header';
 import { TableCustom } from '../../helper/style-component';
-
+import Footer from '../../../components/footer/Footer';
 
 
 const TrainingContainer = () => {
@@ -197,7 +197,7 @@ const TrainingContainer = () => {
     },
   ]
 
-  return (
+  return (<>
     <div>
       <Header />
       <div className='columns'>
@@ -230,11 +230,11 @@ const TrainingContainer = () => {
 
         </div>
         <div className='column'>
-          {listData?.length > 0 && <TableCustom columns={columns} dataSource={listData} 
-          scroll={{ y: 'calc(100vh - 190px)' }}  pagination={{ defaultPageSize: 5, showSizeChanger: true, pageSizeOptions: ['5', '10', '20']}}/>}
+          {listData?.length > 0 && <TableCustom columns={columns} dataSource={listData}
+            scroll={{ y: 'calc(100vh - 190px)' }} pagination={{ defaultPageSize: 5, showSizeChanger: true, pageSizeOptions: ['5', '10', '20'] }} />}
         </div>
       </div>
-    </div>
+    </div><Footer /></>
   );
 };
 

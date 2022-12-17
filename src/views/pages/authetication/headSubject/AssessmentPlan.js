@@ -5,6 +5,7 @@ import AssessmentPlanDetail from './AssessmentPlanDetail';
 import { apiClient } from '../../../../api/api-client';
 import { openNotificationWithIcon } from '../../request/notification';
 import Header from '../Header';
+import Footer from '../../../components/footer/Footer';
 const AssessmentPlan = () => {
     const [listData, setListData] = useState([]);
     const [result, setResult] = useState(0);
@@ -79,7 +80,7 @@ const AssessmentPlan = () => {
                     };
                 })}
             />
-                {show||listData?.length>2?<div></div>:<div className='columns mt-5'>
+                {!show||listData?.length<2?<div></div>:<div className='columns mt-5'>
                     <div className='column is-1' style={{ marginLeft: "40rem" }}>
                         <button  onClick={async () => {
                             // const { data } = await apiClient.post(`api/pass-observation-slot?oSlotId=${id}&pass=${2}`)
@@ -107,6 +108,7 @@ const AssessmentPlan = () => {
                     </div>
                 </div> }
         </div>
+        <Footer/>
     </>
     );
 };

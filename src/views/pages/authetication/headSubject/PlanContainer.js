@@ -4,6 +4,7 @@ import ModalPlanContainer from './ModalPlanContainer';
 import ModalSlotContainer from './ModalSlotContainer';
 import moment from 'moment';
 import '../../styles/plan.css';
+import Footer from '../../../components/footer/Footer';
 import { apiClient } from '../../../../api/api-client';
 import { useNavigate, NavigationContainer } from 'react-router-dom';
 import { openNotificationWithIcon } from '../../request/notification';
@@ -530,6 +531,7 @@ const PlanContainer = () => {
                   dataSource={listPlan} /></CardCustom>}</div>
         </div>
       </div>
+      <Footer/>
     </>
   );
 };

@@ -7,7 +7,7 @@ import LectureDetailContainer from './LectureDetailContainer';
 import Header from '../Header';
 import { useId } from 'react';
 import { TableCustom } from '../../helper/style-component';
-
+import Footer from '../../../components/footer/Footer';
 const LectureResultContainer= () => {
 
     const [listData, setListData] = useState();
@@ -139,6 +139,7 @@ const LectureResultContainer= () => {
     ]
   
     return (
+      <>
       <div>
         {role=="[2]"?
      <Header name1="Lịch dự giờ" link1="/lecture" name2="Kết quả" link2="/lecture-result" name3="Trưởng bộ môn" link3="/head-plan"/>
@@ -168,6 +169,8 @@ const LectureResultContainer= () => {
           </div>
         </div>
       </div>
+      <Footer/>
+      </>
     );
   };
 
