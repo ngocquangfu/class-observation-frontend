@@ -241,7 +241,7 @@ const ModalPlanContainer = ({ handleCancel }) => {
                                   rules={[
                                     {
                                       required: true,
-                                      message: 'Trường hợp bắt buộc',
+                                      message: 'Vui lòng nhập giảng viên',
                                     },
                                     ({ getFieldValue }) => ({
                                       validator(rule, value) {
@@ -290,7 +290,7 @@ const ModalPlanContainer = ({ handleCancel }) => {
                                   rules={[
                                     {
                                       required: true,
-                                      message: 'Trường hợp bắt buộc',
+                                      message: 'Vui lòng nhập môn học',
                                     },
                                   ]}
                                 >
@@ -335,7 +335,7 @@ const ModalPlanContainer = ({ handleCancel }) => {
                                   rules={[
                                     {
                                       required: true,
-                                      message: 'Trường hợp bắt buộc',
+                                      message: 'Vui lòng nhập Slot',
                                     },
                                   ]}
                                 >
@@ -355,7 +355,7 @@ const ModalPlanContainer = ({ handleCancel }) => {
                               rules={[
                                 {
                                   required: true,
-                                  message: 'Trường hợp bắt buộc',
+                                  message: 'Vui lòng nhập thời gian',
                                 },
                               ]}
                             >
@@ -378,7 +378,7 @@ const ModalPlanContainer = ({ handleCancel }) => {
                               rules={[
                                 {
                                   required: true,
-                                  message: 'Trường hợp bắt buộc',
+                                  message: 'Vui lòng nhập Phòng học',
                                 },
                               ]}
                             >
@@ -397,7 +397,7 @@ const ModalPlanContainer = ({ handleCancel }) => {
                               rules={[
                                 {
                                   required: true,
-                                  message: 'Trường hợp bắt buộc',
+                                  message: 'Vui lòng nhập lớp',
                                 }, {
                                   pattern: new RegExp(/^[a-zA-Z0-9]*$/),
                                   message: "Vui lòng nhập chữ cái và số"
@@ -426,7 +426,7 @@ const ModalPlanContainer = ({ handleCancel }) => {
                                   rules={[
                                     {
                                       required: true,
-                                      message: 'Trường hợp bắt buộc',
+                                      message: 'Vui lòng nhập Giảng viên 1',
                                     },
                                     ({ getFieldValue }) => ({
                                       validator(rule, value) {
@@ -471,7 +471,7 @@ const ModalPlanContainer = ({ handleCancel }) => {
                                   rules={[
                                     {
                                       required: true,
-                                      message: 'Trường hợp bắt buộc',
+                                      message: 'Vui lòng nhập giảng viên 2',
                                     },
                                     ({ getFieldValue }) => ({
                                       validator(rule, value) {
@@ -511,7 +511,7 @@ const ModalPlanContainer = ({ handleCancel }) => {
                             rules={[
                               {
                                 required: true,
-                                message: 'Trường hợp bắt buộc',
+                                message: 'Vui lòng nhập lý do',
                               }, {
                                 pattern: new RegExp(/^[a-zA-Z 0-9]*$/),
                                 message: "Vui lòng nhập chữ cái và số"

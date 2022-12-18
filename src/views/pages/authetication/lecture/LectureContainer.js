@@ -35,6 +35,7 @@ const LectureContainer = () => {
     setSemesterId(data?.items)
 
   }
+ 
   const getSemesters = async () => {
     const { data } = await apiClient.get('/api/semester-list')
     var ReverseArray = [];
@@ -119,7 +120,7 @@ const LectureContainer = () => {
       ),
     },
   ];
- 
+
   const semesterColums = [
     {
       title: 'Kì học',
@@ -135,12 +136,12 @@ const LectureContainer = () => {
 
   return (<>
     <div>
-      {role=="[2]"?
-     <Header name1="Lịch dự giờ" link1="/lecture" name2="Kết quả" link2="/lecture-result" name3="Chủ nhiệm bộ môn" link3="/head-plan"/>
-      :
-     <Header name1="Lịch dự giờ" link1="/lecture" name2="Kết quả" link2="/lecture-result" />
+      {role == "[2]" ?
+        <Header name1="Lịch dự giờ" link1="/lecture" name2="Kết quả" link2="/lecture-result" name3="Chủ nhiệm bộ môn" link3="/head-plan" />
+        :
+        <Header name1="Lịch dự giờ" link1="/lecture" name2="Kết quả" link2="/lecture-result" />
 
-    }
+      }
       <p className='has-text-centered has-text-weight-bold is-size-3'>Danh sách đi dự giờ của giảng viên</p>
       <Drawer
         width={620}
@@ -160,12 +161,12 @@ const LectureContainer = () => {
 
         </div>
         <div className='column'>
-          {listData?.length > 0 && <TableCustom columns={columns} dataSource={listData} pagination={{ defaultPageSize: 5, showSizeChanger: true, pageSizeOptions: ['5', '10', '20']}}/>}
+          {listData?.length > 0 && <TableCustom columns={columns} dataSource={listData} pagination={{ defaultPageSize: 5, showSizeChanger: true, pageSizeOptions: ['5', '10', '20'] }} />}
         </div>
       </div>
     </div>
-    <Footer/>
-    </>
+    <Footer />
+  </>
   );
 };
 

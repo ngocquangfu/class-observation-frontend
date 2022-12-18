@@ -125,7 +125,7 @@ const AdminLecture = () => {
 
             openNotificationWithIcon("success", "Thêm thành công")
         } catch (error) {
-            openNotificationWithIcon("error", "Thêm thất bại")
+            openNotificationWithIcon("error", "Email đã tồn tại trong hệ thống")
 
         }
 
@@ -168,7 +168,6 @@ const AdminLecture = () => {
                 extra={<Extra
                     showDel={selectedRow && selectedRow[0]}
                     listColumn={[]}
-
                     _onReload={_handleReset}
                     _handleDel={selectedRow.length > 0 ? _handleDel : () => { }}
                     _onClickAdd={() => setShowAddNew(true)}
@@ -221,7 +220,7 @@ const AdminLecture = () => {
                                     userName: r.userName,
                                     email: r.email,
                                     campusId: listCampus.find(i => i.label == r.campusName).value,
-                                }, type: "Sửa"
+                                }, type: "EDIT"
                             })
                         }
                     })}

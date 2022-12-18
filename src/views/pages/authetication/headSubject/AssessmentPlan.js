@@ -19,15 +19,11 @@ const AssessmentPlan = () => {
     const _requestData = async () => {
         const { data } = await apiClient.get(`/api/result-observation-slot?oSlotId=${id}`)
         setListData(data.items)
-        console.log("lisdata", listData)
+        console.log("lisdata11", listData.length)
+
 
     }
-    // const getResultId = async () => {
-    //     const { data } = await apiClient.get(`/api/list-observation-slot-plan?planId=${id}`)
-    //     console.log("dddsf", data.items[0].result)
-    //     setResult(data.items[0].result)
-
-    // }
+   
     const checkShowReview = async () => {
         const { data } = await apiClient.get(`/api/status-observation-slot?slotId=${id}`)
         if(data?.items != 0){
@@ -47,13 +43,12 @@ const AssessmentPlan = () => {
               if (data.status == '200') {
                 openNotificationWithIcon("success", "Đánh giá thành công")
                 navigation('/head-plan')
-                // onCancel()
               }
             } catch (e) {
-            //   openNotificationWithIcon("error", "Đánh giá thất bại")
+            
             }
           },
-        //   onCancel() { },
+       
         });
       }
     useEffect(() => {
@@ -80,26 +75,17 @@ const AssessmentPlan = () => {
                     };
                 })}
             />
-                {!show||listData?.length<2?<div></div>:<div className='columns mt-5'>
+                {show&&<div className='columns mt-5'>
                     <div className='column is-1' style={{ marginLeft: "40rem" }}>
                         <button  onClick={async () => {
-                            // const { data } = await apiClient.post(`api/pass-observation-slot?oSlotId=${id}&pass=${2}`)
-                            // console.log("idddd", id)
-                            // if (data.status == '200') {
-                            //     openNotificationWithIcon("success", "Đánh giá thành công");
-                            //     navigation('/head-plan')
-                            // }
+                            
                             showConfirm(id,2)
                         }} className='button is-danger'>
                             Không đạt
                         </button>
                     </div>
                     <div onClick={async () => {
-                        // const { data } = await apiClient.post(`api/pass-observation-slot?oSlotId=${id}&pass=${1}`)
-                        // if (data.status == '200') {
-                        //     openNotificationWithIcon("success", "Đánh giá thành công");
-                        //     navigation('/head-plan')
-                        // }
+                       
                         showConfirm(id,1)
                     }} className='column'>
                         <button  className='button is-success'>

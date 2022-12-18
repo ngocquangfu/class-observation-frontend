@@ -88,3 +88,13 @@
   border: 1px solid;
   border-radius: 8px;
 }
+
+.ant-modal-confirm-confirm {
+  margin: 10rem !important;
+  padding-left: 100px;
+
+}
+
+.ant-modal-confirm-confirm .ant-modal-content {
+ width: 500px;
+}

@@ -19,19 +19,7 @@ const LectureDetailContainer = (props) => {
   const [loading, setLoading] = useState(false);
   const [isReveview, setIsReveview] = useState(false);
 
-  // const state = {
-  //   buttonState: 2
-  // };
-  const onSubmit = async (fieldValues) => {
-    //if (state.buttonState === 1) {
-    showConfirm(fieldValues)
-    //   console.log("Button 1 clicked!");
-    // }
-    // if (state.buttonState === 2) {
-    //   console.log("Button 2 clicked!");
-    //   onSaveDraft(fieldValues)
-    // }
-  };
+
   const onSaveDraft = async (fieldValues) => {
     const body = { ...fieldValues, ...values, "observationDetailRequests": observation };
     const { data } = await apiClient.post(`/api/lecture/create-observation-review`, body)
@@ -170,11 +158,11 @@ const LectureDetailContainer = (props) => {
               rules={[
                 {
                   required: true,
-                  message: 'Trường hợp này là bắt buộc',
+                  message: 'Vui lòng nhập tên bài giảng',
                 },
               ]}
             >
-              <Input placeholder='Tên bài giảng'  />
+              <Input placeholder='Tên bài giảng' />
 
             </Form.Item>
 
@@ -239,11 +227,11 @@ const LectureDetailContainer = (props) => {
               rules={[
                 {
                   required: true,
-                  message: 'Trường hợp này là bắt buộc',
+                  message: 'Vui lòng nhập ưu điểm',
                 },
               ]}
             >
-              <TextArea rows={4} className="text-area-antd"/>
+              <TextArea rows={4} className="text-area-antd" />
             </Form.Item>
             <h1 className='pt-4'>Nhược điểm</h1>
             <Form.Item
@@ -251,7 +239,7 @@ const LectureDetailContainer = (props) => {
               rules={[
                 {
                   required: true,
-                  message: 'Trường hợp này là bắt buộc',
+                  message: 'Vui lòng nhập nhược điểm',
                 },
               ]}
             >
@@ -263,11 +251,11 @@ const LectureDetailContainer = (props) => {
               rules={[
                 {
                   required: true,
-                  message: 'Trường hợp này là bắt buộc',
+                  message: 'Vui lòng nhập đánh giá chung',
                 },
               ]}
             >
-              <TextArea rows={4} className="text-area-antd"  />
+              <TextArea rows={4} className="text-area-antd" />
             </Form.Item>
             <div className='is-flex is-justify-content-end'>
               <Space wrap>

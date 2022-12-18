@@ -50,13 +50,32 @@ const ModalForm = ({
       
     }
   } ,[])
- 
+  const handleChangeForm = (value) => {
+    if(value?.email){
+      if(value.email.split('@')[1] != "fpt.edu.vn"){
+        form.setFields([
+          {
+            name : 'email',
+            errors : ['Vui lòng nhập email có đuôi là @fpt.edu.vn']
+          }
+        ])
+      }
+      else {
+        form.setFields([
+          {
+            name : 'email',
+            errors : false
+          }
+        ])
+      }
+    }
+  }
   return (
     <Drawer bodyStyle={{ padding: 10 }} title={false}
       placement={'right'} closable={false} onClose={_onClose} open={visible} width={650}>
       <TitleDetail _onClose={_onClose} _onReset={() => form.resetFields()} />
       <StyledForm onFinish={onFinish} form={form} initialValues={dataInit}
-        style={{ padding: '0px 10px' }} layout="vertical" >
+        style={{ padding: '0px 10px' }} layout="vertical"  onValuesChange={handleChangeForm}>
         <Form.Item> <HeaderForm loading={loading} type={type} /> </Form.Item>
         <RenderForm jsonFrom={jsonFormInput} type={type} />
       </StyledForm>

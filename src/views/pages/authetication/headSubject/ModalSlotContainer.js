@@ -197,7 +197,7 @@ return (
                         rules={[
                           {
                             required: true,
-                            message: 'Trường hợp bắt buộc',
+                            message: 'Vui lòng nhập giảng viên',
                           },
                           ({ getFieldValue }) => ({
                             validator(rule, value) {
@@ -233,7 +233,7 @@ return (
                         rules={[
                           {
                             required: true,
-                            message: 'Trường hợp bắt buộc',
+                            message: 'Vui lòng nhập môn học',
                           },
                         ]}
                       >
@@ -270,7 +270,7 @@ return (
                         rules={[
                           {
                             required: true,
-                            message: 'Trường hợp bắt buộc',
+                            message: 'Vui lòng nhập Slot',
                           },
                         ]}
                       >
@@ -288,7 +288,7 @@ return (
                     rules={[
                       {
                         required: true,
-                        message: 'Trường hợp bắt buộc',
+                        message: 'Vui lòng nhập thời gian',
                       },
                     ]}
                   >
@@ -312,7 +312,7 @@ return (
                     rules={[
                       {
                         required: true,
-                        message: 'Trường hợp bắt buộc',
+                        message: 'Vui lòng nhập phòng',
                       },
                     ]}
                   >
@@ -330,7 +330,7 @@ return (
                     rules={[
                       {
                         required: true,
-                        message: 'Trường hợp bắt buộc',
+                        message: 'Vui lòng nhập lớp',
 
                       }, {
                         pattern: new RegExp(/^[a-zA-Z0-9]*$/),
@@ -356,7 +356,7 @@ return (
                         rules={[
                           {
                             required: true,
-                            message: 'Trường hợp bắt buộc',
+                            message: 'Vui lòng nhập giảng viên 1',
                           },
                           ({ getFieldValue }) => ({
                             validator(rule, value) {
@@ -392,7 +392,7 @@ return (
                         rules={[
                           {
                             required: true,
-                            message: 'Trường hợp bắt buộc',
+                            message: 'Vui lòng nhập giảng viên 2',
                           },
                           ({ getFieldValue }) => ({
                             validator(rule, value) {
@@ -429,7 +429,7 @@ return (
                   rules={[
                     {
                       required: true,
-                      message: 'Trường hợp bắt buộc',
+                      message: 'Vui lòng nhập lý do',
                     }, {
                       pattern: new RegExp(/^[a-zA-Z 0-9]*$/),
                       message: "Vui lòng nhập chữ cái và số"
