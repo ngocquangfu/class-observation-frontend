@@ -4,6 +4,7 @@ import { apiClient } from '../../../../../api/api-client';
 const { Option } = Select;
 export const RenderForm = ({ jsonFrom = () => { } }) => {
     const [departmentOptions, setDepartmentOptions] = useState([]);
+    const [departmentValue , setDepartmentValue] = useState('');
     const _requestDataDepartment = async (searchText = '') => {
         const campusId = localStorage.getItem("campusId");
         const { data } = await apiClient.get(`/api/list-department?id=${campusId}&name=${searchText}`)
@@ -16,12 +17,13 @@ export const RenderForm = ({ jsonFrom = () => { } }) => {
         setDepartmentOptions(
             data.map(item => {
                 return {
-                    label: item.name,
-                    value: item.value
+                    value: item.name,
+                    key: item.value
                 }
             }),
         );
     }
+    
     useEffect(() => {
         _requestDataDepartment()
     }, [])
@@ -95,6 +97,12 @@ export const RenderForm = ({ jsonFrom = () => { } }) => {
                         key={String(index)}
                         name={item.name}
                         label={item.label}
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Vui lòng nhập',
+                            },
+                        ]}
                         style={item.hidden ? { display: 'none' } : { margin: '0', width: '45%' }}>
                         <Input disabled={item.disabled} />
                     </Form.Item>

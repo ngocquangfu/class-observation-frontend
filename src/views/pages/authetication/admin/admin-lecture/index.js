@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { Button} from "antd";
+import React, { useState, useEffect,useCallback } from 'react';
+import { Button,Space,Input} from "antd";
 import {PlusOutlined, DeleteOutlined,  ReloadOutlined} from "@ant-design/icons";
 import { CardCustom, TableCustom } from '../../../helper/style-component'
 import { apiClient } from '../../../../../api/api-client';
 import AddNewForm from '../common/com//add_new_modal';
 import ModalFormDetail from '../common/com/detail_modal'
 import { openNotificationWithIcon } from '../../../request/notification';
-
+import { debounce } from '@mui/material';
+const { Search } = Input;
 
 
 const AdminLecture = () => {
@@ -68,10 +69,10 @@ const AdminLecture = () => {
         console.log("convertDataFormAdd:", convertDataFormAdd)
         setFormAdd(convertDataFormAdd)
     }
-    const _requestDataTable = async () => {
+    const _requestDataTable = async (search="") => {
         const start = page.current == 1 ? 0 : page.current*page.number_of_page - page.number_of_page
         const end = page.current*page.number_of_page
-        const  {data}  = await apiClient.get(`/api/admin/list-account-role?roleId=4&start=${start}&end=${end}`)
+        const  {data}  = await apiClient.get(`/api/admin/list-account-role?roleId=4&email=${search}&start=${start}&end=${end}`)
         const convertData = data.items.map(item => {
             return {
                 key: item.id,
@@ -80,6 +81,10 @@ const AdminLecture = () => {
         })
         setDataTable(convertData)
     }
+    const onChangeSearch = (e) => {
+        debounceReqData(e);
+    }
+    const debounceReqData = useCallback(debounce((nextValue) => _requestDataTable(nextValue), 1000), [])
     const _handleDel = () => {
         const isBool = window.confirm("Bạn muốn vô hiệu tài khoản?")
         if (isBool) {
@@ -160,6 +165,7 @@ const AdminLecture = () => {
                     _onReload={_handleReset}
                     _handleDel={selectedRow.length > 0 ? _handleDel : () => { }}
                     _onClickAdd={() => setShowAddNew(true)}
+                    _onChange={(e) => onChangeSearch(e)}
                 // _onClickColumnShow={() => setShowColumn(true)}
                 />}
             >
@@ -236,10 +242,10 @@ const AdminLecture = () => {
 
     );
 };
-
+const onSearch = (value) => console.log(value);
 const Extra = ({
     showDel = true,
-
+    _onChange = () => {},
     _handleDel = () => { },
     _onClickAdd = () => { },
     _onReload = () => { },
@@ -249,6 +255,16 @@ const Extra = ({
         <div style={{ display: 'flex', alignItems: 'center', paddingRight: 7, justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', flex: 1 }}>
                 <div style={{ display: 'flex' }}>
+                <Space direction="vertical">
+                        <Search
+                            placeholder="Tìm kiếm tài khoản"
+                            onSearch={onSearch}
+                            onChange={(e) => _onChange(e.target.value)}
+                            style={{
+                                width: 200,
+                            }}
+                        />
+                    </Space>
                     {!showDel ? null : <Button onClick={_handleDel} className="ro-custom" type="text" icon={<DeleteOutlined />} >Vô hiệu hóa tài khoản</Button>}
                     <Button onClick={() => _onReload()} className="ro-custom" type="text" icon={<ReloadOutlined />} >Làm mới</Button>
                     <Button onClick={_onClickAdd} className="ro-custom" type="text" icon={<PlusOutlined />} >Thêm</Button>

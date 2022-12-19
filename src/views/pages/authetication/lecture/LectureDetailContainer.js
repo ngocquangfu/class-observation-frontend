@@ -7,7 +7,7 @@ import { openNotificationWithIcon } from '../../request/notification';
 import FormItem from 'antd/es/form/FormItem';
 
 const LectureDetailContainer = (props) => {
-  const { record, onCancel } = props;
+  const { record, onCancel ,requestData} = props;
   const [form] = Form.useForm();
   const campusId = localStorage.getItem('campusId');
   const userId = localStorage.getItem('userId');
@@ -56,8 +56,8 @@ const LectureDetailContainer = (props) => {
   }, [])
 
   useEffect(() => {
-    setDataInput({})
-    getDetailLecture()
+    setDataInput({});
+    getDetailLecture();
     setTimeout(() => {
       setLoading(true)
     }, 2000)
@@ -79,9 +79,34 @@ const LectureDetailContainer = (props) => {
       title: 'Bạn đã chắc chắn nộp chưa?',
       async onOk() {
         try {
-          const body = { ...fieldValues, ...values, "observationDetailRequests": observation };
-          console.log("body", values)
-          console.log("fieldValues", fieldValues)
+          const observationDetailRequests = []
+          if(!dataInput.listOfObservationDetail?.length > 0){
+            listData.map((e) => (
+
+              observationDetailRequests.push({
+                code : "",
+                name: e.criteriaName,
+                point: parseInt(fieldValues[e.criteriaCode])
+              })
+            ))
+          } else {
+            dataInput.listOfObservationDetail.map((e) => (
+              observationDetailRequests.push({
+                code : "",
+                name: e.name,
+                point: parseInt(fieldValues[e.criteriaCode])
+              })
+            ))
+          }
+          const value = {
+            accountId: parseInt(userId),
+            advantage: fieldValues.advantage,
+            comment: fieldValues.comment,
+            disadvantage: fieldValues.disadvantage,
+            lessonName: fieldValues.lessonName,
+            observationSlotId: parseInt(record.id)
+          }
+          const body = {...value, observationDetailRequests}
 
           const { data } = await apiClient.post(`/api/lecture/create-observation-review`, body)
           if (data.status == '200') {
@@ -89,6 +114,8 @@ const LectureDetailContainer = (props) => {
             setIndex(index + 1)
             onCancel()
             form.resetFields();
+            _requestData();
+            requestData()
           }
         } catch (e) {
           openNotificationWithIcon("error", "Nộp thất bại")
@@ -182,7 +209,7 @@ const LectureDetailContainer = (props) => {
                       <div className='column'>{e.name}</div>
                       <div className='column is-2'>
                         <FormItem
-                          name={idx}
+                          name={e.criteriaCode}
                           rules={[
                             {
                               required: true,
@@ -206,7 +233,7 @@ const LectureDetailContainer = (props) => {
                       <div className='column'>{e.criteriaName}</div>
                       <div className='column is-2'>
                         <FormItem
-                          name={idx}
+                          name={e.criteriaCode}
                           rules={[
                             {
                               required: true,

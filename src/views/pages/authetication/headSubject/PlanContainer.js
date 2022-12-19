@@ -217,7 +217,7 @@ const PlanContainer = () => {
       key: 'slotTime',
       render: (text, record, idx) => (
         isUpdate && idx == index ?
-          <DatePicker style={{ width: "8rem" }} onChange={(e) => onDatePickerChange(e, record)} disabledDate={(current) => {
+        <DatePicker defaultValue={moment(record.slotTime)} initialValues={record.slotTime} style={{width: "13rem"}} onChange={(e) => onDatePickerChange(e, record)} disabledDate={(current) => {
             return moment().add(-1, 'days') >= current
           }} />
           // <Select className='select-box' style={{ width: '100%' }} defaultValue={text} options={accounts} onChange={(e) => handleAccount1Change(e, record)} />
@@ -473,7 +473,7 @@ const PlanContainer = () => {
             onClose={handleCancel}
             footer={null}
           >
-            <ModalSlotContainer handleCancel={handleCancel} planId={planId} />
+          <ModalSlotContainer handleCancel={handleCancel} planId={planId} requestData={_requestData}/>
           </Drawer>
         </div>
         <Dialog

@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Checkbox } from "antd";
-import { PlusOutlined, DeleteOutlined, ReloadOutlined } from "@ant-design/icons";
+import React, { useState, useEffect,useCallback } from 'react';
+import { Button, Checkbox ,Input, Space,Upload} from "antd";
+import { PlusOutlined, DeleteOutlined, ReloadOutlined,UploadOutlined } from "@ant-design/icons";
 import { CardCustom, TableCustom } from '../../../helper/style-component'
 import { apiClient } from '../../../../../api/api-client';
 import AddNewForm from '../common/com//add_new_modal';
 import ModalFormDetail from '../common/com/detail_modal'
 import { openNotificationWithIcon } from '../../../request/notification';
-
+import { debounce } from '@mui/material';
+const { Search } = Input;
 
 const AdminLecture = () => {
     const [selectedRow, setSelectRow] = useState([]);
@@ -78,13 +79,15 @@ const AdminLecture = () => {
 
 
     }
-
-    const _requestDataTable = async () => {
+    const onChangeSearch = (e) => {
+        debounceReqData(e);
+    }
+    const debounceReqData = useCallback(debounce((nextValue) => _requestDataTable(nextValue), 1000), [])
+    const _requestDataTable = async (search="") => {
         const start = page.current === 1 ? 0 : page.current * page.number_of_page - page.number_of_page
         const end = page.current * page.number_of_page
-        const dataRole3 = await apiClient.get(`/api/admin/list-account-role?roleId=3&start=${start}&end=${end}`)
-        const dataRole5 = await apiClient.get(`/api/admin/list-account-role?roleId=5&start=${start}&end=${end}`)
-
+        const dataRole3 = await apiClient.get(`/api/admin/list-account-role?roleId=3&email=${search}&start=${start}&end=${end}`)
+        const dataRole5 = await apiClient.get(`/api/admin/list-account-role?roleId=5&email=${search}&start=${start}&end=${end}`)
         const convertData = [...dataRole3.data.items.map(item => {
             return {
                 key: item.id,
@@ -175,7 +178,7 @@ const AdminLecture = () => {
                 extra={<Extra
                     showDel={selectedRow && selectedRow[0]}
                     listColumn={[]}
-
+                    _onChange={(e) => onChangeSearch(e)}
                     _onReload={_handleReset}
                     _handleDel={selectedRow.length > 0 ? _handleDel : () => { }}
                     _onClickAdd={() => setShowAddNew(true)}
@@ -265,20 +268,85 @@ const AdminLecture = () => {
 
     );
 };
-
+const onSearch = (value) => console.log(value);
 const Extra = ({
     showDel = true,
-
+    _onChange = () => {},
     _handleDel = () => { },
     _onClickAdd = () => { },
     _onFilter = () => { },
     _onReload = () => { },
 }) => {
+    const [fileUpload, setFileUpload] = useState();
+    const _handleSelectFile = useCallback(async (file, type) => {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('type', type);
+        setFileUpload({ formData, type, name: file.name });
 
+        return false;
+    }, []);
+    console.log(fileUpload);
+
+    useEffect(() => {
+        if (fileUpload && fileUpload.type) {
+            if (fileUpload.type === 'new') {
+                _handleUploadFile(fileUpload.formData)
+                setFileUpload(null);
+            }
+            else {
+                setFileUpload(null);
+            }
+        }
+    }, fileUpload)
+    const _handleUploadFile = (file) => {
+        console.log("aaaaaa", file);
+        apiClient.post('/api/admin/upload-campus', file, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+            .then((res) => {
+                console.log("-----", res);
+                openNotificationWithIcon('success', 'Tải dữ liệu lên thành công');
+
+            })
+
+            .catch(error => {
+
+                if (error.response) {
+                    console.log('error.response.data', error.response.data);
+                        openNotificationWithIcon('error', 'Tải dữ liệu lên thất bại');
+            }
+            }
+            )
+            .catch((err) => {
+
+            });
+
+    }
     return (
+        
         <div style={{ display: 'flex', alignItems: 'center', paddingRight: 7, justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', flex: 1 }}>
                 <div style={{ display: 'flex' }}>
+                <Space direction="vertical">
+                        <Search
+                            placeholder="Tìm kiếm tài khoản"
+                            onSearch={onSearch}
+                            onChange={(e) => _onChange(e.target.value)}
+                            style={{
+                                width: 200,
+                            }}
+                        />
+                    </Space>
+                    <Upload className="ro-custom" fileList={[]} beforeUpload={file => { 
+                        console.log(file);
+
+                        _handleSelectFile(file, 'new'); return false; }}>
+                        <Button
+                            type="text" icon={<UploadOutlined />}>Import</Button>
+                    </Upload>
                     {!showDel ? null : <Button onClick={_handleDel} className="ro-custom" type="text" icon={<DeleteOutlined />} >Vô hiệu hóa tài khoản</Button>}
                     <Button onClick={() => _onReload()} className="ro-custom" type="text" icon={<ReloadOutlined />} >Làm mới</Button>
                     <Button onClick={_onClickAdd} className="ro-custom" type="text" icon={<PlusOutlined />} >Thêm</Button>
