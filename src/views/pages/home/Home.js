@@ -1,63 +1,46 @@
-import React, { Component } from 'react';
-import Sections from './sections/Sections';
-import { homeObjOne, homeObjThree, homeObjTwo } from './Data';
-import NavBar from '../../components/navbar/Navbar';
-import Footer from '../../components/footer/Footer';
-import { Button } from './button/Button';
-import { Link } from 'react-router-dom';
+
+import React from 'react';
+import '../styles/home.css';
+import {
+    BrowserRouter as Router,Link
+  } from "react-router-dom";
+  import image1 from '../../../assets/images/fpt-logo.png'
+  import image2 from '../../../assets/images/education.png'
 
 
-export default class Home extends Component {
-  
-  state = {
-    windowHeight: undefined,
-    windowWidth: undefined
-  }
-
-  handleResize = () => this.setState({
-    windowHeight: window.innerHeight,
-    windowWidth: window.innerWidth
-  });
-
-  componentDidMount() {
-    this.handleResize();
-    window.addEventListener('resize', this.handleResize)
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.handleResize)
-  }
-
-  render() {
-    var button = "";
-    if (window.innerWidth < 720) {
-      button = (<div className='nav-btn'>
-        <Link to='/login' className='btn-link-2'>
-          <Button
-            buttonStyle='btn--primary'
-            buttonSize='btn--mobile'
-          >
-            Đăng nhập
-          </Button></Link></div>);
-    } else {
-      button = (<div className='nav-btn'>
-        <Link to='/login' className='btn-link'>
-          <Button
-            buttonStyle='btn--outline'
-            buttonSize='btn--medium'
-          >
-            Đăng nhập
-          </Button></Link></div>);
-    }
+const Home = () => {
+    
     return (
-      <>
-        <NavBar custom={button} />
-        <Sections {...homeObjOne} />
-      
-      <Footer/>
-
-      </>
+        <div className='home'>
+            <div className='columns' style={{display: "flex", justifyContent: "space-between", marginTop: "0.75rem"}}>
+                <div className='fpt-logo'>
+                    <img src={image1}></img>
+                </div>
+                <Link to="/login">
+                    <div className='login'>
+                        <button className='button-login'>
+                            Login
+                        </button>
+                    </div>
+                </Link>
+            </div>
+            <hr style={{margin: 0, color: 'gray'}}/>
+            <div className='home-container' style={{display: "flex", justifyContent: "space-evenly"}}> 
+                <div className='title'>
+                    <h1 >Social Constructive Learning</h1>
+                    <h3 className='content'>Construct knowledge and personalize the learning way to empower learners' full potential.</h3>
+                    <Link to="/login">
+                        <button className='button-join'>
+                            Login
+                        </button>
+                </Link>
+                </div>
+                <div>
+                    <img src={image2}></img>
+                </div>
+            </div>
+        </div>
     );
-  }
+};
 
-}
+export default Home;

@@ -23,7 +23,6 @@ const Admin = () => {
         setAdminIndex(idx)
     }
     const profileObj = JSON.parse(localStorage.getItem("profileObj"));
-    console.log('profileObj', profileObj);
     const navigation = useNavigate()
     return (<>
         <div>

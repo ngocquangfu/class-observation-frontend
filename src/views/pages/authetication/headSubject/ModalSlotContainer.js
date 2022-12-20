@@ -123,7 +123,7 @@ const ModalSlotContainer = ({ handleCancel, planId, requestData }) => {
       accountId1: parseInt(item.accountId1),
       accountId2: parseInt(item.accountId2),
     }
-  // console.log("finalValues", observationSlotsRequest)
+  console.log("finalValues slot", values)
   postPlan(values);
 };
 

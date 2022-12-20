@@ -53,16 +53,14 @@ const PlanContainer = () => {
   const [status, setStatus] = useState({});
   const [planId, setPlanId] = useState();
   const [statusId, setStatusId] = useState(0);
-
-  const [listSemestersOption, setListSemestersOption] = useState([]);
-  // const [semesterNow, setSemesterNow] = useState(0);
-  // const [, setSemesterNow] = useState(0);
+  
 
 
   const _getStatusListPlan = async (id) => {
     const { data } = await apiClient.get(`/api/status-observation-plan?planId=${id}`)
     setStatus(dataStatus[data.items])
     setStatusId(data.items)
+    localStorage.setItem("statusPlan",data.items)
 
   }
   const getSemestersCurrent = async () => {
@@ -70,12 +68,9 @@ const PlanContainer = () => {
     setSemesterId(data?.items)
 
   }
+
   const _requestData = async () => {
-    console.log("planId",planId)
-    // setSemesterId(semesterNow)
     const { data } = await apiClient.get(`/api/list-observation-slot?semesterId=${semesterId}&accountId=${userId}`)
-    // localStorage.setItem("planId", data.items[0].planId);
-    // _getStatusListPlan(localStorage.getItem("planId"))
     try {
       if (data.items != 0){
         setPlanId(data?.items[0].planId)
@@ -88,8 +83,8 @@ const PlanContainer = () => {
     data.items = data.items.map((item, idx) => {
       var date = new Date(`${item.slotTime}`);
 
-      item.slotTime =
-        ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear();
+      item.slotTime = date.getFullYear() + '-'+
+        ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '-' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate()))  ;
       let accountName1 = accounts.find(o => o.value == item.accountId1)?.name;
       var accountName2 = accounts.find(o => o.value == item.accountId2)?.name;
       var roomName = room.find(o => o.value == item.roomId)?.name;
@@ -147,8 +142,8 @@ const PlanContainer = () => {
       mnth = ("0" + (date.getMonth() + 1)).slice(-2),
       day = ("0" + date.getDate()).slice(-2);
     var dateResult = [date.getFullYear(), mnth, day].join("-");
+    console.log("ffffffff", dateResult)
     var values = { ...record, slotTime: dateResult }
-  
     setResult(values);
   }
 
@@ -166,7 +161,6 @@ const PlanContainer = () => {
     }
     setListSemesters(ReverseArray);
     setSemesterId(data.length)
-    setListSemestersOption(rooms)
 
   }
 
@@ -210,6 +204,8 @@ const PlanContainer = () => {
       title: 'STT',
       dataIndex: 'stt',
       render: (text, record, index) => index + 1,
+      width: 70,
+      fixed: 'left',
     },
     {
       title: 'Thời gian',
@@ -223,6 +219,8 @@ const PlanContainer = () => {
           // <Select className='select-box' style={{ width: '100%' }} defaultValue={text} options={accounts} onChange={(e) => handleAccount1Change(e, record)} />
           : <div>{text}</div>
       ),
+      width: 150
+
     },
     {
       title: 'Ca học',
@@ -253,7 +251,6 @@ const PlanContainer = () => {
       title: 'Tên môn',
       dataIndex: 'subjectCode',
       key: 'subjectCode',
-      width: 130,
       render: (text, record, idx) => (
         isUpdate && idx == index ?
           <Select className='select-box' style={{ width: 150 }} defaultValue={text} options={subject} onChange={(e) => handleSubjectChange(e, record)} showSearch
@@ -261,7 +258,7 @@ const PlanContainer = () => {
             (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}/>
           : <div>{text}</div>
       ),
-      width: '10%'
+      width: 200
 
     },
     // {
@@ -274,7 +271,8 @@ const PlanContainer = () => {
       title: 'Lớp',
       dataIndex: 'className',
       key: 'className',
-      width: '10%'
+      width: 100
+
     },
     {
       title: 'Tên GV1',
@@ -287,6 +285,8 @@ const PlanContainer = () => {
             (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}/>
           : <div>{text}</div>
       ),
+      width: 200
+
     },
     {
       title: 'Tên GV2',
@@ -302,15 +302,19 @@ const PlanContainer = () => {
           />
           : <div>{text}</div>
       ),
+      width: 200
+
     },
     {
       title: 'Lý do',
       dataIndex: 'reason',
       key: 'reason',
+      width: 100
+
     },
     {
       title: 'Cập nhật',
-      width: 130,
+      width: 100,
       render: (text, record, idx) => (
         isUpdate && idx == index ?
           <Button  type="primary" variant="outlined" onClick={handleClickOpen}>
@@ -322,6 +326,8 @@ const PlanContainer = () => {
             {"Cập nhật"}
           </Button>
       ),
+      fixed: 'right',	
+      width: 100,
     }, {
       title: 'Kết quả',
       key: 'result',
@@ -330,7 +336,8 @@ const PlanContainer = () => {
         <Button onClick={() => handleNavigation(record)}>
           {"Kết quả"}
         </Button>
-      ),
+      ),fixed: 'right',
+      width: 100,
     },
 
   ];
@@ -354,7 +361,9 @@ const PlanContainer = () => {
 
   const [result, setResult] = useState({});
   const handleRoomChange = (e, record) => {
-    var values = { roomId: e }
+    var values = { ...record,roomId: e }
+    console.log("roomId change",values)
+
     setResult(values);
   }
   const handleSlotChange = (e, record) => {
@@ -363,6 +372,7 @@ const PlanContainer = () => {
   }
   const handleSubjectChange = (e, record) => {
     var values = { ...record, subjectId: e }
+    console.log("subject change",values)
     setResult(values);
   }
   const handleClassChange = (e, record) => {
@@ -393,9 +403,10 @@ const PlanContainer = () => {
       accountId2: result.accountId2,
     };
     handleClose();
-    console.log("values",values)
+    console.log("values1",values)
 
     const { data } = await apiClient.post('/api/update-observation-slot', values)
+
     setDialogOpen(false);
     if (data.status == 200) {
       openNotificationWithIcon("success", "Cập nhật thành công")
@@ -510,7 +521,16 @@ const PlanContainer = () => {
                 extra={<Extra
                   showDel={selectedRow && selectedRow[0]}
                   _onReload={_requestData}
-                  _handleDel={selectedRow.length > 0 ? _handleDel : () => { }}
+                  //selectedRow.length > 0 ? _handleDel : () => { }
+                  _handleDel={()=>{
+                    if(statusId!=1){
+                      if(selectedRow.length>0){
+                        _handleDel()
+                      }
+                    }
+                    else
+                    openNotificationWithIcon("error", "Kế hoạch đã duyệt, không được xóa")
+                  }}
                   _onClickAdd={() => {
                     if(statusId!=1)
                     showModalSlot()
@@ -519,15 +539,18 @@ const PlanContainer = () => {
                   }}
                 />}
               >
-                <TableCustom
-                  rowSelection={{
-                    type: 'checkbox',
-                    onChange: (selectedRowKeys, selectedRows) => {
-                      console.log(selectedRowKeys, selectedRows);
-                      setSelectRow(selectedRowKeys)
-                    }
-                  }}
-                  columns={columns}
+                 <Table style={{width: '1300px'}}	
+                  rowSelection={{	
+                    type: 'checkbox',	
+                    onChange: (selectedRowKeys, selectedRows) => {	
+                      console.log(selectedRowKeys, selectedRows);	
+                      setSelectRow(selectedRowKeys)	
+                    }	
+                  }}	
+                  columns={columns}	
+                  scroll={{	
+                    x: 2253.63,	
+                  }}	
                   dataSource={listPlan} /></CardCustom>}</div>
         </div>
       </div>
