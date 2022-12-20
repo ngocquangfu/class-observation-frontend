@@ -512,9 +512,6 @@ const ModalPlanContainer = ({ handleCancel }) => {
                               {
                                 required: true,
                                 message: 'Vui lòng nhập lý do',
-                              }, {
-                                pattern: new RegExp(/^[a-zA-Z 0-9]*$/),
-                                message: "Vui lòng nhập chữ cái và số"
                               }
                             ]}
                           >

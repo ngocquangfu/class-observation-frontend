@@ -3,7 +3,6 @@ import image2 from '../../../assets/images/svg-2.svg';
 import image3 from '../../../assets/images/svg-3.svg';
 
 export const homeObjOne = {
-  
   lightBg: false,
   lightText: true,
   lightTextDesc: false,

@@ -97,12 +97,7 @@ export const RenderForm = ({ jsonFrom = () => { } }) => {
                         key={String(index)}
                         name={item.name}
                         label={item.label}
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Vui lòng nhập',
-                            },
-                        ]}
+                        rules={item.rules}
                         style={item.hidden ? { display: 'none' } : { margin: '0', width: '45%' }}>
                         <Input disabled={item.disabled} />
                     </Form.Item>

@@ -77,6 +77,7 @@ const LectureDetailContainer = (props) => {
   function showConfirm(fieldValues) {
     confirm({
       title: 'Bạn đã chắc chắn nộp chưa?',
+      
       async onOk() {
         try {
           const observationDetailRequests = []

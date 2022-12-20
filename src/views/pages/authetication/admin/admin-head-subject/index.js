@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Button, Space, Input} from "antd";
+import { Button, Space, Input } from "antd";
 import { PlusOutlined, DeleteOutlined, ReloadOutlined } from "@ant-design/icons";
 import { CardCustom, TableCustom } from '../../../helper/style-component'
 import { apiClient } from '../../../../../api/api-client';
@@ -21,12 +21,27 @@ const AdminLecture = () => {
             {
                 name: 'userName',
                 label: 'Tên',
-                
+                rules: [
+                    {
+                        required: true,
+                        message: 'Vui lòng nhập tên',
+                    }]
+
             },
             {
                 name: 'email',
                 label: "Email",
-               
+                rules: [
+                    {
+                        required: true,
+                        message: 'Vui lòng nhập email',
+                    },
+                    {
+                        pattern: new RegExp(/^[a-z0-9]*@(fpt.edu.vn)$/),
+                        message: "Vui lòng nhập email đuôi @fpt.edu.vn"
+                    }
+                ]
+
             },
             {
                 name: 'campusId',
@@ -79,10 +94,10 @@ const AdminLecture = () => {
         })
         setFormAdd(convertDataFormAdd)
     }
-    const _requestDataTable = async (search="") => {
+    const _requestDataTable = async (search = "") => {
         const start = page.current == 1 ? 0 : page.current * page.number_of_page - page.number_of_page
         const end = page.current * page.number_of_page
-        const  {data}  = await apiClient.get(`/api/admin/list-account-role?roleId=2&email=${search}&start=${start}&end=${end}`)
+        const { data } = await apiClient.get(`/api/admin/list-account-role?roleId=2&email=${search}&start=${start}&end=${end}`)
         const convertData = data.items.map(item => {
             return {
                 key: item.id,
@@ -123,8 +138,8 @@ const AdminLecture = () => {
         setDepartmentOptions(
             data.map(item => {
                 return {
-                    value : item.name,
-                    key : item.value
+                    value: item.name,
+                    key: item.value
                 }
             }),
         );
@@ -245,7 +260,7 @@ const AdminLecture = () => {
                                     id: r.id,
                                     userName: r.userName,
                                     email: r.email,
-                                    departmentName : r.departmentName,
+                                    departmentName: r.departmentName,
                                     campusId: listCampus.find(i => i.label == r.campusName).value,
                                 }, type: "EDIT"
                             })
@@ -266,10 +281,10 @@ const AdminLecture = () => {
             />
             <ModalFormDetail
                 visible={showDetail} jsonFormInput={formAdd.map(i => {
-                    if(i.name=='departmentId'){
+                    if (i.name == 'departmentId') {
                         return {
                             ...i,
-                            name : 'departmentName'
+                            name: 'departmentName'
                         }
                     }
                     return i
@@ -294,7 +309,7 @@ const Extra = ({
     _onClickAdd = () => { },
     _onFilter = () => { },
     _onReload = () => { },
-    _onChange = () => {}
+    _onChange = () => { }
     // _onClickColumnShow = () => { },
 }) => {
 
@@ -302,7 +317,7 @@ const Extra = ({
         <div style={{ display: 'flex', alignItems: 'center', paddingRight: 7, justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', flex: 1 }}>
                 <div style={{ display: 'flex' }}>
-                <Space direction="vertical">
+                    <Space direction="vertical">
                         <Search
                             placeholder="Tìm kiếm tài khoản"
                             onSearch={onSearch}

@@ -1,6 +1,6 @@
-import React, { useState, useEffect,useCallback } from 'react';
-import { Button, Checkbox ,Input, Space,Upload} from "antd";
-import { PlusOutlined, DeleteOutlined, ReloadOutlined,UploadOutlined } from "@ant-design/icons";
+import React, { useState, useEffect, useCallback } from 'react';
+import { Button, Checkbox, Input, Space, Upload } from "antd";
+import { PlusOutlined, DeleteOutlined, ReloadOutlined, UploadOutlined } from "@ant-design/icons";
 import { CardCustom, TableCustom } from '../../../helper/style-component'
 import { apiClient } from '../../../../../api/api-client';
 import AddNewForm from '../common/com//add_new_modal';
@@ -20,11 +20,26 @@ const AdminLecture = () => {
             {
                 name: 'userName',
                 label: 'Tên',
-                
+                rules: [
+                    {
+                        required: true,
+                        message: 'Vui lòng nhập tên',
+                    }]
+
             },
             {
                 name: 'email',
-                label: "Email"
+                label: "Email",
+                rules: [
+                    {
+                        required: true,
+                        message: 'Vui lòng nhập email',
+                    },
+                    {
+                        pattern: new RegExp(/^[a-z0-9]*@(fpt.edu.vn)$/),
+                        message: "Vui lòng nhập email đuôi @fpt.edu.vn"
+                    }
+                ]
 
             },
             {
@@ -83,7 +98,7 @@ const AdminLecture = () => {
         debounceReqData(e);
     }
     const debounceReqData = useCallback(debounce((nextValue) => _requestDataTable(nextValue), 1000), [])
-    const _requestDataTable = async (search="") => {
+    const _requestDataTable = async (search = "") => {
         const start = page.current === 1 ? 0 : page.current * page.number_of_page - page.number_of_page
         const end = page.current * page.number_of_page
         const dataRole3 = await apiClient.get(`/api/admin/list-account-role?roleId=3&email=${search}&start=${start}&end=${end}`)
@@ -271,7 +286,7 @@ const AdminLecture = () => {
 const onSearch = (value) => console.log(value);
 const Extra = ({
     showDel = true,
-    _onChange = () => {},
+    _onChange = () => { },
     _handleDel = () => { },
     _onClickAdd = () => { },
     _onFilter = () => { },
@@ -316,8 +331,8 @@ const Extra = ({
 
                 if (error.response) {
                     console.log('error.response.data', error.response.data);
-                        openNotificationWithIcon('error', 'Tải dữ liệu lên thất bại');
-            }
+                    openNotificationWithIcon('error', 'Tải dữ liệu lên thất bại');
+                }
             }
             )
             .catch((err) => {
@@ -326,11 +341,11 @@ const Extra = ({
 
     }
     return (
-        
+
         <div style={{ display: 'flex', alignItems: 'center', paddingRight: 7, justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', flex: 1 }}>
                 <div style={{ display: 'flex' }}>
-                <Space direction="vertical">
+                    <Space direction="vertical">
                         <Search
                             placeholder="Tìm kiếm tài khoản"
                             onSearch={onSearch}
@@ -340,10 +355,11 @@ const Extra = ({
                             }}
                         />
                     </Space>
-                    <Upload className="ro-custom" fileList={[]} beforeUpload={file => { 
+                    <Upload className="ro-custom" fileList={[]} beforeUpload={file => {
                         console.log(file);
 
-                        _handleSelectFile(file, 'new'); return false; }}>
+                        _handleSelectFile(file, 'new'); return false;
+                    }}>
                         <Button
                             type="text" icon={<UploadOutlined />}>Import</Button>
                     </Upload>

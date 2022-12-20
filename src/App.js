@@ -17,20 +17,9 @@ function App() {
               const checkRole = isLogin && route.role.filter(i => role?.includes(i)).length > 0
               return (
                 <>
-                  {/* <Route path={"/"} element={
-                    <Home />
-                  }>
-                  </Route>
-                  {checkRole
-                    ? */}
-                    <Route key={route.path} path={route.path} element={<route.Com />}></Route>
-                    {/* :
-                    <Route path={"/login"} element={
-                      <Login />
-                    }>
-                    </Route>
 
-                  } */}
+                  <Route key={route.path} path={route.path} element={<route.Com />}></Route>
+
                 </>
               )
             })

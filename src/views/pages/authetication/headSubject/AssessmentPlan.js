@@ -41,6 +41,7 @@ const AssessmentPlan = () => {
     function showConfirm(value, pass) {
         confirm({
             title: 'Bạn đã chắc chắn nộp chưa?',
+            
             async onOk() {
                 try {
                     const { data } = await apiClient.post(`api/pass-observation-slot?oSlotId=${value}&pass=${pass}`)

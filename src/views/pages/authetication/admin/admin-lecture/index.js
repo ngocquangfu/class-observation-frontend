@@ -19,11 +19,26 @@ const AdminLecture = () => {
         [
             {
                 name : 'userName',
-                label : 'Tên'
+                label : 'Tên',
+                rules:[
+                    {
+                      required: true,
+                      message: 'Vui lòng nhập tên',
+                    }]
             },
             {
                 name : 'email',
-                label : "Email"
+                label : "Email",
+                rules:[
+                    {
+                      required: true,
+                      message: 'Vui lòng nhập email',
+                    },
+                    {
+                        pattern: new RegExp(/^[a-z0-9]*@(fpt.edu.vn)$/),
+                        message: "Vui lòng nhập email đuôi @fpt.edu.vn"
+                      }
+                  ]
             },
             {
                 name : 'campusId',
