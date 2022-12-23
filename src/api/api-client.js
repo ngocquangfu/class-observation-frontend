@@ -27,7 +27,7 @@ const apiClient = {
         throw err;
       });
   },
-  post: (url, data) => {
+  post: (url, data, headers = {}) => {
     return request({
       method: "post",
       url,

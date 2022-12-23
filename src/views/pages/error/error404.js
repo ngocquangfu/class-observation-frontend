@@ -12,9 +12,9 @@ function error404() {
           <div className="notfound-404">
             <h1>404</h1>
           </div>
-          <h2>Oops! This Page Could Not Be Found</h2>
-          <p>Sorry but the page you are looking for does not exist, have been removed. name changed or is temporarily unavailable</p>
-          <a href="/">Go To Homepage</a>
+          <h2>Ối! Rất tiếc! Không thể tìm thấy trang này</h2>
+          <p>XIN LỖI NHƯNG TRANG BẠN ĐANG TÌM KIẾM KHÔNG TỒN TẠI, ĐÃ BỊ XÓA. TÊN ĐÃ THAY ĐỔI HOẶC TẠM THỜI KHÔNG CÓ</p>
+          <a href="/">Về Trang Chủ</a>
         </div>
       </div>
 

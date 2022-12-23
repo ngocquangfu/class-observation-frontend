@@ -37,7 +37,7 @@ const AdminLecture = () => {
                     },
                     {
                         pattern: new RegExp(/^[a-z0-9]*@(fpt.edu.vn)$/),
-                        message: "Vui lòng nhập email đuôi @fpt.edu.vn"
+                        message: "Vui lòng nhập email chữ thường và đuôi @fpt.edu.vn"
                     }
                 ]
 
@@ -315,7 +315,6 @@ const Extra = ({
         }
     }, fileUpload)
     const _handleUploadFile = (file) => {
-        console.log("aaaaaa", file);
         apiClient.post('/api/admin/upload-campus', file, {
             headers: {
                 'Content-Type': 'multipart/form-data'
@@ -328,7 +327,6 @@ const Extra = ({
             })
 
             .catch(error => {
-
                 if (error.response) {
                     console.log('error.response.data', error.response.data);
                     openNotificationWithIcon('error', 'Tải dữ liệu lên thất bại');
@@ -356,7 +354,6 @@ const Extra = ({
                         />
                     </Space>
                     <Upload className="ro-custom" fileList={[]} beforeUpload={file => {
-                        console.log(file);
 
                         _handleSelectFile(file, 'new'); return false;
                     }}>

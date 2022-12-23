@@ -36,7 +36,7 @@ const AdminLecture = () => {
                     },
                     {
                         pattern: new RegExp(/^[a-z0-9]*@(fpt.edu.vn)$/),
-                        message: "Vui lòng nhập email đuôi @fpt.edu.vn"
+                        message: "Vui lòng nhập email chữ thường và đuôi @fpt.edu.vn"
                       }
                   ]
             },
@@ -193,7 +193,7 @@ const AdminLecture = () => {
                             render: (text, record, index) => index + 1,
                         },
                         {
-                            title: 'Name',
+                            title: 'Tên',
                             dataIndex: 'userName',
                             key: 'userName',
                         },
@@ -203,7 +203,7 @@ const AdminLecture = () => {
                             key: 'email',
                         },
                         {
-                            title: 'CampusName',
+                            title: 'Cơ sở',
                             dataIndex: 'campusName',
                             key: 'campusName',
                         },

@@ -45,7 +45,12 @@ const LectureContainer = () => {
     }
     setListSemesters(ReverseArray);
   }
-
+  useEffect(() => {
+    const role = localStorage.getItem('role');
+    if(!role.includes(4)){
+        navigation('/login');
+    }
+} ,[])
   useEffect(() => {
     getSemesters()
     getSemestersCurrent()

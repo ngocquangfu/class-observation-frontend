@@ -19,7 +19,7 @@ const Home = () => {
                 <Link to="/login">
                     <div className='login'>
                         <button className='button-login'>
-                            Login
+                            Đăng nhập
                         </button>
                     </div>
                 </Link>
@@ -27,11 +27,11 @@ const Home = () => {
             <hr style={{margin: 0, color: 'gray'}}/>
             <div className='home-container' style={{display: "flex", justifyContent: "space-evenly"}}> 
                 <div className='title'>
-                    <h1 >Social Constructive Learning</h1>
-                    <h3 className='content'>Construct knowledge and personalize the learning way to empower learners' full potential.</h3>
+                    <h1 >Học tập mang tính xây dựng xã hội</h1>
+                    <h3 className='content'>Kiến tạo kiến thức và cá nhân hóa cách học để phát huy hết khả năng của người học.</h3>
                     <Link to="/login">
                         <button className='button-join'>
-                            Login
+                            Đăng nhập
                         </button>
                 </Link>
                 </div>

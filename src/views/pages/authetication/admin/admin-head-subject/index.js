@@ -38,7 +38,7 @@ const AdminLecture = () => {
                     },
                     {
                         pattern: new RegExp(/^[a-z0-9]*@(fpt.edu.vn)$/),
-                        message: "Vui lòng nhập email đuôi @fpt.edu.vn"
+                        message: "Vui lòng nhập email chữ thường và đuôi @fpt.edu.vn"
                     }
                 ]
 

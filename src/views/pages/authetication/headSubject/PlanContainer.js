@@ -53,14 +53,16 @@ const PlanContainer = () => {
   const [status, setStatus] = useState({});
   const [planId, setPlanId] = useState();
   const [statusId, setStatusId] = useState(0);
-  
+  const [rejectId, setRejectId] = useState();
+
+
 
 
   const _getStatusListPlan = async (id) => {
     const { data } = await apiClient.get(`/api/status-observation-plan?planId=${id}`)
     setStatus(dataStatus[data.items])
     setStatusId(data.items)
-    localStorage.setItem("statusPlan",data.items)
+    localStorage.setItem("statusPlan", data.items)
 
   }
   const getSemestersCurrent = async () => {
@@ -72,10 +74,10 @@ const PlanContainer = () => {
   const _requestData = async () => {
     const { data } = await apiClient.get(`/api/list-observation-slot?semesterId=${semesterId}&accountId=${userId}`)
     try {
-      if (data.items != 0){
+      if (data.items != 0) {
         setPlanId(data?.items[0].planId)
-    _getStatusListPlan(data?.items[0].planId)
-    console.log("listPlan111", statusId)
+        _getStatusListPlan(data?.items[0].planId)
+        console.log("listPlan111", statusId)
       }
     } catch {
 
@@ -83,8 +85,8 @@ const PlanContainer = () => {
     data.items = data.items.map((item, idx) => {
       var date = new Date(`${item.slotTime}`);
 
-      item.slotTime = date.getFullYear() + '-'+
-        ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '-' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate()))  ;
+      item.slotTime = date.getFullYear() + '-' +
+        ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '-' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate()));
       let accountName1 = accounts.find(o => o.value == item.accountId1)?.name;
       var accountName2 = accounts.find(o => o.value == item.accountId2)?.name;
       var roomName = room.find(o => o.value == item.roomId)?.name;
@@ -213,7 +215,7 @@ const PlanContainer = () => {
       key: 'slotTime',
       render: (text, record, idx) => (
         isUpdate && idx == index ?
-        <DatePicker defaultValue={moment(record.slotTime)} initialValues={record.slotTime} style={{width: "13rem"}} onChange={(e) => onDatePickerChange(e, record)} disabledDate={(current) => {
+          <DatePicker defaultValue={moment(record.slotTime)} initialValues={record.slotTime} style={{ width: "13rem" }} onChange={(e) => onDatePickerChange(e, record)} disabledDate={(current) => {
             return moment().add(-1, 'days') >= current
           }} />
           // <Select className='select-box' style={{ width: '100%' }} defaultValue={text} options={accounts} onChange={(e) => handleAccount1Change(e, record)} />
@@ -240,8 +242,8 @@ const PlanContainer = () => {
       render: (text, record, idx) => (
         isUpdate && idx == index ?
           <Select className='select-box' style={{ width: '100%' }} defaultValue={text} options={room} onChange={(e) => handleRoomChange(e, record)} showSearch
-          filterOption={(input, option) =>
-            (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}/>
+            filterOption={(input, option) =>
+              (option?.label ?? '').toLowerCase().includes(input.toLowerCase())} />
           : <div>{text}</div>
       ),
       width: 150
@@ -254,19 +256,14 @@ const PlanContainer = () => {
       render: (text, record, idx) => (
         isUpdate && idx == index ?
           <Select className='select-box' style={{ width: 150 }} defaultValue={text} options={subject} onChange={(e) => handleSubjectChange(e, record)} showSearch
-          filterOption={(input, option) =>
-            (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}/>
+            filterOption={(input, option) =>
+              (option?.label ?? '').toLowerCase().includes(input.toLowerCase())} />
           : <div>{text}</div>
       ),
       width: 200
 
     },
-    // {
-    //   title: 'Tên môn',
-    //   dataIndex: 'subjectName',
-    //   key: 'subjectName',
 
-    // },
     {
       title: 'Lớp',
       dataIndex: 'className',
@@ -281,8 +278,8 @@ const PlanContainer = () => {
       render: (text, record, idx) => (
         isUpdate && idx == index ?
           <Select className='select-box' style={{ width: '100%' }} defaultValue={text} options={accounts} onChange={(e) => handleAccount1Change(e, record)} showSearch
-          filterOption={(input, option) =>
-            (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}/>
+            filterOption={(input, option) =>
+              (option?.label ?? '').toLowerCase().includes(input.toLowerCase())} />
           : <div>{text}</div>
       ),
       width: 200
@@ -295,10 +292,10 @@ const PlanContainer = () => {
       render: (text, record, idx) => (
         isUpdate && idx == index ?
           <Select className='select-box' style={{ width: '100%' }} defaultValue={text} options={accounts} onChange={(e) => handleAccount2Change(e, record)}
-          showSearch
-          filterOption={(input, option) =>
-            (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
-          }
+            showSearch
+            filterOption={(input, option) =>
+              (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+            }
           />
           : <div>{text}</div>
       ),
@@ -317,16 +314,16 @@ const PlanContainer = () => {
       width: 100,
       render: (text, record, idx) => (
         isUpdate && idx == index ?
-          <Button  type="primary" variant="outlined" onClick={handleClickOpen}>
+          <Button type="primary" variant="outlined" onClick={handleClickOpen}>
             Xác nhận
           </Button>
           :
           // disabled={statusId!=1?false:true} 
-          <Button disabled={statusId!=1?false:true} type="primary"onClick={() => updateSlot(record, idx)}>
+          <Button disabled={statusId != 1 ? false : true} type="primary" onClick={() => updateSlot(record, idx)}>
             {"Cập nhật"}
           </Button>
       ),
-      fixed: 'right',	
+      fixed: 'right',
       width: 100,
     }, {
       title: 'Kết quả',
@@ -336,7 +333,7 @@ const PlanContainer = () => {
         <Button onClick={() => handleNavigation(record)}>
           {"Kết quả"}
         </Button>
-      ),fixed: 'right',
+      ), fixed: 'right',
       width: 100,
     },
 
@@ -361,8 +358,8 @@ const PlanContainer = () => {
 
   const [result, setResult] = useState({});
   const handleRoomChange = (e, record) => {
-    var values = { ...record,roomId: e }
-    console.log("roomId change",values)
+    var values = { ...record, roomId: e }
+    console.log("roomId change", values)
 
     setResult(values);
   }
@@ -372,7 +369,7 @@ const PlanContainer = () => {
   }
   const handleSubjectChange = (e, record) => {
     var values = { ...record, subjectId: e }
-    console.log("subject change",values)
+    console.log("subject change", values)
     setResult(values);
   }
   const handleClassChange = (e, record) => {
@@ -381,12 +378,24 @@ const PlanContainer = () => {
   }
   const [isUpdate, setIsUpdate] = useState(false);
   const [index, setIndex] = useState(-1);
+
   const updateSlot = (values, index) => {
     setIsUpdate(true);
     setIndex(index);
     setResult(values)
+    reject();
   }
-
+  const reject = async () => {
+    const { data } = await apiClient.post(`/api/approve-observation-plan?planId=${planId}&statusId=0`);
+    console.log("goi toi day", data)
+    setRejectId(data)
+  }
+  useEffect(() => {
+    const role = localStorage.getItem('role');
+    if(!role.includes(2)){
+        navigation('/login');
+    }
+} ,[])
   const postUpdateSlot = async () => {
     var values = {
       id: result.id,
@@ -403,7 +412,7 @@ const PlanContainer = () => {
       accountId2: result.accountId2,
     };
     handleClose();
-    console.log("values1",values)
+    console.log("values1", values)
 
     const { data } = await apiClient.post('/api/update-observation-slot', values)
 
@@ -412,8 +421,8 @@ const PlanContainer = () => {
       openNotificationWithIcon("success", "Cập nhật thành công")
       setIndex(-1);
       _requestData();
-    }else if(data.status==400){
-        openNotificationWithIcon("error", "Vui lòng nhập đầy đủ thông tin")
+    } else if (data.status == 400) {
+      openNotificationWithIcon("error", "Vui lòng nhập đầy đủ thông tin")
     } else {
       openNotificationWithIcon("error", "Thất bại")
     }
@@ -455,7 +464,7 @@ const PlanContainer = () => {
       <Header name1="Giảng viên" link1="/lecture" />
       <div className='plan-container'>
         <div className='modal-plan'>
-          <Button disabled={planId==null?false:true}type="primary" onClick={showModal}>
+          <Button disabled={planId == null ? false : true} type="primary" onClick={showModal}>
             Tạo kế hoạch dự giờ
           </Button>
           <Drawer
@@ -484,7 +493,7 @@ const PlanContainer = () => {
             onClose={handleCancel}
             footer={null}
           >
-          <ModalSlotContainer handleCancel={handleCancel} planId={planId} requestData={_requestData}/>
+            <ModalSlotContainer handleCancel={handleCancel} planId={planId} requestData={_requestData} />
           </Drawer>
         </div>
         <Dialog
@@ -522,39 +531,39 @@ const PlanContainer = () => {
                   showDel={selectedRow && selectedRow[0]}
                   _onReload={_requestData}
                   //selectedRow.length > 0 ? _handleDel : () => { }
-                  _handleDel={()=>{
-                    if(statusId!=1){
-                      if(selectedRow.length>0){
+                  _handleDel={() => {
+                    if (statusId != 1) {
+                      if (selectedRow.length > 0) {
                         _handleDel()
                       }
                     }
                     else
-                    openNotificationWithIcon("error", "Kế hoạch đã duyệt, không được xóa")
+                      openNotificationWithIcon("error", "Kế hoạch đã duyệt, không được xóa")
                   }}
                   _onClickAdd={() => {
-                    if(statusId!=1)
-                    showModalSlot()
+                    if (statusId != 1)
+                      showModalSlot()
                     else
-                    openNotificationWithIcon("error", "Kế hoạch đã duyệt, không được tạo")
+                      openNotificationWithIcon("error", "Kế hoạch đã duyệt, không được tạo")
                   }}
                 />}
               >
-                 <Table style={{width: '1300px'}}	
-                  rowSelection={{	
-                    type: 'checkbox',	
-                    onChange: (selectedRowKeys, selectedRows) => {	
-                      console.log(selectedRowKeys, selectedRows);	
-                      setSelectRow(selectedRowKeys)	
-                    }	
-                  }}	
-                  columns={columns}	
-                  scroll={{	
-                    x: 2253.63,	
-                  }}	
+                <Table style={{ width: '1300px' }}
+                  rowSelection={{
+                    type: 'checkbox',
+                    onChange: (selectedRowKeys, selectedRows) => {
+                      console.log(selectedRowKeys, selectedRows);
+                      setSelectRow(selectedRowKeys)
+                    }
+                  }}
+                  columns={columns}
+                  scroll={{
+                    x: 2253.63,
+                  }}
                   dataSource={listPlan} /></CardCustom>}</div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 };

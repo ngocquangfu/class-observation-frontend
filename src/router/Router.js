@@ -44,7 +44,7 @@ export const public_route = [
         role: [1]
     },
     {
-        path: `/*`,
+        path: `/404`,
         Com: Error404,
         role: [1, 2, 3, 4 ,5]
     },

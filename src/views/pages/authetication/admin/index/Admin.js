@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState,useEffect } from 'react';
+import { useNavigate,navigation } from 'react-router-dom';
 import { Button } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import AdminLecture from '../admin-lecture/index';
@@ -8,7 +8,7 @@ import AdminTraining from '../admin-trainning/index';
 import image1 from '../../../../../assets/images/svg-1.png'
 import Header from '../../Header';
 import Footer from '../../../../components/footer/Footer';
-
+import AdminImport from '../admin-import';
 
 
 const Admin = () => {
@@ -17,13 +17,21 @@ const Admin = () => {
     const objAdmin = {
         1: <AdminLecture />,
         2: <AdminHOS />,
-        3: <AdminTraining />
+        3: <AdminTraining />,
+        4: <AdminImport />
     }
     const handleClick = (idx) => {
         setAdminIndex(idx)
     }
+    
     const profileObj = JSON.parse(localStorage.getItem("profileObj"));
     const navigation = useNavigate()
+    useEffect(() => {
+        const role = localStorage.getItem('role');
+        if(!role.includes(1)){
+            navigation('/login');
+        }
+    } ,[])
     return (<>
         <div>
             <div style={{ height: 60, background: '#0a8cf1', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 40 }}>
@@ -38,6 +46,9 @@ const Admin = () => {
                         </div>
                         <div className={adminIndex == 3 ? "position-header position-header-active" : "position-header"} onClick={() => handleClick(3)}>
                             Trưởng ban đào tạo
+                        </div>
+                        <div className={adminIndex == 4 ? "position-header position-header-active" : "position-header"} onClick={() => handleClick(4)}>
+                            Import
                         </div>
                     </div>
                 </div>
