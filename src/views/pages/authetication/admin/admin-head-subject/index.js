@@ -65,10 +65,7 @@ const AdminLecture = () => {
     const [showAddNew, setShowAddNew] = useState(false);
     const [showDetail, setShowDetail] = useState(false);
 
-    const getListDepartment = async (campusId) => {
-        const { data } = await apiClient.get(`/api/list-department?id=${campusId}&name=`)
-        setListDepartment(data)
-    }
+   
     const _requestData = async () => {
         const { data } = await apiClient.get(`/api/campus-dropdown-list`)
         const convertData = data.map((i, idx) => {
@@ -126,27 +123,26 @@ const AdminLecture = () => {
     const onChangeSearch = (e) => {
         debounceReqData(e);
     }
-    const _requestDataDepartment = async (searchText = '') => {
-        const campusId = localStorage.getItem("campusId");
-        const { data } = await apiClient.get(`/api/list-department?id=${campusId}&name=${searchText}`)
-        const searchData = [];
-        if (data && data.length > 0) {
-            for (let i = 0; i < data.length; i++) {
-                searchData.push({ value: data[i].name })
-            }
-        }
-        setDepartmentOptions(
-            data.map(item => {
-                return {
-                    value: item.name,
-                    key: item.value
-                }
-            }),
-        );
+    const _requestDataDepartment = async (searchText = '') => {	
+        const campusId = localStorage.getItem("campusId");	
+        const { data } = await apiClient.get(`/api/list-department?id=${campusId}&name=${searchText}`)	
+        const searchData = [];	
+        if (data && data.length > 0) {	
+            for (let i = 0; i < data.length; i++) {	
+                searchData.push({ value: data[i].name })	
+            }	
+        }	
+        setDepartmentOptions(	
+            data.map(item => {	
+                return {	
+                    value : item.name,	
+                    key : item.value	
+                }	
+            }),	
+        );	
     }
     const debounceReqData = useCallback(debounce((nextValue) => _requestDataTable(nextValue), 1000), [])
     const _handleAddNew = async (value) => {
-
         const body = {
             userName: value.userName,
             email: value.email,
@@ -169,34 +165,33 @@ const AdminLecture = () => {
         }
 
     }
-    const _handleUpdate = async (value) => {
+    const _handleUpdate = async(value) => {
         const body = {
-            id: showDetail.data.id,
-            userName: value.userName,
-            email: value.email,
-            campusId: value.campusId,
-            departmentId: departmentOptions.find(i => i.value == value.departmentId).key,
-            roles: [
+            id : showDetail.data.id,
+            userName : value.userName,
+            email : value.email,
+            campusId : value.campusId,
+            departmentId : departmentOptions.find(i => i.value == value.departmentName).key,
+            roles : [
                 {
-                    id: 2
+                    id : 2
                 }
             ]
         }
         try {
             const { data } = await apiClient.post(`/api/admin/edit-account`, body)
-            console.log("data", data);
-            openNotificationWithIcon("success", "Sửa thành công")
+            console.log("data" ,data);
+            openNotificationWithIcon("success","Sửa thành công")
         } catch (error) {
-            openNotificationWithIcon("error", "Sửa thất bại")
+            openNotificationWithIcon("error","Sửa thất bại")
         }
-
+        
     }
 
     const _handleReset = () => {
         _requestDataTable()
     }
     useEffect(() => {
-        getListDepartment(campusId)
         _requestDataTable()
         _requestDataDepartment()
         _requestData()
