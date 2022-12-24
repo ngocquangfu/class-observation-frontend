@@ -344,7 +344,12 @@ const PlanContainer = () => {
       selectedRow.map(async (item) => {
         try {
           const { data } = await apiClient.post(`/api/delete-observation-slot?slotId=${item}`)
+          const data1 = await apiClient.get(`/api/list-observation-slot?semesterId=${semesterId}&accountId=${userId}`)
           openNotificationWithIcon("success", "Xoá thành công");
+          console.log("ddelete", data1)
+          if(data1.data.items.length==0){
+            const data2 = await apiClient.post(`/api/delete-plan?id=${planId}`)
+          }
           _requestData();
         } catch (error) {
           openNotificationWithIcon("error", error.message)
@@ -479,7 +484,7 @@ const PlanContainer = () => {
             onClose={handleCancel}
             footer={null}
           >
-            <ModalPlanContainer handleCancel={handleCancel} />
+            <ModalPlanContainer handleCancel={handleCancel} requestData={_requestData}/>
           </Drawer>
           <Drawer
             width={820}

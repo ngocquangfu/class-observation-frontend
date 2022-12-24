@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { openNotificationWithIcon } from '../../request/notification';
 
-const ModalPlanContainer = ({ handleCancel }) => {
+const ModalPlanContainer = ({ handleCancel, requestData }) => {
   const [form] = Form.useForm();
   const campusId = localStorage.getItem('campusId');
   const userId = localStorage.getItem('userId');
@@ -152,6 +152,7 @@ const ModalPlanContainer = ({ handleCancel }) => {
       openNotificationWithIcon("success", "Tạo mới thành công")
       handleCancel()
       form.resetFields()
+      requestData();
     } else {
       openNotificationWithIcon("error", "Thất bại")
     }

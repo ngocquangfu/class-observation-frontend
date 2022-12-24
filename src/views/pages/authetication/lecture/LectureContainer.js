@@ -47,7 +47,7 @@ const LectureContainer = () => {
   }
   useEffect(() => {
     const role = localStorage.getItem('role');
-    if(!role.includes(4)){
+    if(!role.includes(4)&&!role.includes(2)){
         navigation('/login');
     }
 } ,[])

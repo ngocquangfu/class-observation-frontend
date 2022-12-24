@@ -6,8 +6,8 @@ import { apiClient } from '../../../../api/api-client';
 import { openNotificationWithIcon } from '../../request/notification';
 import FormItem from 'antd/es/form/FormItem';
 
-const LectureDetailContainer = (props) => {
-  const { record, onCancel ,requestData} = props;
+const LectureDetailContainer = ({record, onCancel ,requestData}) => {
+  // const { record, onCancel ,requestData} = props;
   const [form] = Form.useForm();
   const campusId = localStorage.getItem('campusId');
   const userId = localStorage.getItem('userId');
@@ -111,7 +111,7 @@ const LectureDetailContainer = (props) => {
 
           const { data } = await apiClient.post(`/api/lecture/create-observation-review`, body)
           if (data.status == '200') {
-            openNotificationWithIcon("success", "Thêm thành công")
+            openNotificationWithIcon("success", "Nộp thành công")
             setIndex(index + 1)
             onCancel()
             form.resetFields();
