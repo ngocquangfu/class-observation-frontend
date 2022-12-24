@@ -54,7 +54,7 @@ const TrainingContainer = () => {
 
   useEffect(() => {
     const role = localStorage.getItem('role');
-    if (!role.includes(5)) {
+    if (!role.includes(5)&&!role.includes(3)) {
       navigation('/login');
     }
     //  if (!role.includes(3)) {

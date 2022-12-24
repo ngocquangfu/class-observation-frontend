@@ -3,6 +3,7 @@ import { Segmented, Button, Tabs, Table } from 'antd';
 import Upload from 'antd/lib/upload/Upload';
 import React, { useState, useCallback, useEffect } from 'react';
 import { apiClient } from "../../../../../api/api-client";
+import { TableCustom } from "../../../helper/style-component";
 import { openNotificationWithIcon } from "../../../request/notification";
 
 const options = [
@@ -61,8 +62,13 @@ const AdminImport = () => {
             }
         })
             .then((res) => {
-                console.log("-----", res);
+                console.log("return", res.data.status);
+                if(res.data.status==200)
                 openNotificationWithIcon('success', `Tải dữ liệu ${dataValue} lên thành công`);
+                if(res.data.status==400){
+                    openNotificationWithIcon('error', 'File không hợp lệ');
+
+                }
 
             })
 
@@ -81,7 +87,6 @@ const AdminImport = () => {
     }
     const handleChange = (value) => {
         setDataValue(value)
-        console.log("value",value)
     }
 
     useEffect(() => {
@@ -118,7 +123,7 @@ const AdminImport = () => {
                         return {
                             label: i.label,
                             key: i.value,
-                            children: <TableOption keyCampus={i.value} dataValue={dataValue} size='20px'/>
+                            children: <TableOption keyCampus={i.value} dataValue={dataValue}  size='20px'/>
                         }
                     })}
                 />
@@ -132,16 +137,19 @@ const TableOption = ({ keyCampus, dataValue }) => {
     const [dataTable, setDataTable] = useState([])
     const columns = [
         {
-            title: 'id',
+            title: 'STT',
             dataIndex: 'id',
             key: 'id',
-            render: (text, record, index) => index + 1
+            render: (text, record, index) => index + 1,
+            width:2
         },
         {
-            title: dataValue,
+            title: "Giá trị",
             dataIndex: 'name',
-            key: 'name'
+            key: 'name',
+            width:400
         }
+        
     ]
     const _requestDataTable = async () => {
         if (dataValue == 'room') {
@@ -156,12 +164,13 @@ const TableOption = ({ keyCampus, dataValue }) => {
             setDataTable(convertData)
         }
         if (dataValue== 'subject') {
-            const { data } = await apiClient.get(`/api/subject-dropdown-list?id=${keyCampus}&code=`)
-            console.log("data",keyCampus)
-            const convertData = data.map((i, idx) => {
+            const { data } = await apiClient.get(`/api/subject-list-campus?campusId=${keyCampus}`)
+            console.log("data99", {data})
+            
+            const convertData = data.items.map((i, idx) => {
                 return {
                     id: i.id,
-                    name: i.name
+                    name: i.subject_name
                 }
             })
             setDataTable(convertData)
@@ -191,7 +200,7 @@ const TableOption = ({ keyCampus, dataValue }) => {
     useEffect(() => {
         _requestDataTable()
     })
-    return <Table dataSource={dataTable} columns={columns} pagination={false} />;
+    return <TableCustom dataSource={dataTable} columns={columns}  pagination={{ defaultPageSize: 5, showSizeChanger: true, pageSizeOptions: ['5', '10', '15']}} />;
 }
 
 export default AdminImport
