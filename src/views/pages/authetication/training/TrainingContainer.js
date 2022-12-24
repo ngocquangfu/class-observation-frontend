@@ -53,6 +53,14 @@ const TrainingContainer = () => {
   }
 
   useEffect(() => {
+    const role = localStorage.getItem('role');
+    if (!role.includes(5)) {
+      navigation('/login');
+    }
+    //  if (!role.includes(3)) {
+    //   navigation('/login');
+
+    // }
     getSemesters()
     getSemestersCurrent()
   }, [])
@@ -160,12 +168,7 @@ const TrainingContainer = () => {
       ),
     },
   ];
-  useEffect(() => {
-    const role = localStorage.getItem('role');
-    if(!role.includes(3) || !role.includes(5)){
-        navigation('/login');
-    }
-} ,[])
+
   const approved = async (record) => {
     const { data } = await apiClient.post(`/api/approve-observation-plan?planId=${record.id}&statusId=1`);
     if (data.status == 200) {

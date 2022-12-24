@@ -55,7 +55,7 @@ const ModalSlotContainer = ({ handleCancel, planId, requestData }) => {
     setSlot(rooms);
   }
   const getSubjects = async () => {
-    const { data } = await apiClient.get(`/api/subject-dropdown-list?id=${campusId}&code=`)
+    const { data } = await apiClient.get(`/api/subject-dropdown-list?id=${userId}&code=`)
     var subjects = data;
     subjects = subjects.map((item, idx) => {
       return { ...item, label: item.name }

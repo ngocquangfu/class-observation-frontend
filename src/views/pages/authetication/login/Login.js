@@ -57,7 +57,7 @@ const Login = () => {
                     navigation("/lecture")
                     navigation("/head-plan")
 
-                } if (parseInt(role) === 3) {
+                } if (parseInt(role) == 3) {
                     navigation("/train")
                 } if (role == 4) {
                     navigation("/lecture")

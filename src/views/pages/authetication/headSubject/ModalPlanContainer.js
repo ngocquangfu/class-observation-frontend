@@ -39,6 +39,7 @@ const ModalPlanContainer = ({ handleCancel }) => {
     for (var i = length - 1; i >= 0; i--) {
       ReverseArray.push(data[i]);
       console.log("dataa1", data[i])
+
     }
     rooms = rooms.map((item, idx) => {
       return { ...item, label: item.name }
@@ -55,7 +56,8 @@ const ModalPlanContainer = ({ handleCancel }) => {
     setSlot(rooms);
   }
   const getSubjects = async () => {
-    const { data } = await apiClient.get(`/api/subject-dropdown-list?id=${campusId}&code=`)
+    console.log("useid", userId)
+    const { data } = await apiClient.get(`/api/subject-dropdown-list?id=${userId}&code=`)
     var subjects = data;
     subjects = subjects.map((item, idx) => {
       return { ...item, label: item.name }
