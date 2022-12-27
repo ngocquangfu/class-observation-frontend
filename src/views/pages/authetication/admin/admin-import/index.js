@@ -199,7 +199,7 @@ const TableOption = ({ keyCampus, dataValue }) => {
     }
     useEffect(() => {
         _requestDataTable()
-    })
+    },[dataValue])
     return <TableCustom dataSource={dataTable} columns={columns}  pagination={{ defaultPageSize: 5, showSizeChanger: true, pageSizeOptions: ['5', '10', '15']}} />;
 }
 

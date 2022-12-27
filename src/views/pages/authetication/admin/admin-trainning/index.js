@@ -353,13 +353,6 @@ const Extra = ({
                             }}
                         />
                     </Space>
-                    <Upload className="ro-custom" fileList={[]} beforeUpload={file => {
-
-                        _handleSelectFile(file, 'new'); return false;
-                    }}>
-                        <Button
-                            type="text" icon={<UploadOutlined />}>Import</Button>
-                    </Upload>
                     {!showDel ? null : <Button onClick={_handleDel} className="ro-custom" type="text" icon={<DeleteOutlined />} >Vô hiệu hóa tài khoản</Button>}
                     <Button onClick={() => _onReload()} className="ro-custom" type="text" icon={<ReloadOutlined />} >Làm mới</Button>
                     <Button onClick={_onClickAdd} className="ro-custom" type="text" icon={<PlusOutlined />} >Thêm</Button>

@@ -1,8 +1,8 @@
 import React from 'react';
 import './Footer.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faLocationDot, faCopy, faLocationArrow, faSearchLocation, faMailBulk, faMailForward, faVoicemail, faMailReplyAll, faMailReply, faMobilePhone, faHeadphones, faPhone, faMapMarked, faMapLocationDot, faMapPin, faMap } from "@fortawesome/free-solid-svg-icons";
-import image1 from './../../../assets/images/classlogo.png'
+import {faMailBulk,faPhone, faMapLocationDot} from "@fortawesome/free-solid-svg-icons";
+import image1 from './../../../assets/images/logo-no-background.png'
 
 import { Component } from 'react';
 
