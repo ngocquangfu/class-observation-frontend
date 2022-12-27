@@ -62,7 +62,6 @@ const ModalPlanContainer = ({ handleCancel, requestData }) => {
     subjects = subjects.map((item, idx) => {
       return { ...item, label: item.name }
     })
-    console.log("ssssss", subjects)
     setSubjectOptions(subjects);
   }
   const getRooms = async () => {
@@ -91,22 +90,6 @@ const ModalPlanContainer = ({ handleCancel, requestData }) => {
     getSlot();
   }, [])
 
-
-  // const onDepartmentSearch = async (searchText) => {
-  //   const { data } = await apiClient.get(`/api/list-department?id=${campusId}&name=${searchText}`)
-  //   const searchData = [];
-  //   if (!searchText) {
-  //     searchData = [];
-  //   }
-  //   if (data && data.length > 0) {
-  //     for (let i = 0; i < data.length; i++) {
-  //       searchData.push({ value: data[i].name })
-  //     }
-  //   }
-  //   setDepartmentOptions(
-  //     !searchText ? [] : searchData,
-  //   );
-  // };
 
   const onFinish = (fieldValues) => {
     var observationSlotsRequest = fieldValues.observationSlotsRequest;
@@ -205,21 +188,7 @@ const ModalPlanContainer = ({ handleCancel, requestData }) => {
     <div>
       <div className='form-container'>
         <Form form={form} name="dynamic_form_nest_item" onFinish={onFinish} autoComplete="off">
-          {/* <div className='form-util'>
-            <Form.Item
-              name="semesterId"
-              label="Semester"
-              rules={[
-                {
-                  required: true,
-                  message: 'Missing semester',
-                },
-              ]}
-            >
-              <Select className='select-box' options={semestersOption} onChange={handleChange} />
-            </Form.Item>
-            
-          </div> */}
+         
           <Form.List name="observationSlotsRequest">
             {(fields, { add, remove }) => (
               <>

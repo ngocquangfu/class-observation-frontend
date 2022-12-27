@@ -57,10 +57,12 @@ const LectureContainer = () => {
   }, [])
   useEffect(() => {
     _requestData();
-  }, [semesterId])
+  }, [semesterId, detail])
+ 
   const showModal = (record) => {
     setOpen(true);
     setDetail(record);
+    console.log("recordddd", detail)
   };
   const handleOk = () => {
     setLoading(true);

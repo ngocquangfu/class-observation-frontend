@@ -290,7 +290,7 @@ const LectureDetailContainer = ({record, onCancel ,requestData}) => {
                 <Button className='button mt-5 ml-6' disabled={isReveview} htmlType="submit">
                   Submit
                 </Button>
-                <Button className='button mt-5 ml-6' disabled={isReveview} htmlType="submit" >
+                <Button className='button mt-5 ml-6' disabled={true} htmlType="submit" >
                   Save draft
                 </Button>
               </Space>

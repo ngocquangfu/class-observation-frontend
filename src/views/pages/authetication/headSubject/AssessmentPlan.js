@@ -24,7 +24,7 @@ const AssessmentPlan = () => {
     const _requestData = async () => {
         const { data } = await apiClient.get(`/api/result-observation-slot?oSlotId=${id}`)
         setListData(data.items)
-
+        console.log("listData111", listData.length)
 
     }
 
@@ -34,14 +34,16 @@ const AssessmentPlan = () => {
         if (statusPlan == 0) {
             setShow(false)
         } else if (data?.items != 0) {
-                setResult(data.items)
-                setShow(false)
-            }
+            setResult(data.items)
+            setShow(false)
+            
+        }
+
     }
     function showConfirm(value, pass) {
         confirm({
             title: 'Bạn đã chắc chắn nộp chưa?',
-            
+
             async onOk() {
                 try {
                     const { data } = await apiClient.post(`api/pass-observation-slot?oSlotId=${value}&pass=${pass}`)

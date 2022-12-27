@@ -31,49 +31,55 @@ const Login = () => {
     const handleLogin = async (ggApi) => {
         console.log('gg', ggApi);
         localStorage.setItem("profileObj", JSON.stringify(ggApi.profileObj))
-        if (campus) {
-            const body = {
-                token: ggApi.tokenId,
-                campusId: campus
+        console.log("campus999", campus)
+        // if (campus!=null) {
+        const body = {
+            token: ggApi.tokenId,
+            campusId: campus
+        }
+
+
+        const { data } = await apiClient.post('/auth/google', body)
+        console.log('data9998', data.accessToken);
+
+        if (data.accessToken != null) {
+            console.log('data', data);
+            const role = data.setRole.map(i => i.id)
+            console.log("role", role);
+            localStorage.setItem("access_token", data.accessToken)
+            localStorage.setItem("campusId", data.campusId)
+            localStorage.setItem("userId", data.userId)
+            localStorage.setItem("userName", data.userName)
+            localStorage.setItem("role", JSON.stringify(role))
+
+            if (parseInt(role) === 1) {
+                navigation("/admin")
+            } if (parseInt(role) === 2) {
+                navigation("/lecture")
+                navigation("/head-plan")
+
+            } if (parseInt(role) == 3) {
+                navigation("/train")
+            } if (role == 4) {
+                navigation("/lecture")
+            }
+            if (role == 5) {
+                navigation("/train")
             }
 
-            
-            const { data } = await apiClient.post('/auth/google', body)
-            console.log('data9998', data.accessToken);
-
-            if (data.accessToken!=null) {
-                console.log('data', data);
-                const role = data.setRole.map(i => i.id)
-                console.log("role", role);
-                localStorage.setItem("access_token", data.accessToken)
-                localStorage.setItem("campusId", data.campusId)
-                localStorage.setItem("userId", data.userId)
-                localStorage.setItem("userName", data.userName)
-                localStorage.setItem("role", JSON.stringify(role))
-
-                if (parseInt(role) === 1) {
-                    navigation("/admin")
-                } if (parseInt(role) === 2) {
-                    navigation("/lecture")
-                    navigation("/head-plan")
-
-                } if (parseInt(role) == 3) {
-                    navigation("/train")
-                } if (role == 4) {
-                    navigation("/lecture")
-                }
-                if (role == 5) {
-                    navigation("/train")
-                }
-                
 
 
-            } else{
+        }
+        //  else{
+        // openNotificationWithIcon("error", "Tài khoản của bạn không được phép đăng nhập vào hệ thống")
+        // }
+
+        // }else 
+        if (campus == null && localStorage.getItem("role") != 1) {
+            openNotificationWithIcon("error", "Vui lòng chọn cơ sở")
+
+        } else {
             openNotificationWithIcon("error", "Tài khoản của bạn không được phép đăng nhập vào hệ thống")
-            }
-            
-
-            
         }
     }
     const onChange = (value) => {

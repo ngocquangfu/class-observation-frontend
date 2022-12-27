@@ -123,7 +123,7 @@ const PlanContainer = () => {
     setRoom(rooms);
   }
   const getAccounts = async () => {
-    const { data } = await apiClient.get(`/api/list-account?id=${campusId}&email=`)
+    const { data } = await apiClient.get(`/api/list-account-lecture?id=${campusId}&email=`)
     var rooms = data;
     rooms = rooms.map((item, idx) => {
       return { ...item, label: item.name }
@@ -181,6 +181,7 @@ const PlanContainer = () => {
     if (isDone & isDoneAccount) {
       _requestData();
       setCount(semesterId)
+      setPlanId()
     }
   }, [semesterId, isDone, isDoneAccount])
 
@@ -546,10 +547,8 @@ const PlanContainer = () => {
                       openNotificationWithIcon("error", "Kế hoạch đã duyệt, không được xóa")
                   }}
                   _onClickAdd={() => {
-                    if (statusId != 1)
                       showModalSlot()
-                    else
-                      openNotificationWithIcon("error", "Kế hoạch đã duyệt, không được tạo")
+                 
                   }}
                 />}
               >
