@@ -1,0 +1,98 @@
+.wrap-login {
+  background-image: url('../../../assets/images/BG2.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* background-color: aquamarine; */
+  width: 100%;
+  height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.box-login {
+  padding: 20px;
+  text-align: center;
+  width: 450px;
+  box-shadow: 0px 8px 32px rgb(0 0 0 / 7%);
+  border-radius: 15px;
+  margin-top: 30px;
+  background-color: white;
+}
+
+.google-login {
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 1px 1px 3px rgb(0 0 0 / 17%);
+  text-decoration: none;
+  transition: all 300ms;
+  color: black;
+  display: flex;
+}
+
+.ant-form-item-row {
+  width: 100% !important;
+  margin-right: 0px !important;
+
+}
+
+.admin-header:hover {
+  color: yellow !important;
+}
+
+.position-header {
+  margin-left: 10px;
+  margin-right: 10px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.position-header-active {
+  border-bottom: 3px solid aqua;
+  color: aqua;
+}
+
+.position-header:hover {
+  color: aqua;
+  cursor: pointer;
+}
+
+.button-google {
+  height: 40px !important;
+  border: none;
+  margin: auto;
+  margin-left: 60px;
+  box-shadow: none !important;
+}
+
+.choose-campus {
+  background-color: azure !important;
+  border-radius: 8px;
+  color: white;
+}
+
+.login-google {
+  display: flex;
+  width: 370px;
+  align-items: center;
+  margin-left: 20px;
+  border: 1px solid black;
+  border-radius: 8px;
+}
+
+.wrap-login.ant-select-selector {
+  background-color: white !important;
+  border: 1px solid;
+  border-radius: 8px;
+}
+
+
+.ant-modal-confirm-confirm{
+  margin: 10rem auto !important;
+}
+.ant-modal-confirm-confirm .ant-modal-content{
+  width: 600px;
+}
